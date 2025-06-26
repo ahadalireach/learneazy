@@ -8,29 +8,40 @@ export const errorMiddlware = (
   next: NextFunction
 ) => {
   err.statusCode = err.statusCode || 500;
-  err.message = err.message || "Internal server Error!";
+  err.message = err.message || "Internal Server Error";
 
-  // wrong mongodb id error
+  // MongoDB CastError - Invalid ObjectId
   if (err.name === "CastError") {
-    const message = `Resource not found. Invalid ID: ${err.path}.`;
-    err = new errorHandler(message, 400);
+    const message = `Resource not found. Invalid ${err.path}: ${err.value}`;
+    err = new errorHandler(message, 404);
   }
 
-  // Duplicate key error
+  // MongoDB Duplicate Key Error
   if (err.code === 11000) {
-    const message = `Duplicate key entered: ${Object.keys(err.keyValue)}.`;
-    err = new errorHandler(message, 400);
+    const field = Object.keys(err.keyValue)[0];
+    const value = err.keyValue[field];
+    const message = `${
+      field.charAt(0).toUpperCase() + field.slice(1)
+    } '${value}' already exists. Please use a different ${field}.`;
+    err = new errorHandler(message, 409);
   }
 
-  // wrong jwt error
+  // JWT Invalid Token Error
   if (err.name === "JsonWebTokenError") {
-    const message = `JWT is invalid. Please try again.`;
-    err = new errorHandler(message, 400);
+    const message = "Invalid authentication token. Please log in again.";
+    err = new errorHandler(message, 401);
   }
 
-  // jwt expired
+  // JWT Expired Token Error
   if (err.name === "TokenExpiredError") {
-    const message = `JWT has expired. Please try again.`;
+    const message = "Your session has expired. Please log in again.";
+    err = new errorHandler(message, 401);
+  }
+
+  // MongoDB Validation Error
+  if (err.name === "ValidationError") {
+    const errors = Object.values(err.errors).map((val: any) => val.message);
+    const message = `Validation failed: ${errors.join(", ")}`;
     err = new errorHandler(message, 400);
   }
 
