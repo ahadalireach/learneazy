@@ -37,7 +37,6 @@ const userSchema: Schema<IUser> = new Schema(
     },
     password: {
       type: String,
-      required: [true, "Please enter your password."],
       minlength: [6, "Password must be at least 6 characters long."],
       select: false, // Exclude password from queries by default
     },
@@ -87,14 +86,14 @@ userSchema.methods.comparePassword = async function (
 // Sign access token method
 userSchema.methods.SignAccessToken = function (): string {
   return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN as string, {
-    expiresIn: "15m",
+    expiresIn: "5m",
   });
 };
 
 // Sign refresh token method
 userSchema.methods.SignRefreshToken = function (): string {
   return jwt.sign({ id: this._id }, process.env.REFRESH_TOKEN as string, {
-    expiresIn: "7d",
+    expiresIn: "3d",
   });
 };
 

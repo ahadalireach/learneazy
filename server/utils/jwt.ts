@@ -13,25 +13,25 @@ interface ITokenOption {
 }
 
 const accessTokenExpires = parseInt(
-  process.env.ACCESS_TOKEN_EXPIRE || "900",
+  process.env.ACCESS_TOKEN_EXPIRE || "300",
   10
 );
 
 const refreshTokenExpire = parseInt(
-  process.env.REFRESH_TOKEN_EXPIRE || "604800",
+  process.env.REFRESH_TOKEN_EXPIRE || "1200",
   10
 );
 
 export const accessTokenOptions: ITokenOption = {
-  expires: new Date(Date.now() + accessTokenExpires * 1000),
-  maxAge: accessTokenExpires * 1000,
+  expires: new Date(Date.now() + accessTokenExpires * 60 * 60 * 1000),
+  maxAge: accessTokenExpires * 60 * 60 * 1000,
   httpOnly: true,
   sameSite: "lax",
 };
 
 export const refreshTokenOptions: ITokenOption = {
-  expires: new Date(Date.now() + refreshTokenExpire * 1000),
-  maxAge: refreshTokenExpire * 1000,
+  expires: new Date(Date.now() + refreshTokenExpire * 24 * 60 * 60 * 1000),
+  maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000,
   httpOnly: true,
   sameSite: "lax",
 };
