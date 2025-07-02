@@ -6,7 +6,7 @@ import {
   sendToken,
 } from "../utils/jwt";
 import User, { IUser } from "../models/User";
-import { getUserById } from "../services/user.service";
+import { getUserById } from "../services/userService";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import cloudinary from "cloudinary";
 import sendMail from "../utils/sendMail";

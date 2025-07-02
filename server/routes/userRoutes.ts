@@ -5,7 +5,6 @@ import {
   activateUser,
   loginUser,
   logoutUser,
-  authorizeRoles,
   updateAccessToken,
   getUserInfo,
   socialAuth,
