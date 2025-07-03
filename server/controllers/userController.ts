@@ -6,8 +6,12 @@ import {
   sendToken,
 } from "../utils/jwt";
 import User, { IUser } from "../models/User";
-import { getUserById } from "../services/userService";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
+import {
+  getUserProfileFromCache,
+  getAllUsers,
+  changeUserRole,
+} from "../services/userService";
 import cloudinary from "cloudinary";
 import sendMail from "../utils/sendMail";
 import errorHandler from "../utils/errorHandler";
@@ -20,7 +24,7 @@ interface IRegisterUser {
   avatar?: string;
 }
 
-export const registerUser = catchAsyncError(
+export const registerNewUser = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, email, password } = req.body;
@@ -30,7 +34,7 @@ export const registerUser = catchAsyncError(
         return next(
           new errorHandler(
             "An account with this email address already exists. Please sign in to your existing account or use a different email.",
-            400
+            409
           )
         );
       }
@@ -64,10 +68,7 @@ export const registerUser = catchAsyncError(
       });
     } catch (error) {
       return next(
-        new errorHandler(
-          "Registration failed due to a server error. Please try again in a few moments.",
-          500
-        )
+        new errorHandler("Registration failed. Please try again.", 500)
       );
     }
   }
@@ -96,7 +97,7 @@ interface IActivationRequest {
   activationCode: string;
 }
 
-export const activateUser = catchAsyncError(
+export const activateUserAccount = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     const { activationToken, activationCode } = req.body as IActivationRequest;
 
@@ -106,7 +107,7 @@ export const activateUser = catchAsyncError(
         process.env.JWT_SECRET as Secret
       ) as { user: IUser; activationCode: string };
 
-      if (newUser.activationCode !== activationCode) {
+      if (newUser.activationCode !== activationCode.trim()) {
         return next(
           new errorHandler(
             "Invalid activation code. Please check your email for the correct 4-digit code and try again.",
@@ -121,7 +122,7 @@ export const activateUser = catchAsyncError(
         return next(
           new errorHandler(
             "This account has already been activated. Please proceed to sign in with your credentials.",
-            400
+            409
           )
         );
       }
@@ -136,7 +137,9 @@ export const activateUser = catchAsyncError(
         success: true,
       });
     } catch (error) {
-      next(new errorHandler("Activation failed. Invalid token.", 400));
+      return next(
+        new errorHandler("Account activation failed. Please try again.", 500)
+      );
     }
   }
 );
@@ -146,26 +149,19 @@ interface ILoginRequest {
   password: string;
 }
 
-export const loginUser = catchAsyncError(
+export const authenticateUser = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body as ILoginRequest;
 
-      if (!email || !password) {
-        return next(
-          new errorHandler(
-            "Please enter both your email and password to log in.",
-            400
-          )
-        );
-      }
-
-      const user = await User.findOne({ email }).select("+password");
+      const user = await User.findOne({
+        email: email.trim().toLowerCase(),
+      }).select("+password");
       if (!user) {
         return next(
           new errorHandler(
-            "No account found with this email address. Please check your email or register for a new account.",
-            400
+            "Invalid email or password. Please check your credentials and try again.",
+            401
           )
         );
       }
@@ -174,8 +170,8 @@ export const loginUser = catchAsyncError(
       if (!isPasswordMatch) {
         return next(
           new errorHandler(
-            "Incorrect password. Please check your password and try again.",
-            400
+            "Invalid email or password. Please check your credentials and try again.",
+            401
           )
         );
       }
@@ -186,7 +182,7 @@ export const loginUser = catchAsyncError(
   }
 );
 
-export const logoutUser = catchAsyncError(
+export const logoutCurrentUser = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       res.cookie("access_token", "", { maxAge: 1 });
@@ -202,36 +198,24 @@ export const logoutUser = catchAsyncError(
           "You have been successfully signed out. Thank you for using Learneazy!",
       });
     } catch (error: any) {
-      return next(new errorHandler(error.message, 400));
+      return next(new errorHandler("Logout failed. Please try again.", 500));
     }
   }
 );
 
-export const authorizeRoles = (...roles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    if (!req.user || !roles.includes(req.user?.role)) {
-      return next(
-        new errorHandler(
-          "You do not have permission to perform this action.",
-          403
-        )
-      );
-    }
-
-    next();
-  };
-};
-
-export const updateAccessToken = catchAsyncError(
+export const refreshUserAccessToken = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const refresh_token = req.cookies.refresh_token as string;
+
       const decoded: any = jwt.verify(
         refresh_token,
         process.env.REFRESH_TOKEN as string
       ) as JwtPayload;
       if (!decoded) {
-        return next(new errorHandler("Couldn't refresh token.", 400));
+        return next(
+          new errorHandler("Invalid refresh token. Please log in again.", 401)
+        );
       }
 
       const session = await redis.get(decoded.id);
@@ -243,7 +227,9 @@ export const updateAccessToken = catchAsyncError(
 
       const user = JSON.parse(session) as IUser;
       if (!user) {
-        return next(new errorHandler("User not found.", 404));
+        return next(
+          new errorHandler("User session not found. Please log in again.", 401)
+        );
       }
 
       const accessToken = jwt.sign(
@@ -274,23 +260,9 @@ export const updateAccessToken = catchAsyncError(
         accessToken,
       });
     } catch (error: any) {
-      return next(new errorHandler(error.message, 400));
-    }
-  }
-);
-
-export const getUserInfo = catchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userId = req.user?._id?.toString();
-
-      if (!userId) {
-        return next(new errorHandler("User not found.", 404));
-      }
-
-      getUserById(userId, res);
-    } catch (error: any) {
-      return next(new errorHandler(error.message, 400));
+      return next(
+        new errorHandler("Token refresh failed. Please log in again.", 500)
+      );
     }
   }
 );
@@ -301,7 +273,7 @@ interface ISocialAuthBody {
   avatar: string;
 }
 
-export const socialAuth = catchAsyncError(
+export const authenticateWithSocialMedia = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, name, avatar } = req.body as ISocialAuthBody;
@@ -313,7 +285,25 @@ export const socialAuth = catchAsyncError(
         sendToken(user, 200, res);
       }
     } catch (error: any) {
-      return next(new errorHandler(error.message, 400));
+      return next(
+        new errorHandler("Social authentication failed. Please try again.", 500)
+      );
+    }
+  }
+);
+
+export const getCurrentUserProfile = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = req.user?._id?.toString();
+
+      if (!userId) {
+        return next(new errorHandler("User not found.", 404));
+      }
+
+      getUserProfileFromCache(userId, res);
+    } catch (error: any) {
+      return next(new errorHandler("Failed to retrieve user profile.", 500));
     }
   }
 );
@@ -323,14 +313,14 @@ interface IUpdateUserInfo {
   email?: string;
 }
 
-export const updateUserInfo = catchAsyncError(
+export const updateUserProfile = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, email } = req.body as IUpdateUserInfo;
 
       const userId = req.user?._id?.toString();
       if (!userId) {
-        return next(new errorHandler("User not found.", 404));
+        return next(new errorHandler("User not authenticated.", 401));
       }
 
       const user = await User.findById(userId);
@@ -342,7 +332,10 @@ export const updateUserInfo = catchAsyncError(
         const existingUser = await User.findOne({ email });
         if (existingUser) {
           return next(
-            new errorHandler("Email already exists with this email", 400)
+            new errorHandler(
+              "This email is already registered with another account.",
+              409
+            )
           );
         }
         user.email = email;
@@ -360,7 +353,9 @@ export const updateUserInfo = catchAsyncError(
         user,
       });
     } catch (error: any) {
-      return next(new errorHandler(error.message, 400));
+      return next(
+        new errorHandler("Failed to update profile. Please try again.", 500)
+      );
     }
   }
 );
@@ -370,19 +365,23 @@ interface IUpdatePassword {
   newPassword: string;
 }
 
-export const updateUserPassword = catchAsyncError(
+export const changeUserPassword = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { oldPassword, newPassword } = req.body as IUpdatePassword;
-      if (!oldPassword || !newPassword) {
+
+      if (oldPassword === newPassword) {
         return next(
-          new errorHandler("Please enter old and new password.", 400)
+          new errorHandler(
+            "New password must be different from current password.",
+            400
+          )
         );
       }
 
       const userId = req.user?._id?.toString();
       if (!userId) {
-        return next(new errorHandler("User not found.", 404));
+        return next(new errorHandler("User not authenticated.", 401));
       }
 
       const user = await User.findById(userId).select("+password");
@@ -390,13 +389,18 @@ export const updateUserPassword = catchAsyncError(
         return next(new errorHandler("User not found.", 404));
       }
 
-      if (user?.password === undefined) {
-        return next(new errorHandler("Invalid user.", 400));
+      if (!user.password) {
+        return next(
+          new errorHandler(
+            "Password change not available for social login accounts.",
+            400
+          )
+        );
       }
 
-      const isPasswordMatch = await user?.comparePassword(oldPassword);
+      const isPasswordMatch = await user.comparePassword(oldPassword);
       if (!isPasswordMatch) {
-        return next(new errorHandler("Invalid old password.", 400));
+        return next(new errorHandler("Current password is incorrect.", 400));
       }
 
       user.password = newPassword;
@@ -409,7 +413,9 @@ export const updateUserPassword = catchAsyncError(
         user,
       });
     } catch (error: any) {
-      return next(new errorHandler(error.message, 400));
+      return next(
+        new errorHandler("Failed to change password. Please try again.", 500)
+      );
     }
   }
 );
@@ -418,17 +424,17 @@ interface IUpdateProfilePicture {
   avatar: string;
 }
 
-export const updateUserAvatar = catchAsyncError(
+export const updateUserProfilePicture = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { avatar } = req.body as IUpdateProfilePicture;
 
       const userId = req.user?._id?.toString();
       if (!userId) {
-        return next(new errorHandler("User not found.", 404));
+        return next(new errorHandler("User not authenticated.", 401));
       }
 
-      const user = await User.findById(userId).select("+password");
+      const user = await User.findById(userId);
       if (!user) {
         return next(new errorHandler("User not found.", 404));
       }
@@ -465,7 +471,81 @@ export const updateUserAvatar = catchAsyncError(
         user,
       });
     } catch (error: any) {
-      return next(new errorHandler(error.message, 400));
+      return next(
+        new errorHandler(
+          "Failed to update profile picture. Please try again.",
+          500
+        )
+      );
+    }
+  }
+);
+
+export const getAllUsersForAdmin = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllUsers(res);
+    } catch (error: any) {
+      return next(new errorHandler("Failed to retrieve users list.", 500));
+    }
+  }
+);
+
+export const changeUserRoleByAdmin = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, role } = req.body;
+
+      const validRoles = ["user", "admin", "instructor", "moderator"];
+      if (!validRoles.includes(role)) {
+        return next(
+          new errorHandler(
+            "Invalid role. Valid roles are: user, admin, instructor.",
+            400
+          )
+        );
+      }
+
+      const isUserExist = await User.findOne({
+        email: email.trim().toLowerCase(),
+      });
+      if (!isUserExist) {
+        return next(
+          new errorHandler("User not found with this email address.", 404)
+        );
+      }
+
+      const id = isUserExist._id?.toString();
+      if (!id) {
+        return next(new errorHandler("Invalid user data.", 400));
+      }
+
+      changeUserRole(res, id, role);
+    } catch (error: any) {
+      return next(new errorHandler("Failed to update user role.", 500));
+    }
+  }
+);
+
+export const deleteUserByAdmin = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      const user = await User.findById(id);
+      if (!user) {
+        return next(new errorHandler("User not found.", 404));
+      }
+
+      await user.deleteOne({ id });
+      await redis.del(id);
+
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+      });
+    } catch (error: any) {
+      return next(new errorHandler("Failed to delete user.", 500));
     }
   }
 );

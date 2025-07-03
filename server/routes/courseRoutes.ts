@@ -1,29 +1,57 @@
 import express from "express";
 const router = express.Router();
-import { isAuthenticated } from "./../middleware/auth";
 import {
-  createCourse,
-  updateCourse,
-  getCoursePreview,
-  getAllCoursePreviews,
-  getPurchasedCourseContent,
+  createNewCourse,
+  updateCourseDetails,
+  getCoursePublicPreview,
+  getAllPublicCoursePreviews,
+  getEnrolledCourseContent,
+  addCourseQuestion,
+  addQuestionAnswer,
+  addCourseReview,
+  addReviewReply,
+  getAllCoursesForAdmin,
+  deleteCourseByAdmin,
 } from "../controllers/courseController";
-import { authorizeRoles } from "../controllers/userController";
+import { authorizeRoles, isAuthenticated } from "./../middleware/auth";
 
 router.post(
-  "/create-course",
+  "/admin/create",
   isAuthenticated,
   authorizeRoles("admin"),
-  createCourse
+  createNewCourse
 );
 router.put(
-  "/update-course/:id",
+  "/admin/update/:id",
   isAuthenticated,
   authorizeRoles("admin"),
-  updateCourse
+  updateCourseDetails
 );
-router.get("/course-preview/:id", getCoursePreview);
-router.get("/course-previews", getAllCoursePreviews);
-router.get("/purchased-course/:id", isAuthenticated, getPurchasedCourseContent);
+router.get(
+  "/admin/all-courses",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getAllCoursesForAdmin
+);
+router.delete(
+  "/admin/delete/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  deleteCourseByAdmin
+);
+
+router.get("/public/preview/:id", getCoursePublicPreview);
+router.get("/public/all-previews", getAllPublicCoursePreviews);
+
+router.get("/enrolled/content/:id", isAuthenticated, getEnrolledCourseContent);
+router.put("/enrolled/question", isAuthenticated, addCourseQuestion);
+router.put("/enrolled/answer", isAuthenticated, addQuestionAnswer);
+router.put("/enrolled/review", isAuthenticated, addCourseReview);
+router.put(
+  "/enrolled/review-reply",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  addReviewReply
+);
 
 export default router;

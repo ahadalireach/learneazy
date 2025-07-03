@@ -11,7 +11,9 @@ import cors from "cors";
 import connectDB from "./db/db";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes";
+import orderRoutes from "./routes/orderRoutes";
 import courseRoutes from "./routes/courseRoutes";
+import notificationRoutes from "./routes/notificationRoutes";
 import { v2 as cloudinary } from "cloudinary";
 import { errorMiddlware } from "./middleware/error";
 
@@ -35,6 +37,8 @@ app.use(
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // Basic health check route
 app.get("/health", (req: Request, res: Response) => {
@@ -42,7 +46,7 @@ app.get("/health", (req: Request, res: Response) => {
     success: true,
     message: "Server is running successfully.",
     timestamp: new Date().toISOString(),
-    database: "Connected",
+    database: "Connected!",
   });
 });
 

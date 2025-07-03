@@ -27,6 +27,7 @@
     "ioredis": "^5.6.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.0",
+    "node-cron": "^4.2.0",
     "nodemailer": "^7.0.3",
     "redis": "^5.5.6",
     "ts-node-dev": "^2.0.0",
