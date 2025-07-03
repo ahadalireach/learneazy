@@ -328,7 +328,7 @@ export const addCourseReview = catchAsyncError(
       }
 
       await course?.save();
-      await redis.set(courseId, JSON.stringify(course), "EX", 604800); // 7days
+      await redis.set(courseId, JSON.stringify(course), "EX", 604800);
 
       await Notification.create({
         user: req.user?._id,
@@ -385,7 +385,7 @@ export const addReviewReply = catchAsyncError(
       review.commentReplies?.push(replyData);
 
       await course?.save();
-      await redis.set(courseId, JSON.stringify(course), "EX", 604800); // 7days
+      await redis.set(courseId, JSON.stringify(course), "EX", 604800);
 
       res.status(200).json({
         success: true,
@@ -399,7 +399,7 @@ export const addReviewReply = catchAsyncError(
   }
 );
 
-export const getAllCoursesForAdmin = catchAsyncError(
+export const getAllCoursesByAdmin = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       getAllCourses(res);

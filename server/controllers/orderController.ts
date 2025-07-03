@@ -102,7 +102,7 @@ export const processOrder = catchAsyncError(
   }
 );
 
-export const getAllOrdersForAdmin = catchAsyncError(
+export const getAllOrdersByAdmin = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       getAllOrders(res);

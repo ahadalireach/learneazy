@@ -11,7 +11,7 @@ import {
   updateUserProfile,
   changeUserPassword,
   updateUserProfilePicture,
-  getAllUsersForAdmin,
+  getAllUsersByAdmin,
   changeUserRoleByAdmin,
   deleteUserByAdmin,
 } from "../controllers/userController";
@@ -33,7 +33,7 @@ router.get(
   "/admin/users",
   isAuthenticated,
   authorizeRoles("admin"),
-  getAllUsersForAdmin
+  getAllUsersByAdmin
 );
 router.put(
   "/admin/change-user-role",

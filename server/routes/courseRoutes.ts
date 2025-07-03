@@ -10,7 +10,7 @@ import {
   addQuestionAnswer,
   addCourseReview,
   addReviewReply,
-  getAllCoursesForAdmin,
+  getAllCoursesByAdmin,
   deleteCourseByAdmin,
 } from "../controllers/courseController";
 import { authorizeRoles, isAuthenticated } from "./../middleware/auth";
@@ -31,7 +31,7 @@ router.get(
   "/admin/all-courses",
   isAuthenticated,
   authorizeRoles("admin"),
-  getAllCoursesForAdmin
+  getAllCoursesByAdmin
 );
 router.delete(
   "/admin/delete/:id",

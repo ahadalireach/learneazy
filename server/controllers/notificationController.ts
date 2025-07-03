@@ -4,7 +4,7 @@ import errorHandler from "../utils/errorHandler";
 import Notification from "../models/Notification";
 import catchAsyncError from "../middleware/catchAsyncError";
 
-export const getAllNotificationsForAdmin = catchAsyncError(
+export const getAllNotificationsByAdmin = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const notifications = await Notification.find().sort({

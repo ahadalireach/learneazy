@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { IUser } from "../models/User";
 import { redis } from "./redis";
-import jwt from "jsonwebtoken";
-import errorHandler from "./errorHandler";
 
 interface ITokenOption {
   expires: Date;

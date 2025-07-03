@@ -254,7 +254,6 @@ export const refreshUserAccessToken = catchAsyncError(
       res.cookie("refresh_token", refreshToken, refreshTokenOptions);
 
       await redis.set(user?._id as string, JSON.stringify(user), "EX", 604800);
-
       res.status(200).json({
         success: true,
         accessToken,
@@ -296,7 +295,6 @@ export const getCurrentUserProfile = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = req.user?._id?.toString();
-
       if (!userId) {
         return next(new errorHandler("User not found.", 404));
       }
@@ -481,7 +479,7 @@ export const updateUserProfilePicture = catchAsyncError(
   }
 );
 
-export const getAllUsersForAdmin = catchAsyncError(
+export const getAllUsersByAdmin = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       getAllUsers(res);

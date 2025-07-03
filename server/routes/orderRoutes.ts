@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import {
   processOrder,
-  getAllOrdersForAdmin,
+  getAllOrdersByAdmin,
 } from "../controllers/orderController";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 
@@ -11,7 +11,7 @@ router.get(
   "/admin/all-orders",
   isAuthenticated,
   authorizeRoles("admin"),
-  getAllOrdersForAdmin
+  getAllOrdersByAdmin
 );
 
 export default router;
