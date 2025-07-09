@@ -56,6 +56,7 @@ export const sendToken = (user: IUser, statusCode: number, res: Response) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      avatar: user.avatar,
     },
     accessToken,
     message: "Successfully signed in! Welcome to Learneazy.",

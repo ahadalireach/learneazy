@@ -11,6 +11,20 @@ export const getUserProfileFromCache = async (id: string, res: Response) => {
       success: true,
       user,
     });
+  } else {
+    const user = await User.findById(id);
+    if (user) {
+      await redis.set(id, JSON.stringify(user), "EX", 604800);
+      res.status(201).json({
+        success: true,
+        user,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
   }
 };
 

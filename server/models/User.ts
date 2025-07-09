@@ -56,7 +56,6 @@ const userSchema: Schema<IUser> = new Schema(
       {
         courseId: {
           type: String,
-          required: true,
         },
       },
     ],

@@ -20,7 +20,7 @@ import { authorizeRoles, isAuthenticated } from "./../middleware/auth";
 router.post("/auth/register", registerNewUser);
 router.post("/auth/activate", activateUserAccount);
 router.post("/auth/login", authenticateUser);
-router.post("/auth/logout", isAuthenticated, logoutCurrentUser);
+router.get("/auth/logout", isAuthenticated, logoutCurrentUser);
 router.get("/auth/refresh-token", refreshUserAccessToken);
 router.post("/auth/social-login", authenticateWithSocialMedia);
 

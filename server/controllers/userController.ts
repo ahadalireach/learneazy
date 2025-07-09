@@ -33,7 +33,7 @@ export const registerNewUser = catchAsyncError(
       if (existingUser) {
         return next(
           new errorHandler(
-            "An account with this email address already exists. Please sign in to your existing account or use a different email.",
+            "Account already exists. Please sign in or use a different email.",
             409
           )
         );
@@ -61,9 +61,9 @@ export const registerNewUser = catchAsyncError(
 
       res.status(200).json({
         success: true,
-        message: `Registration successful! We've sent a 4-digit activation code to ${email
+        message: `Check your email ${email
           .trim()
-          .toLowerCase()}. Please check your email inbox (and spam folder) and enter the code to activate your account within 5 minutes.`,
+          .toLowerCase()} to activate your account in 5 mins`,
         activationToken: activationToken.token,
       });
     } catch (error) {
@@ -278,9 +278,24 @@ export const authenticateWithSocialMedia = catchAsyncError(
       const { email, name, avatar } = req.body as ISocialAuthBody;
       const user = await User.findOne({ email });
       if (!user) {
-        const newUser = await User.create({ email, name, avatar });
+        const newUser = await User.create({
+          email,
+          name,
+          avatar: {
+            public_id: "",
+            url: avatar,
+          },
+        });
         sendToken(newUser, 200, res);
       } else {
+        // Update existing user's avatar if they don't have one
+        if (!user.avatar?.url && avatar) {
+          user.avatar = {
+            public_id: "",
+            url: avatar,
+          };
+          await user.save();
+        }
         sendToken(user, 200, res);
       }
     } catch (error: any) {
@@ -469,6 +484,8 @@ export const updateUserProfilePicture = catchAsyncError(
         user,
       });
     } catch (error: any) {
+      console.log(error);
+
       return next(
         new errorHandler(
           "Failed to update profile picture. Please try again.",
