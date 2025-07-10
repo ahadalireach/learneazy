@@ -2,12 +2,12 @@
 import {
   useLoadUserQuery,
   useRefreshTokenQuery,
-} from "@/redux/features/api/apiSlice";
+} from "@/store/features/api/apiSlice";
 import "./globals.css";
 import { Loader } from "./components";
 import { Toaster } from "react-hot-toast";
 import { Poppins } from "next/font/google";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ReduxProvider } from "./providers/ReduxProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
@@ -46,6 +46,5 @@ const Custom: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isLoading: isRefreshLoading } = useRefreshTokenQuery({});
 
   const isLoading = isUserLoading || isRefreshLoading;
-
   return <>{isLoading ? <Loader /> : <div>{children}</div>}</>;
 };

@@ -8,6 +8,7 @@ import sendMail from "../utils/sendMail";
 import errorHandler from "../utils/errorHandler";
 import Notification from "../models/Notification";
 import catchAsyncError from "../middleware/catchAsyncError";
+import axios from "axios";
 
 export const createNewCourse = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -428,6 +429,28 @@ export const deleteCourseByAdmin = catchAsyncError(
       });
     } catch (error: any) {
       return next(new errorHandler("Failed to delete course.", 500));
+    }
+  }
+);
+
+export const generateVideoUrl = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { videoId } = req.body;
+      const response = await axios.post(
+        `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
+        { ttl: 300 },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Apisecret ${process.env.VDOCIPHER_API_KEY}`,
+          },
+        }
+      );
+      res.json(response.data);
+    } catch (error: any) {
+      return next(new errorHandler(error.message, 400));
     }
   }
 );

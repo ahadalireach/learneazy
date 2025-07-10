@@ -1,14 +1,14 @@
 import {
   useEditProfileMutation,
   useUpdateAvatarMutation,
-} from "@/redux/features/user/userApi";
+} from "@/store/features/user/userApi";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
 import styles from "../../styles/styles";
 import { avatar as avatarIcon } from "@/public";
 import { AiOutlineCamera } from "react-icons/ai";
 import React, { FC, useEffect, useState } from "react";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import { useLoadUserQuery } from "@/store/features/api/apiSlice";
 
 type Props = {
   avatar: string | null;

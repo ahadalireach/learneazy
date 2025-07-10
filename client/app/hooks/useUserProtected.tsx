@@ -5,7 +5,7 @@ interface ProtectedProps {
   children: React.ReactNode;
 }
 
-export default function Protected({ children }: ProtectedProps) {
+export default function UserProtected({ children }: ProtectedProps) {
   const isAuthenticated = useAuth();
   return isAuthenticated ? children : redirect("/");
 }

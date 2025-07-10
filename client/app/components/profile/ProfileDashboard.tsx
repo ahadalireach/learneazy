@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 import ProfileSidebar from "./ProfileSidebar";
 import ChangePassword from "./ChangePassword";
 import React, { FC, useEffect, useState } from "react";
-import { useLogOutQuery } from "../../../redux/features/auth/authApi";
+import { useLogOutQuery } from "../../../store/features/auth/authApi";
 
 type Props = {
   user: any;

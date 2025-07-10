@@ -8,7 +8,7 @@ import {
 import {
   useLogOutQuery,
   useSocialAuthMutation,
-} from "@/redux/features/auth/authApi";
+} from "@/store/features/auth/authApi";
 import Link from "next/link";
 import Image from "next/image";
 import { avatar } from "@/public";
@@ -88,7 +88,7 @@ const Header: FC<HeaderProps> = ({
             </div>
 
             <div className="flex items-center gap-4">
-              <NavItems activeItem={activeItem} isMobile={false} />
+              <NavItems isMobile={false} />
               <ThemeSwitcher />
 
               {user ? (
@@ -134,7 +134,7 @@ const Header: FC<HeaderProps> = ({
               >
                 <HiOutlineX size={25} />
               </div>
-              <NavItems activeItem={activeItem} isMobile={true} />
+              <NavItems isMobile={true} />
               <button
                 onClick={() => setOpen(true)}
                 className="flex items-center py-5 px-6 font-Poppins font-[400] text-[18px] text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors"

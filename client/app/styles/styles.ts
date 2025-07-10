@@ -118,13 +118,11 @@ export const cardStyles = {
 };
 
 export const navStyles = {
-  // Navigation links
   link: "text-[16px] px-4 py-2 font-Poppins font-[400] cursor-pointer transition-colors duration-200 rounded-md",
   linkActive: "text-blue-600 dark:text-blue-400",
   linkDefault:
     "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20",
 
-  // Mobile navigation
   mobileLink:
     "block py-4 text-[18px] px-6 font-Poppins font-[400] cursor-pointer transition-colors duration-200",
   mobileLinkActive:
@@ -132,35 +130,27 @@ export const navStyles = {
   mobileLinkDefault:
     "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20",
 
-  // Navigation brand
   brand:
     "text-[25px] font-Poppins font-[500] text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors",
 };
 
-// Form Styles
 export const formStyles = {
-  // Form containers
   container: "space-y-6",
   group: "space-y-2",
   row: "grid grid-cols-1 md:grid-cols-2 gap-4",
 
-  // Form elements
   fieldset: "border border-slate-200 dark:border-slate-700 rounded-lg p-4",
   legend:
     "text-lg font-semibold font-Poppins text-slate-900 dark:text-white px-2",
 
-  // Error and success messages
   error: "text-red-600 dark:text-red-400 text-sm font-Poppins mt-1",
   success: "text-green-600 dark:text-green-400 text-sm font-Poppins mt-1",
   hint: "text-slate-500 dark:text-slate-400 text-sm font-Poppins mt-1",
 };
 
-// Badge Styles
 export const badgeStyles = {
-  // Base badge styles
   base: "inline-flex items-center px-3 py-1 rounded-full text-sm font-medium font-Poppins",
 
-  // Badge variants
   primary: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
   secondary: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
   success:
@@ -169,55 +159,53 @@ export const badgeStyles = {
     "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
   danger: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 
-  // Badge sizes
   small: "px-2 py-0.5 text-xs",
   medium: "px-3 py-1 text-sm",
   large: "px-4 py-1.5 text-base",
 };
 
-// Utility Classes
 export const utilityStyles = {
-  // Text utilities
   textMuted: "text-slate-500 dark:text-slate-400",
   textAccent: "text-blue-600 dark:text-blue-400",
   textSuccess: "text-green-600 dark:text-green-400",
   textWarning: "text-yellow-600 dark:text-yellow-400",
   textDanger: "text-red-600 dark:text-red-400",
 
-  // Background utilities
   bgAccent: "bg-blue-50 dark:bg-blue-900/20",
   bgSuccess: "bg-green-50 dark:bg-green-900/20",
   bgWarning: "bg-yellow-50 dark:bg-yellow-900/20",
   bgDanger: "bg-red-50 dark:bg-red-900/20",
 
-  // Border utilities
   borderAccent: "border-blue-200 dark:border-blue-700",
   borderSuccess: "border-green-200 dark:border-green-700",
   borderWarning: "border-yellow-200 dark:border-yellow-700",
   borderDanger: "border-red-200 dark:border-red-700",
 
-  // Animation utilities
-  fadeIn: "animate-fade-in",
-  slideIn: "animate-slide-in",
-  pulse: "animate-pulse",
-  bounce: "animate-bounce",
-
-  // Spacing utilities
   spacingXSmall: "space-y-2",
   spacingSmall: "space-y-4",
   spacingMedium: "space-y-6",
   spacingLarge: "space-y-8",
   spacingXLarge: "space-y-12",
+
+  avatarSmall: "w-6 h-6 rounded-full",
+  avatarMedium: "w-8 h-8 rounded-full",
+  avatarLarge: "w-10 h-10 rounded-full",
+  avatarXLarge: "w-12 h-12 rounded-full",
+
+  avatarBorder: "border-2 border-gray-200 dark:border-gray-600",
+  avatarBorderActive: "border-2 border-blue-600 dark:border-blue-400",
+  avatarBorderSuccess: "border-2 border-green-600 dark:border-green-400",
+
+  sidebarCollapsed: "w-16",
+  sidebarExpanded: "w-64",
+  sidebarTransition: "transition-all duration-300 ease-in-out",
 };
 
-// Helper function to combine styles
 export const combineStyles = (...styles: string[]) => {
   return styles.filter(Boolean).join(" ");
 };
 
-// Common style combinations
 export const commonStyles = {
-  // Page layouts
   pageContainer: combineStyles(
     sectionStyles.container,
     sectionStyles.paddingMedium
@@ -228,7 +216,6 @@ export const commonStyles = {
     sectionStyles.borderBottom
   ),
 
-  // Form layouts
   formContainer: combineStyles(
     cardStyles.base,
     cardStyles.paddingLarge,
@@ -236,7 +223,6 @@ export const commonStyles = {
   ),
   formField: combineStyles(formStyles.group),
 
-  // Button combinations
   primaryButton: combineStyles(
     buttonStyles.base,
     buttonStyles.primary,
@@ -253,7 +239,6 @@ export const commonStyles = {
     buttonStyles.medium
   ),
 
-  // Input combinations
   defaultInput: combineStyles(
     inputStyles.base,
     inputStyles.default,
@@ -265,7 +250,6 @@ export const commonStyles = {
     inputStyles.medium
   ),
 
-  // Title combinations
   pageTitle: combineStyles(titleStyles.h1, "text-center mb-6"),
   sectionTitle: combineStyles(titleStyles.section),
   cardTitle: combineStyles(titleStyles.card, "mb-4"),

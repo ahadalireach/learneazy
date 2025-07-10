@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import Heading from "../components/common/PageHead";
-import Header from "../components/common/Header";
-import React, { FC, useState } from "react";
-import Protected from "../hooks/useProtectedRoute";
+import { UserProtected } from "../hooks";
 import { useSelector } from "react-redux";
-import Profile from "../components/profile/ProfileDashboard";
+import React, { FC, useState } from "react";
+import { Header, PageHead, ProfileDashboard } from "../components";
 
 type Props = {};
 
@@ -17,9 +15,9 @@ const page = (props: Props) => {
 
   return (
     <div className="min-h-screen">
-      <Protected>
-        <Heading
-          title={`${user?.name} Profile - Elearning`}
+      <UserProtected>
+        <PageHead
+          title={`${user?.name} Profile - Learneazy`}
           description="ELearning is a platform for students to learn and get help from teachers"
           keywords="Prograaming,MERN,Redux,Machine Learning"
         />
@@ -31,9 +29,9 @@ const page = (props: Props) => {
           route={route}
         />
         <div className="py-[120px]">
-          <Profile user={user} />
+          <ProfileDashboard user={user} />
         </div>
-      </Protected>
+      </UserProtected>
     </div>
   );
 };

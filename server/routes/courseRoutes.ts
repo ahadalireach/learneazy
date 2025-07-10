@@ -12,6 +12,7 @@ import {
   addReviewReply,
   getAllCoursesByAdmin,
   deleteCourseByAdmin,
+  generateVideoUrl,
 } from "../controllers/courseController";
 import { authorizeRoles, isAuthenticated } from "./../middleware/auth";
 
@@ -46,12 +47,14 @@ router.get("/public/all-previews", getAllPublicCoursePreviews);
 router.get("/enrolled/content/:id", isAuthenticated, getEnrolledCourseContent);
 router.put("/enrolled/question", isAuthenticated, addCourseQuestion);
 router.put("/enrolled/answer", isAuthenticated, addQuestionAnswer);
-router.put("/enrolled/review", isAuthenticated, addCourseReview);
+router.put("/enrolled/review/:id", isAuthenticated, addCourseReview);
 router.put(
   "/enrolled/review-reply",
   isAuthenticated,
   authorizeRoles("admin"),
   addReviewReply
 );
+
+router.post("/video/getVdoCipherOTP", generateVideoUrl);
 
 export default router;
