@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import {
-  CreateCourse,
+  EditCourse,
   AdminDashboardSidebar,
   AdminDashboardHeader,
   PageHead,
-} from "../../components";
+} from "../../../components";
 import React, { useState } from "react";
-import styles from "../../styles/styles";
-import { AdminProtected } from "../../hooks";
+import styles from "../../../styles/styles";
+import { AdminProtected } from "../../../hooks";
 
 type Props = {};
 
@@ -44,7 +44,7 @@ const page = (props: Props) => {
               />
             </div>
             <div className="flex-1">
-              <CreateCourse />
+              <EditCourse />
             </div>
           </div>
         </div>

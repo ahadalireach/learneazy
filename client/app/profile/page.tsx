@@ -18,7 +18,7 @@ const page = (props: Props) => {
       <UserProtected>
         <PageHead
           title={`${user?.name} Profile - Learneazy`}
-          description="ELearning is a platform for students to learn and get help from teachers"
+          description="Learneazy is a platform for students to learn and get help from teachers"
           keywords="Prograaming,MERN,Redux,Machine Learning"
         />
         <Header

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import {
-  CreateCourse,
+  Courses,
   AdminDashboardSidebar,
   AdminDashboardHeader,
   PageHead,
@@ -44,7 +44,7 @@ const page = (props: Props) => {
               />
             </div>
             <div className="flex-1">
-              <CreateCourse />
+              <Courses />
             </div>
           </div>
         </div>

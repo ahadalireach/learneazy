@@ -1,9 +1,12 @@
+export { default as Users } from "./user/Users";
+export { default as Courses } from "./course/Courses";
+export { default as EditCourse } from "./course/EditCourse";
 export { default as CourseData } from "./course/CourseData";
 export { default as CreateCourse } from "./course/CreateCourse";
 export { default as CourseContent } from "./course/CourseContent";
 export { default as CoursePreview } from "./course/CoursePreview";
 export { default as CourseOptions } from "./course/CourseOptions";
-export { default as CourseInformation } from "./course/CourseInformation";
 export { default as AdminDashboardHero } from "./AdminDashboardHero";
 export { default as AdminDashboardHeader } from "./AdminDashboardHeader";
+export { default as CourseInformation } from "./course/CourseInformation";
 export { default as AdminDashboardSidebar } from "./AdminDashboardSidebar";

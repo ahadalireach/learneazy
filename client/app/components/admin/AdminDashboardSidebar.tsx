@@ -139,7 +139,7 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
           alt="Admin Profile"
           width={80}
           height={80}
-          className="w-[50px] h-[50px] sm:w-[80px] sm:h-[80px] rounded-full border cursor-pointer mb-4"
+          className="w-[40px] h-[40px] sm:w-[80px] sm:h-[80px] rounded-full border cursor-pointer mb-4"
         />
         <h5 className="text-[12px] sm:text-[18px] font-Poppins dark:text-white text-black">
           {user?.name || "Admin User"}
