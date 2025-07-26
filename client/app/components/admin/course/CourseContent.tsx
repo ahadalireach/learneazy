@@ -36,14 +36,28 @@ const CourseContent: FC<Props> = ({
   };
 
   const handleRemoveLink = (index: number, linkIndex: number) => {
-    const updatedData = [...courseContentData];
-    updatedData[index].links.splice(linkIndex, 1);
+    const updatedData = courseContentData.map((content: any, i: number) =>
+      i === index
+        ? {
+            ...content,
+            links: content.links.filter(
+              (_: any, li: number) => li !== linkIndex
+            ),
+          }
+        : content
+    );
     setCourseContentData(updatedData);
   };
 
   const handleAddLink = (index: number) => {
-    const updatedData = [...courseContentData];
-    updatedData[index].links.push({ title: "", url: "" });
+    const updatedData = courseContentData.map((content: any, i: number) =>
+      i === index
+        ? {
+            ...content,
+            links: [...content.links, { title: "", url: "" }],
+          }
+        : content
+    );
     setCourseContentData(updatedData);
   };
 
@@ -161,8 +175,12 @@ const CourseContent: FC<Props> = ({
                         type="text"
                         value={item.videoSection}
                         onChange={(e) => {
-                          const updatedData = [...courseContentData];
-                          updatedData[index].videoSection = e.target.value;
+                          const updatedData = courseContentData.map(
+                            (content: any, i: number) =>
+                              i === index
+                                ? { ...content, videoSection: e.target.value }
+                                : content
+                          );
                           setCourseContentData(updatedData);
                         }}
                         className={styles.combineStyles(
@@ -211,8 +229,9 @@ const CourseContent: FC<Props> = ({
                       type="button"
                       onClick={() => {
                         if (index > 0) {
-                          const updatedData = [...courseContentData];
-                          updatedData.splice(index, 1);
+                          const updatedData = courseContentData.filter(
+                            (_: any, i: number) => i !== index
+                          );
                           setCourseContentData(updatedData);
                         }
                       }}
@@ -259,8 +278,12 @@ const CourseContent: FC<Props> = ({
                         placeholder="Introduction to React Hooks..."
                         value={item.title}
                         onChange={(e) => {
-                          const updatedData = [...courseContentData];
-                          updatedData[index].title = e.target.value;
+                          const updatedData = courseContentData.map(
+                            (content: any, i: number) =>
+                              i === index
+                                ? { ...content, title: e.target.value }
+                                : content
+                          );
                           setCourseContentData(updatedData);
                         }}
                         className={styles.combineStyles(
@@ -281,8 +304,12 @@ const CourseContent: FC<Props> = ({
                           placeholder="https://youtube.com/watch?v=..."
                           value={item.videoUrl}
                           onChange={(e) => {
-                            const updatedData = [...courseContentData];
-                            updatedData[index].videoUrl = e.target.value;
+                            const updatedData = courseContentData.map(
+                              (content: any, i: number) =>
+                                i === index
+                                  ? { ...content, videoUrl: e.target.value }
+                                  : content
+                            );
                             setCourseContentData(updatedData);
                           }}
                           className={styles.combineStyles(
@@ -301,8 +328,12 @@ const CourseContent: FC<Props> = ({
                           placeholder="15"
                           value={item.videoLength}
                           onChange={(e) => {
-                            const updatedData = [...courseContentData];
-                            updatedData[index].videoLength = e.target.value;
+                            const updatedData = courseContentData.map(
+                              (content: any, i: number) =>
+                                i === index
+                                  ? { ...content, videoLength: e.target.value }
+                                  : content
+                            );
                             setCourseContentData(updatedData);
                           }}
                           className={styles.combineStyles(
@@ -323,8 +354,12 @@ const CourseContent: FC<Props> = ({
                         placeholder="Describe what students will learn in this video..."
                         value={item.description}
                         onChange={(e) => {
-                          const updatedData = [...courseContentData];
-                          updatedData[index].description = e.target.value;
+                          const updatedData = courseContentData.map(
+                            (content: any, i: number) =>
+                              i === index
+                                ? { ...content, description: e.target.value }
+                                : content
+                          );
                           setCourseContentData(updatedData);
                         }}
                         className={styles.combineStyles(
@@ -370,9 +405,23 @@ const CourseContent: FC<Props> = ({
                                 placeholder="Source Code, Documentation, etc."
                                 value={link.title}
                                 onChange={(e) => {
-                                  const updatedData = [...courseContentData];
-                                  updatedData[index].links[linkIndex].title =
-                                    e.target.value;
+                                  const updatedData = courseContentData.map(
+                                    (content: any, i: number) =>
+                                      i === index
+                                        ? {
+                                            ...content,
+                                            links: content.links.map(
+                                              (link: any, li: number) =>
+                                                li === linkIndex
+                                                  ? {
+                                                      ...link,
+                                                      title: e.target.value,
+                                                    }
+                                                  : link
+                                            ),
+                                          }
+                                        : content
+                                  );
                                   setCourseContentData(updatedData);
                                 }}
                                 className={styles.combineStyles(
@@ -386,9 +435,23 @@ const CourseContent: FC<Props> = ({
                                 placeholder="https://github.com/..."
                                 value={link.url}
                                 onChange={(e) => {
-                                  const updatedData = [...courseContentData];
-                                  updatedData[index].links[linkIndex].url =
-                                    e.target.value;
+                                  const updatedData = courseContentData.map(
+                                    (content: any, i: number) =>
+                                      i === index
+                                        ? {
+                                            ...content,
+                                            links: content.links.map(
+                                              (link: any, li: number) =>
+                                                li === linkIndex
+                                                  ? {
+                                                      ...link,
+                                                      url: e.target.value,
+                                                    }
+                                                  : link
+                                            ),
+                                          }
+                                        : content
+                                  );
                                   setCourseContentData(updatedData);
                                 }}
                                 className={styles.combineStyles(

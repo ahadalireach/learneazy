@@ -28,12 +28,15 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
     setError("");
 
     try {
+      console.log("Fetching video data for:", videoUrl);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URI}/courses/video/getVdoCipherOTP`,
         {
           videoId: videoUrl,
         }
       );
+
+      console.log("Video response:", response.data);
 
       if (response.data?.otp && response.data?.playbackInfo) {
         setVideoData(response.data);
@@ -155,21 +158,27 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
     >
       {videoData.otp && videoData.playbackInfo && (
         <>
-          <iframe
-            src={`https://player.vdocipher.com/v2/?otp=${videoData.otp}&playbackInfo=${videoData.playbackInfo}&player=${process.env.NEXT_VDOCIPHER_PLAYER_ID}`}
-            className="absolute inset-0 w-full h-full border-0"
-            allowFullScreen={true}
-            allow="encrypted-media"
-            title={title || "Course Video"}
-            loading="lazy"
-          />
+          {(() => {
+            const playerId = process.env.NEXT_PUBLIC_VDOCIPHER_PLAYER_ID;
+            const playerUrl = `https://player.vdocipher.com/v2/?otp=${videoData.otp}&playbackInfo=${videoData.playbackInfo}${playerId ? `&player=${playerId}` : ''}`;
+            console.log("Player URL:", playerUrl);
+            console.log("Player ID:", playerId);
 
-          <div className="absolute inset-0 pointer-events-none">
+            return (
+              <iframe
+                src={playerUrl}
+                className="absolute inset-0 w-full h-full border-0"
+                allowFullScreen={true}
+                allow="encrypted-media"
+                title={title || "Course Video"}
+                loading="lazy"
+                style={{ zIndex: 10 }}
+              />
+            );
+          })()}
+
+          <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 5 }}>
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-          </div>
-
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 animate-pulse">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
           </div>
         </>
       )}

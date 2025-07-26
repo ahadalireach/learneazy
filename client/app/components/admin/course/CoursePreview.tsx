@@ -16,7 +16,7 @@ type Props = {
   setActive: (active: number) => void;
   courseData: any;
   handleCourseCreate: any;
-  isEdit?: boolean;
+  isCreate?: boolean;
 };
 
 const CoursePreview: FC<Props> = ({
@@ -24,7 +24,7 @@ const CoursePreview: FC<Props> = ({
   handleCourseCreate,
   setActive,
   active,
-  isEdit,
+  isCreate,
 }) => {
   const discountPercentage =
     courseData?.estimatedPrice && courseData?.price
@@ -274,7 +274,7 @@ const CoursePreview: FC<Props> = ({
             "w-full sm:w-auto min-w-[180px]"
           )}
         >
-          {isEdit ? "Update Course" : "Create Course"}
+          {isCreate ? "Create Course" : "Update Course"}
         </button>
       </div>
     </div>

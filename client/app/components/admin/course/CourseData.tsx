@@ -22,8 +22,9 @@ const CourseData: FC<Props> = ({
   setActive,
 }) => {
   const handleBenefitChange = (index: number, value: any) => {
-    const updatedBenefits = [...benefits];
-    updatedBenefits[index].title = value;
+    const updatedBenefits = benefits.map((benefit, i) =>
+      i === index ? { ...benefit, title: value } : benefit
+    );
     setBenefits(updatedBenefits);
   };
 
@@ -39,8 +40,9 @@ const CourseData: FC<Props> = ({
   };
 
   const handlePrerequisitesChange = (index: number, value: any) => {
-    const updatedPrerequisites = [...prerequisites];
-    updatedPrerequisites[index].title = value;
+    const updatedPrerequisites = prerequisites.map((prerequisite, i) =>
+      i === index ? { ...prerequisite, title: value } : prerequisite
+    );
     setPrerequisites(updatedPrerequisites);
   };
 

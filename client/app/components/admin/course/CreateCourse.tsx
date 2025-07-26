@@ -12,7 +12,7 @@ import { useCreateCourseMutation } from "@/store/features/courses/coursesApi";
 
 type Props = {};
 
-const AdminDashboardCreateCourse = (props: Props) => {
+const CreateCourse = (props: Props) => {
   const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
@@ -118,7 +118,11 @@ const AdminDashboardCreateCourse = (props: Props) => {
             styles.cardStyles.paddingMedium
           )}
         >
-          <CourseOptions active={active} setActive={setActive} />
+          <CourseOptions
+            active={active}
+            setActive={setActive}
+            isCreate={true}
+          />
         </div>
       </div>
 
@@ -157,6 +161,7 @@ const AdminDashboardCreateCourse = (props: Props) => {
             setActive={setActive}
             courseData={courseData}
             handleCourseCreate={handleCourseCreate}
+            isCreate={true}
           />
         )}
       </div>
@@ -164,4 +169,4 @@ const AdminDashboardCreateCourse = (props: Props) => {
   );
 };
 
-export default AdminDashboardCreateCourse;
+export default CreateCourse;

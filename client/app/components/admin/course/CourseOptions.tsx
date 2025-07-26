@@ -5,9 +5,10 @@ import { IoMdCheckmark } from "react-icons/io";
 type Props = {
   active: number;
   setActive: (active: number) => void;
+  isCreate?: boolean;
 };
 
-const CourseOptions: FC<Props> = ({ active, setActive }) => {
+const CourseOptions: FC<Props> = ({ active, setActive, isCreate = true }) => {
   const options = [
     "Course Information",
     "Course Options",
@@ -18,9 +19,11 @@ const CourseOptions: FC<Props> = ({ active, setActive }) => {
   return (
     <div className="w-full">
       <div className="mb-6">
-        <h3 className={styles.titleStyles.h5}>Course Creation Steps</h3>
+        <h3 className={styles.titleStyles.h5}>
+          Course {isCreate ? "Creation" : "Updation"} Steps
+        </h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-          Complete each step to create your course
+          Complete each step to {isCreate ? "Create" : "Update"} your course
         </p>
       </div>
 

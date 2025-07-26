@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import {
-  EditCourse,
+  UpdateCourse,
   AdminDashboardSidebar,
   AdminDashboardHeader,
   PageHead,
@@ -9,18 +9,21 @@ import {
 import React, { useState } from "react";
 import styles from "../../../styles/styles";
 import { AdminProtected } from "../../../hooks";
+import { useParams } from "next/navigation";
 
 type Props = {};
 
 const page = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const params = useParams();
+  const courseId = params.id as string;
 
   return (
     <AdminProtected>
       <PageHead
-        title="Learneazy - Create Course"
-        description="Create and manage courses on Learneazy platform"
+        title="Learneazy - Update Course"
+        description="Update and manage courses on Learneazy platform"
         keywords="Create,Course,Learneazy,Admin"
       />
       <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -44,7 +47,7 @@ const page = (props: Props) => {
               />
             </div>
             <div className="flex-1">
-              <EditCourse />
+              <UpdateCourse id={courseId} />
             </div>
           </div>
         </div>
