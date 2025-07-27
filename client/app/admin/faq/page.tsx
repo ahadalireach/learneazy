@@ -20,9 +20,9 @@ const page = (props: Props) => {
   return (
     <AdminProtected>
       <PageHead
-        title="Learneazy - Update Course"
-        description="Update and manage courses on Learneazy platform"
-        keywords="Create,Course,Learneazy,Admin"
+        title="Learneazy - Manage FAQ | Admin Dashboard"
+        description="Manage frequently asked questions on Learneazy platform. Update, add, and organize FAQ content to help users with common questions and support."
+        keywords="Manage FAQ, Update FAQ, FAQ Management, Ahad Ali LMS, Ahad Ali Project"
       />
       <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900">
         <AdminDashboardHeader

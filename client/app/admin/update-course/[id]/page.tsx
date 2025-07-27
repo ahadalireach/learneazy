@@ -8,8 +8,8 @@ import {
 } from "../../../components";
 import React, { useState } from "react";
 import styles from "../../../styles/styles";
-import { AdminProtected } from "../../../hooks";
 import { useParams } from "next/navigation";
+import { AdminProtected } from "../../../hooks";
 
 type Props = {};
 
@@ -22,9 +22,9 @@ const page = (props: Props) => {
   return (
     <AdminProtected>
       <PageHead
-        title="Learneazy - Update Course"
-        description="Update and manage courses on Learneazy platform"
-        keywords="Create,Course,Learneazy,Admin"
+        title="Learneazy - Update Course | Admin Dashboard"
+        description="Update and manage existing courses on Learneazy platform."
+        keywords="Ahad Ali LMS, Ahad Ali Project, Update Course, Ahad Ali LMS, Ahad Ali Project, Course Management, Edit Course, Learneazy Admin"
       />
       <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900">
         <AdminDashboardHeader

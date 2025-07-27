@@ -20,8 +20,8 @@ const page = (props: Props) => {
     <AdminProtected>
       <PageHead
         title="Learneazy - Admin Dashboard"
-        description="Learneazy admin dashboard for managing courses, users, and analytics"
-        keywords="Admin,Dashboard,Learneazy,Management"
+        description="Comprehensive admin dashboard for Learneazy platform."
+        keywords="Admin Dashboard, Ahad Ali LMS, Ahad Ali Project"
       />
       <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900">
         <AdminDashboardHeader

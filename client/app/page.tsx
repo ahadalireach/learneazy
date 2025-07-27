@@ -12,9 +12,9 @@ const Page: FC<Props> = (props) => {
   return (
     <>
       <PageHead
-        title="Learneazy Platform"
-        description="Learneazy is a platform for students to learn and get help from teachers"
-        keywords="Programming, MERN, Redux"
+        title="Learneazy - Online Learning Platform"
+        description="Learneazy is an interactive e-learning platform for students to learn, connect with teachers, and access educational resources. Discover courses, get academic help, and enhance your skills online."
+        keywords="Online Learning, Ahad Ali LMS, Ahad Ali Project, Student Help, Educational Resources, E-learning Platform, Learneazy Admin"
       />
       <div>
         <Header

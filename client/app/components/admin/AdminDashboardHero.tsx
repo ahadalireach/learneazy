@@ -1,15 +1,103 @@
+import {
+  useGetOrdersAnalyticsQuery,
+  useGetUsersAnalyticsQuery,
+} from "@/redux/features/analytics/analyticsApi";
+import Invoices from "./order/Invoices";
 import styles from "../../styles/styles";
+import { BiBorderLeft } from "react-icons/bi";
+import { PiUsersFourLight } from "react-icons/pi";
+import { Box, CircularProgress } from "@mui/material";
+import UserAnalytics from "./analytics/UsersAnalytics";
+import React, { FC, useEffect, useState } from "react";
+import OrdersAnalytics from "./analytics/OrdersAnalytics";
 
 type Props = {
   isDashboard?: boolean;
+  open?: boolean;
+  setOpen?: (open: boolean) => void;
 };
 
-const AdminDashboardHero = ({ isDashboard }: Props) => {
+const CircularProgressWithLabel: FC<{ open?: boolean; value?: number }> = ({
+  open,
+  value,
+}) => {
+  return (
+    <Box sx={{ position: "relative", display: "inline-flex" }}>
+      <CircularProgress
+        variant="determinate"
+        value={value}
+        size={45}
+        color={value && value > 99 ? "info" : "error"}
+        thickness={4}
+        style={{ zIndex: open ? -1 : 1 }}
+      />
+    </Box>
+  );
+};
+
+const AdminDashboardHero = ({ isDashboard, open, setOpen }: Props) => {
+  const [ordersComparePercentage, setOrdersComparePercentage] = useState<any>();
+  const [userComparePercentage, setUserComparePercentage] = useState<any>();
+
+  const { data, isLoading } = useGetUsersAnalyticsQuery({});
+  const { data: ordersData, isLoading: ordersLoading } =
+    useGetOrdersAnalyticsQuery({});
+
+  useEffect(() => {
+    if (isLoading && ordersLoading) {
+      return;
+    } else {
+      if (data && ordersData) {
+        const usersLastTwoMonths = data.users.last12Months.slice(-2);
+        const ordersLastTwoMonths = ordersData.orders.last12Months.slice(-2);
+
+        if (
+          usersLastTwoMonths.length === 2 &&
+          ordersLastTwoMonths.length === 2
+        ) {
+          const usersCurrentMonth = usersLastTwoMonths[1].count;
+          const usersPreviousMonth = usersLastTwoMonths[0].count;
+          const ordersCurrentMonth = ordersLastTwoMonths[1].count;
+          const ordersPreviousMonth = ordersLastTwoMonths[0].count;
+
+          const usersPercentChange =
+            usersPreviousMonth !== 0
+              ? ((usersCurrentMonth - usersPreviousMonth) /
+                  usersPreviousMonth) *
+                100
+              : 100;
+
+          const ordersPercentChange =
+            ordersPreviousMonth !== 0
+              ? ((ordersCurrentMonth - ordersPreviousMonth) /
+                  ordersPreviousMonth) *
+                100
+              : 100;
+
+          setUserComparePercentage({
+            currentMonth: usersCurrentMonth,
+            previousMonth: usersPreviousMonth,
+            percentChange: usersPercentChange,
+          });
+
+          setOrdersComparePercentage({
+            currentMonth: ordersCurrentMonth,
+            previousMonth: ordersPreviousMonth,
+            percentChange: ordersPercentChange,
+          });
+        }
+      }
+    }
+  }, [isLoading, ordersLoading, data, ordersData]);
+
   if (!isDashboard) return null;
 
   return (
     <div
-      className={styles.combineStyles(styles.cardStyles.base, "p-6 space-y-6")}
+      className={styles.combineStyles(
+        styles.cardStyles.base,
+        "p-6 space-y-6 min-h-screen"
+      )}
     >
       <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
         <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">
@@ -21,99 +109,184 @@ const AdminDashboardHero = ({ isDashboard }: Props) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-        <div className="bg-white dark:bg-slate-900 p-4 lg:p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+        <div
+          className={styles.combineStyles(
+            styles.cardStyles.base,
+            styles.cardStyles.paddingMedium
+          )}
+        >
           <h3 className="text-sm lg:text-base font-semibold text-slate-900 dark:text-white mb-2">
             Total Users
           </h3>
           <p className="text-2xl lg:text-3xl font-bold text-blue-600 dark:text-blue-400">
-            1,234
+            {userComparePercentage?.currentMonth || 0}
           </p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 p-4 lg:p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+        <div
+          className={styles.combineStyles(
+            styles.cardStyles.base,
+            styles.cardStyles.paddingMedium
+          )}
+        >
           <h3 className="text-sm lg:text-base font-semibold text-slate-900 dark:text-white mb-2">
-            Total Courses
+            Total Orders
           </h3>
           <p className="text-2xl lg:text-3xl font-bold text-green-600 dark:text-green-400">
-            56
+            {ordersComparePercentage?.currentMonth || 0}
           </p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 p-4 lg:p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+        <div
+          className={styles.combineStyles(
+            styles.cardStyles.base,
+            styles.cardStyles.paddingMedium
+          )}
+        >
           <h3 className="text-sm lg:text-base font-semibold text-slate-900 dark:text-white mb-2">
-            Total Revenue
+            User Growth
           </h3>
-          <p className="text-2xl lg:text-3xl font-bold text-yellow-600 dark:text-yellow-400">
-            $12,345
+          <p
+            className={`text-2xl lg:text-3xl font-bold ${
+              userComparePercentage?.percentChange >= 0
+                ? "text-green-600 dark:text-green-400"
+                : "text-red-600 dark:text-red-400"
+            }`}
+          >
+            {userComparePercentage?.percentChange >= 0 ? "+" : ""}
+            {userComparePercentage?.percentChange?.toFixed(1) || 0}%
           </p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 p-4 lg:p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+        <div
+          className={styles.combineStyles(
+            styles.cardStyles.base,
+            styles.cardStyles.paddingMedium
+          )}
+        >
           <h3 className="text-sm lg:text-base font-semibold text-slate-900 dark:text-white mb-2">
-            Active Orders
+            Sales Growth
           </h3>
-          <p className="text-2xl lg:text-3xl font-bold text-purple-600 dark:text-purple-400">
-            89
+          <p
+            className={`text-2xl lg:text-3xl font-bold ${
+              ordersComparePercentage?.percentChange >= 0
+                ? "text-green-600 dark:text-green-400"
+                : "text-red-600 dark:text-red-400"
+            }`}
+          >
+            {ordersComparePercentage?.percentChange >= 0 ? "+" : ""}
+            {ordersComparePercentage?.percentChange?.toFixed(1) || 0}%
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
-            Recent Activity
-          </h3>
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-sm text-slate-600 dark:text-slate-400">
-                New user registered: John Doe
-              </span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-sm text-slate-600 dark:text-slate-400">
-                Course published: React Masterclass
-              </span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-              <span className="text-sm text-slate-600 dark:text-slate-400">
-                Payment received: $299
-              </span>
-            </div>
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+        {/* Analytics Chart - Takes 3 columns */}
+        <div className="xl:col-span-3">
+          <div
+            className={styles.combineStyles(
+              styles.cardStyles.base,
+              styles.cardStyles.paddingMedium
+            )}
+          >
+            <UserAnalytics isDashboard={true} />
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
-            Quick Actions
-          </h3>
-          <div className="grid grid-cols-2 gap-3">
-            <button className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-              <div className="text-center">
-                <div className="text-2xl mb-2">👥</div>
-                <span className="text-sm font-medium">Add User</span>
+        <div className="space-y-6">
+          <div
+            className={styles.combineStyles(
+              styles.cardStyles.base,
+              styles.cardStyles.paddingMedium
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <BiBorderLeft className="text-green-600 dark:text-green-400 text-3xl mb-2" />
+                <h5 className="text-xl font-semibold text-slate-900 dark:text-white">
+                  {ordersComparePercentage?.currentMonth || 0}
+                </h5>
+                <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  Sales Obtained
+                </p>
               </div>
-            </button>
-            <button className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
               <div className="text-center">
-                <div className="text-2xl mb-2">📚</div>
-                <span className="text-sm font-medium">New Course</span>
+                <CircularProgressWithLabel
+                  value={ordersComparePercentage?.percentChange > 0 ? 100 : 0}
+                  open={open}
+                />
+                <p
+                  className={`text-sm font-semibold mt-2 ${
+                    ordersComparePercentage?.percentChange >= 0
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
+                  }`}
+                >
+                  {ordersComparePercentage?.percentChange >= 0 ? "+" : ""}
+                  {ordersComparePercentage?.percentChange?.toFixed(2) || 0}%
+                </p>
               </div>
-            </button>
-            <button className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
+            </div>
+          </div>
+
+          <div
+            className={styles.combineStyles(
+              styles.cardStyles.base,
+              styles.cardStyles.paddingMedium
+            )}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <PiUsersFourLight className="text-blue-600 dark:text-blue-400 text-3xl mb-2" />
+                <h5 className="text-xl font-semibold text-slate-900 dark:text-white">
+                  {userComparePercentage?.currentMonth || 0}
+                </h5>
+                <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  New Users
+                </p>
+              </div>
               <div className="text-center">
-                <div className="text-2xl mb-2">📊</div>
-                <span className="text-sm font-medium">Analytics</span>
+                <CircularProgressWithLabel
+                  value={userComparePercentage?.percentChange > 0 ? 100 : 0}
+                  open={open}
+                />
+                <p
+                  className={`text-sm font-semibold mt-2 ${
+                    userComparePercentage?.percentChange >= 0
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
+                  }`}
+                >
+                  {userComparePercentage?.percentChange >= 0 ? "+" : ""}
+                  {userComparePercentage?.percentChange?.toFixed(2) || 0}%
+                </p>
               </div>
-            </button>
-            <button className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg text-orange-600 dark:text-orange-400 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors">
-              <div className="text-center">
-                <div className="text-2xl mb-2">⚙️</div>
-                <span className="text-sm font-medium">Settings</span>
-              </div>
-            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="xl:col-span-2">
+          <div
+            className={styles.combineStyles(
+              styles.cardStyles.base,
+              styles.cardStyles.paddingMedium
+            )}
+          >
+            <OrdersAnalytics isDashboard={true} />
+          </div>
+        </div>
+
+        <div
+          className={styles.combineStyles(
+            styles.cardStyles.base,
+            styles.cardStyles.paddingMedium
+          )}
+        >
+          <h3 className={styles.titleStyles.h5}>Recent Transactions</h3>
+          <div className="mt-4">
+            <Invoices isDashboard={true} />
           </div>
         </div>
       </div>

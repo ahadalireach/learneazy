@@ -16,3 +16,4 @@ export { default as UpdateCategories } from "./customization/UpdateCategories";
 export { default as CoursesAnalytics } from "./analytics/CoursesAnalytics";
 export { default as OrdersAnalytics } from "./analytics/OrdersAnalytics";
 export { default as UsersAnalytics } from "./analytics/UsersAnalytics";
+export { default as Invoices } from "./order/Invoices";

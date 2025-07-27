@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import {
-  UpdateHero,
+  Invoices,
   AdminDashboardSidebar,
   AdminDashboardHeader,
   PageHead,
@@ -9,7 +9,6 @@ import {
 import React, { useState } from "react";
 import styles from "../../styles/styles";
 import { AdminProtected } from "../../hooks";
-import { useParams } from "next/navigation";
 
 type Props = {};
 
@@ -20,9 +19,9 @@ const page = (props: Props) => {
   return (
     <AdminProtected>
       <PageHead
-        title="Learneazy - Manage Hero Section | Admin Dashboard"
-        description="Update and customize the hero section of Learneazy platform. Manage homepage banner and main text."
-        keywords="Hero Section, Homepage Management, Banner Management, Learneazy Admin, Ahad Ali LMS, Ahad Ali Project"
+        title="Learneazy - Invoices | Admin Dashboard"
+        description="Customer invoices and orders on Learneazy platform."
+        keywords="Invoices, Transaction History, Learneazy Admin, Ahad Ali LMS, Ahad Ali Project"
       />
       <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900">
         <AdminDashboardHeader
@@ -45,7 +44,7 @@ const page = (props: Props) => {
               />
             </div>
             <div className="flex-1">
-              <UpdateHero />
+              <Invoices />
             </div>
           </div>
         </div>

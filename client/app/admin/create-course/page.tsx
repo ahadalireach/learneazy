@@ -19,9 +19,9 @@ const page = (props: Props) => {
   return (
     <AdminProtected>
       <PageHead
-        title="Learneazy - Create Course"
-        description="Create and manage courses on Learneazy platform"
-        keywords="Create,Course,Learneazy,Admin"
+        title="Learneazy - Create Course | Admin Dashboard"
+        description="Create new courses on Learneazy platform. Course creation tool with content upload, curriculum design, pricing setup, and publishing options for admin."
+        keywords="Create Course, Course Creation, New Course, Ahad Ali LMS, Ahad Ali Project"
       />
       <div className="w-full min-h-screen bg-gray-50 dark:bg-gray-900">
         <AdminDashboardHeader

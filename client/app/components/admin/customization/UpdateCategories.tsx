@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
-import { toast } from "react-hot-toast";
 import {
   useGetLayoutDataQuery,
   useUpdateLayoutMutation,
 } from "@/redux/features/layout/layoutApi";
 import { Loader } from "../../common";
+import { toast } from "react-hot-toast";
 import styles from "@/app/styles/styles";
+import React, { useEffect, useState } from "react";
+import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 
 type Props = {};
 
@@ -180,7 +180,7 @@ const UpdateCategories = (props: Props) => {
                 No categories added yet
               </p>
               <p className="text-sm text-slate-500 dark:text-slate-500">
-                Click the "Add Category" button to get started
+                Click the &quot;Add Category&quot; button to get started
               </p>
             </div>
           )}
@@ -243,7 +243,7 @@ const UpdateCategories = (props: Props) => {
                 styles.buttonStyles.secondary,
                 styles.buttonStyles.medium,
                 "min-w-[120px]",
-                !hasChanges && "opacity-50 cursor-not-allowed"
+                !hasChanges ? "opacity-50 cursor-not-allowed" : ""
               )}
             >
               Reset
@@ -260,8 +260,9 @@ const UpdateCategories = (props: Props) => {
                   : styles.buttonStyles.secondary,
                 styles.buttonStyles.medium,
                 "min-w-[120px]",
-                (!hasChanges || hasEmptyFields) &&
-                  "opacity-50 cursor-not-allowed"
+                !hasChanges || hasEmptyFields
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
               )}
             >
               {hasChanges && !hasEmptyFields
