@@ -221,7 +221,6 @@ const CoursePreview: FC<Props> = ({
               </div>
             </div>
 
-            {/* Course Info */}
             <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-700">
               <div className="flex justify-between text-sm">
                 <span className="text-slate-600 dark:text-slate-400">
@@ -252,7 +251,6 @@ const CoursePreview: FC<Props> = ({
         </div>
       </div>
 
-      {/* Navigation Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 sm:justify-between pt-8 mt-8 border-t border-slate-200 dark:border-slate-700">
         <button
           onClick={prevButton}

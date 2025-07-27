@@ -10,3 +10,6 @@ export { default as AdminDashboardHero } from "./AdminDashboardHero";
 export { default as AdminDashboardHeader } from "./AdminDashboardHeader";
 export { default as CourseInformation } from "./course/CourseInformation";
 export { default as AdminDashboardSidebar } from "./AdminDashboardSidebar";
+export { default as UpdateHero } from "./customization/UpdateHero";
+export { default as UpdateFaqs } from "./customization/UpdateFaqs";
+export { default as UpdateCategories } from "./customization/UpdateCategories";

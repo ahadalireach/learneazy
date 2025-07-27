@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "../../../styles/styles";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { useGetLayoutDataQuery } from "@/redux/features/layout/layoutApi";
 
 type Props = {
   courseInfo: any;
@@ -9,14 +10,6 @@ type Props = {
   setActive: (active: number) => void;
 };
 
-const categories = [
-  { _id: "1", title: "Programming" },
-  { _id: "2", title: "Web Development" },
-  { _id: "3", title: "Mobile Development" },
-  { _id: "4", title: "Data Science" },
-  { _id: "5", title: "Design" },
-];
-
 const CourseInformation: FC<Props> = ({
   courseInfo,
   setCourseInfo,
@@ -24,6 +17,14 @@ const CourseInformation: FC<Props> = ({
   setActive,
 }) => {
   const [dragging, setDragging] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const { data } = useGetLayoutDataQuery("Categories", {});
+
+  useEffect(() => {
+    if (data) {
+      setCategories(data.layout?.categories);
+    }
+  }, [data]);
 
   const handleFileChange = (e: any) => {
     const file = e.target.files?.[0];

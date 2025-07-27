@@ -83,7 +83,6 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
           </label>
         </div>
 
-        {/* Form Section */}
         <div className="w-full max-w-md">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>

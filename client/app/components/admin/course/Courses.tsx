@@ -156,7 +156,6 @@ const AllCourses = (props: Props) => {
           </div>
         ) : (
           <>
-            {/* Header Section */}
             <div className="mb-6 sm:mb-8">
               <h1 className={combineStyles(titleStyles.h3, "mb-2")}>
                 Course Management
@@ -166,7 +165,6 @@ const AllCourses = (props: Props) => {
               </p>
             </div>
 
-            {/* Stats Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
               <div
                 className={combineStyles(
@@ -273,7 +271,6 @@ const AllCourses = (props: Props) => {
               </div>
             </div>
 
-            {/* Data Table */}
             <div className={combineStyles(cardStyles.base, "overflow-hidden")}>
               <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-700">
                 <h2 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white">
@@ -461,7 +458,6 @@ const AllCourses = (props: Props) => {
           </>
         )}
 
-        {/* Delete Modal */}
         {open && (
           <Modal
             open={open}

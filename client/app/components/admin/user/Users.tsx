@@ -264,7 +264,6 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           </div>
         ) : (
           <>
-            {/* Header Section */}
             <div className="mb-4 sm:mb-6 lg:mb-8">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
@@ -300,7 +299,6 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
               </div>
             </div>
 
-            {/* Stats Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
               <div
                 className={combineStyles(cardStyles.base, "p-3 sm:p-4 lg:p-6")}
@@ -396,7 +394,6 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
               </div>
             </div>
 
-            {/* Data Table */}
             <div className={combineStyles(cardStyles.base, "overflow-hidden")}>
               <div className="p-3 sm:p-4 lg:p-6 border-b border-slate-200 dark:border-slate-700">
                 <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-slate-900 dark:text-white">
@@ -593,7 +590,6 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           </>
         )}
 
-        {/* Add Member Modal */}
         {active && (
           <Modal
             open={active}
@@ -701,7 +697,6 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           </Modal>
         )}
 
-        {/* Delete Confirmation Modal */}
         {open && (
           <Modal
             open={open}

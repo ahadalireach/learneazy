@@ -1,13 +1,9 @@
 "use client";
-import {
-  useLoadUserQuery,
-  useRefreshTokenQuery,
-} from "@/redux/features/api/apiSlice";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import "./globals.css";
 import { Loader } from "./components";
 import { Toaster } from "react-hot-toast";
 import { Poppins } from "next/font/google";
-import React, { FC, useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ReduxProvider } from "./providers/ReduxProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
@@ -43,8 +39,7 @@ export default function RootLayout({
 
 const Custom: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isLoading: isUserLoading } = useLoadUserQuery({});
-  const { isLoading: isRefreshLoading } = useRefreshTokenQuery({});
 
-  const isLoading = isUserLoading || isRefreshLoading;
+  const isLoading = isUserLoading;
   return <>{isLoading ? <Loader /> : <div>{children}</div>}</>;
 };
