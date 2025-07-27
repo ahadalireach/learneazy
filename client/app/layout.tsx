@@ -2,7 +2,7 @@
 import {
   useLoadUserQuery,
   useRefreshTokenQuery,
-} from "@/store/features/api/apiSlice";
+} from "@/redux/features/api/apiSlice";
 import "./globals.css";
 import { Loader } from "./components";
 import { Toaster } from "react-hot-toast";

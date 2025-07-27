@@ -11,7 +11,7 @@ import CourseInformation from "./CourseInformation";
 import {
   useGetAllCoursesQuery,
   useUpdateCourseMutation,
-} from "@/store/features/courses/coursesApi";
+} from "@/redux/features/courses/coursesApi";
 
 type Props = {
   id: string;

@@ -3,7 +3,7 @@ import styles from "../../styles/styles";
 import { useSelector } from "react-redux";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { useActivationMutation } from "@/store/features/auth/authApi";
+import { useActivationMutation } from "@/redux/features/auth/authApi";
 
 type Props = {
   setRoute: (route: string) => void;

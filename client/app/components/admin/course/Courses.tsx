@@ -7,7 +7,7 @@ import { FiEdit2 } from "react-icons/fi";
 import {
   useDeleteCourseMutation,
   useGetAllCoursesQuery,
-} from "@/store/features/courses/coursesApi";
+} from "@/redux/features/courses/coursesApi";
 import { format } from "timeago.js";
 import { toast } from "react-hot-toast";
 import Link from "next/link";

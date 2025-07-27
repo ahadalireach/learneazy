@@ -8,7 +8,7 @@ import {
 import {
   useLogOutQuery,
   useSocialAuthMutation,
-} from "@/store/features/auth/authApi";
+} from "@/redux/features/auth/authApi";
 import Link from "next/link";
 import Image from "next/image";
 import { avatar } from "@/public";

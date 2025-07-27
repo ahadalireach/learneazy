@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 import styles from "../../styles/styles";
 import React, { FC, useEffect, useState } from "react";
-import { useUpdatePasswordMutation } from "@/store/features/user/userApi";
+import { useUpdatePasswordMutation } from "@/redux/features/user/userApi";
 
 type Props = {};
 

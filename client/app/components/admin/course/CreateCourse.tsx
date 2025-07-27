@@ -8,7 +8,7 @@ import CoursePreview from "./CoursePreview";
 import styles from "../../../styles/styles";
 import React, { useEffect, useState } from "react";
 import CourseInformation from "./CourseInformation";
-import { useCreateCourseMutation } from "@/store/features/courses/coursesApi";
+import { useCreateCourseMutation } from "@/redux/features/courses/coursesApi";
 
 type Props = {};
 

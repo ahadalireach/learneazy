@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import { store } from "../../store/store";
+import { store } from "../../redux/store";
 
 interface ProvidersProps {
   children: any;

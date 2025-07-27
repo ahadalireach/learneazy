@@ -11,7 +11,7 @@ import styles from "../../styles/styles";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import React, { FC, useEffect, useState } from "react";
-import { useRegisterMutation } from "@/store/features/auth/authApi";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
 
 type Props = {
   setRoute: (route: string) => void;

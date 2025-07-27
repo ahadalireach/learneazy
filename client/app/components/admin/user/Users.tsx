@@ -14,7 +14,7 @@ import {
   useDeleteUserMutation,
   useGetAllUsersQuery,
   useUpdateUserRoleMutation,
-} from "@/store/features/user/userApi";
+} from "@/redux/features/user/userApi";
 import { toast } from "react-hot-toast";
 import { Loader } from "../../common";
 import {
