@@ -13,3 +13,6 @@ export { default as AdminDashboardSidebar } from "./AdminDashboardSidebar";
 export { default as UpdateHero } from "./customization/UpdateHero";
 export { default as UpdateFaqs } from "./customization/UpdateFaqs";
 export { default as UpdateCategories } from "./customization/UpdateCategories";
+export { default as CoursesAnalytics } from "./analytics/CoursesAnalytics";
+export { default as OrdersAnalytics } from "./analytics/OrdersAnalytics";
+export { default as UsersAnalytics } from "./analytics/UsersAnalytics";
