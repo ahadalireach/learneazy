@@ -36,6 +36,13 @@ input::-webkit-inner-spin-button {
 ::-webkit-scrollbar-thumb:hover {
   background: #2563eb;
 }
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
 @media (min-width: 800px) {
   .\38 00px\:flex {
     display: flex;

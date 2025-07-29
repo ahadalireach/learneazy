@@ -63,7 +63,6 @@ const UpdateCategories = (props: Props) => {
     );
   };
 
-  // Improved comparison function to handle data properly
   const areCategoriesUnchanged = (
     originalCategories: any[],
     newCategories: any[]
@@ -71,7 +70,6 @@ const UpdateCategories = (props: Props) => {
     if (!originalCategories || !newCategories) return false;
     if (originalCategories.length !== newCategories.length) return false;
 
-    // Normalize both arrays for comparison
     const normalizeCategory = (category: any) => ({
       _id: category._id,
       title: category.title || "",
@@ -124,7 +122,6 @@ const UpdateCategories = (props: Props) => {
       </div>
 
       <div className={styles.formStyles.container}>
-        {/* Categories List */}
         <div className="space-y-4">
           {categories?.length > 0 ? (
             categories.map((category: any, index: number) => (
@@ -186,7 +183,6 @@ const UpdateCategories = (props: Props) => {
           )}
         </div>
 
-        {/* Add Category Button */}
         <div className="flex justify-center mb-6">
           <button
             onClick={newCategoriesHandler}
@@ -202,7 +198,6 @@ const UpdateCategories = (props: Props) => {
           </button>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 sm:justify-between pt-6 border-t border-slate-200 dark:border-slate-slate-700">
           <div className="flex items-center gap-2">
             {hasChanges && (

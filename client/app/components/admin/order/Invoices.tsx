@@ -42,7 +42,6 @@ const Invoices = ({ isDashboard }: Props) => {
     return <Loader />;
   }
 
-  // Dashboard view (compact)
   if (isDashboard) {
     return (
       <div className="space-y-4">
@@ -120,7 +119,6 @@ const Invoices = ({ isDashboard }: Props) => {
     );
   }
 
-  // Full page view with improved styling
   return (
     <div
       className={styles.combineStyles(
@@ -129,7 +127,6 @@ const Invoices = ({ isDashboard }: Props) => {
         "min-h-screen"
       )}
     >
-      {/* Header Section */}
       <div className="mb-8">
         <h1 className={styles.titleStyles.h3}>Orders & Invoices</h1>
         <p className={styles.titleStyles.subtitle}>
@@ -137,7 +134,6 @@ const Invoices = ({ isDashboard }: Props) => {
         </p>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div
           className={styles.combineStyles(
@@ -272,7 +268,6 @@ const Invoices = ({ isDashboard }: Props) => {
         </div>
       </div>
 
-      {/* Orders Table Section */}
       <div
         className={styles.combineStyles(
           styles.cardStyles.base,
@@ -288,7 +283,6 @@ const Invoices = ({ isDashboard }: Props) => {
 
         {orderData && orderData.length > 0 ? (
           <div className="space-y-4">
-            {/* Mobile Cards (shown on small screens) */}
             <div className="block md:hidden space-y-3">
               {orderData.map((order: any) => (
                 <div
@@ -341,7 +335,6 @@ const Invoices = ({ isDashboard }: Props) => {
               ))}
             </div>
 
-            {/* Desktop Table (shown on medium screens and up) */}
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
                 <thead>
@@ -418,7 +411,6 @@ const Invoices = ({ isDashboard }: Props) => {
               </table>
             </div>
 
-            {/* Pagination */}
             <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 Showing {orderData.length} of {orderData.length} orders

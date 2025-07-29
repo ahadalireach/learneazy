@@ -93,13 +93,6 @@ export const titleStyles = {
   section:
     "text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-slate-900 dark:text-white text-center mb-4",
   card: "text-xl font-semibold font-Poppins text-slate-900 dark:text-white",
-
-  gradient:
-    "bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent",
-  gradientBlue:
-    "bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent",
-  gradientGreen:
-    "bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent",
 };
 
 export const cardStyles = {

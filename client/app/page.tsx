@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, useState } from "react";
-import { PageHead, Header, HeroSection } from "./components";
+import { PageHead, Header, Hero, HomeCourses, Reviews, Faqs, Footer } from "./components";
 
 type Props = object;
 
@@ -25,7 +25,11 @@ const Page: FC<Props> = (props) => {
           route={route}
         />
         <div className="pt-[80px]">
-          <HeroSection />
+          <Hero />
+          <HomeCourses />
+          <Reviews />
+          <Faqs />
+          <Footer />
         </div>
       </div>
     </>

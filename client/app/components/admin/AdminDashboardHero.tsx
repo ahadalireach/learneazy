@@ -181,7 +181,6 @@ const AdminDashboardHero = ({ isDashboard, open, setOpen }: Props) => {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        {/* Analytics Chart - Takes 3 columns */}
         <div className="xl:col-span-3">
           <div
             className={styles.combineStyles(
