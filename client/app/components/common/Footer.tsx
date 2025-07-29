@@ -17,23 +17,28 @@ type Props = {};
 
 const Footer = (props: Props) => {
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900">
-      <div className="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
+    <footer
+      className={combineStyles(
+        "relative overflow-hidden border-t border-blue-400",
+        styles.sectionStyles.backgroundDefault
+      )}
+    >
+      <div className="absolute top-0 left-0 w-full h-1 bg-blue-500/70 dark:bg-blue-600/40"></div>
 
-      <div className="absolute top-10 left-10 opacity-10 dark:opacity-5">
+      <div className="hidden lg:block absolute top-10 left-10 opacity-10 dark:opacity-5 pointer-events-none">
         <FaGraduationCap className="text-6xl text-blue-600" />
       </div>
-      <div className="absolute top-20 right-20 opacity-10 dark:opacity-5">
+      <div className="hidden lg:block absolute top-20 right-20 opacity-10 dark:opacity-5 pointer-events-none">
         <FaBook className="text-5xl text-indigo-600" />
       </div>
-      <div className="absolute bottom-20 left-1/4 opacity-10 dark:opacity-5">
+      <div className="hidden lg:block absolute bottom-20 left-1/4 opacity-10 dark:opacity-5 pointer-events-none">
         <FaCertificate className="text-4xl text-purple-600" />
       </div>
 
       <div
         className={combineStyles(
           "relative z-10",
-          styles.sectionStyles.paddingLarge
+          styles.sectionStyles.paddingSmall
         )}
       >
         <div className={styles.sectionStyles.container}>
@@ -160,12 +165,8 @@ const Footer = (props: Props) => {
 
             <div className={styles.utilityStyles.spacingSmall}>
               <div className="flex items-center gap-2 mb-4">
-                <FiShare2
-                  className={combineStyles(
-                    styles.utilityStyles.textAccent,
-                    "w-5 h-5"
-                  )}
-                />
+                <FiShare2 className={styles.utilityStyles.textAccent} />
+
                 <h3
                   className={combineStyles(
                     styles.titleStyles.h6,
@@ -181,10 +182,15 @@ const Footer = (props: Props) => {
                     href="https://www.ahadali.me"
                     className={combineStyles(
                       "flex items-center gap-2 text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
-                      "hover:text-red-600 dark:hover:text-red-400"
+                      "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
-                    <CgWebsite className="text-lg" />
+                    <CgWebsite
+                      className={combineStyles(
+                        styles.utilityStyles.textAccent,
+                        "text-sm"
+                      )}
+                    />
                     Portfolio
                   </Link>
                 </li>
@@ -196,7 +202,12 @@ const Footer = (props: Props) => {
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
-                    <FaLinkedin className="text-lg" />
+                    <FaLinkedin
+                      className={combineStyles(
+                        styles.utilityStyles.textAccent,
+                        "text-sm"
+                      )}
+                    />
                     Linkedin
                   </Link>
                 </li>
@@ -208,7 +219,12 @@ const Footer = (props: Props) => {
                       "hover:text-gray-800 dark:hover:text-gray-200"
                     )}
                   >
-                    <FaGithub className="text-lg" />
+                    <FaGithub
+                      className={combineStyles(
+                        styles.utilityStyles.textAccent,
+                        "text-sm"
+                      )}
+                    />
                     GitHub
                   </Link>
                 </li>

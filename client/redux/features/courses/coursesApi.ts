@@ -39,6 +39,13 @@ export const coursesApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+    getPublicCoursePreview: builder.query({
+      query: (id: any) => ({
+        url: `/courses/public/preview/${id}`,
+        method: "GET",
+        credentials: "include" as const,
+      }),
+    }),
   }),
 });
 
@@ -47,5 +54,6 @@ export const {
   useGetAllCoursesQuery,
   useDeleteCourseMutation,
   useUpdateCourseMutation,
+  useGetPublicCoursePreviewQuery,
   useGetAllPublicCoursePreviewsQuery,
 } = coursesApi;

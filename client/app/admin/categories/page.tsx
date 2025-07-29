@@ -9,7 +9,6 @@ import {
 import React, { useState } from "react";
 import styles from "../../styles/styles";
 import { AdminProtected } from "../../hooks";
-import { useParams } from "next/navigation";
 
 type Props = {};
 

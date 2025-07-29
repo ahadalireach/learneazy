@@ -67,12 +67,12 @@ const Hero: FC<Props> = () => {
                       data.layout.banner.title
                     ) : (
                       <>
-                        <span className="text-slate-900 dark:text-white">Master</span>
-                        <br />
+                        <span className="text-slate-900 dark:text-white">
+                          Master
+                        </span>
                         <span className={styles.utilityStyles.textAccent}>
                           Top Skills
                         </span>
-                        <br />
                         <span className="text-slate-900 dark:text-white">
                           from Learneazy
                         </span>
@@ -192,8 +192,7 @@ const Hero: FC<Props> = () => {
                 <div className="w-full max-w-md lg:max-w-lg">
                   <Image
                     src={
-                      data?.layout?.banner?.image?.url ||
-                      "/assets/heroImg.png"
+                      data?.layout?.banner?.image?.url || "/assets/heroImg.png"
                     }
                     width={400}
                     height={400}

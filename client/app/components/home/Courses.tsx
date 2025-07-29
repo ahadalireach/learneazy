@@ -35,7 +35,6 @@ const Courses = (props: Props) => {
             <span className={combineStyles(styles.utilityStyles.textAccent)}>
               Opportunity
             </span>
-            <br />
             With Our Courses
           </h1>
           <p
