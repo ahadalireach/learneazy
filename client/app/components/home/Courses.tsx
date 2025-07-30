@@ -31,11 +31,14 @@ const Courses = (props: Props) => {
               "text-center font-Poppins mb-4"
             )}
           >
-            Expand Your Career{" "}
-            <span className={combineStyles(styles.utilityStyles.textAccent)}>
-              Opportunity
+            <span>
+              Expand Your Career{" "}
+              <span className={combineStyles(styles.utilityStyles.textAccent)}>
+                Opportunity
+              </span>
             </span>
-            With Our Courses
+            <br />
+            <span>With Our Courses</span>
           </h1>
           <p
             className={combineStyles(

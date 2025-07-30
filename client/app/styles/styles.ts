@@ -99,7 +99,7 @@ export const cardStyles = {
   base: "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm transition-all duration-200",
 
   default: "hover:shadow-md",
-  interactive: "hover:shadow-lg hover:scale-[1.02] cursor-pointer",
+  interactive: "hover:shadow-lg cursor-pointer",
   elevated: "shadow-md hover:shadow-lg",
 
   paddingSmall: "p-4",

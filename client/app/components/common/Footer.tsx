@@ -19,11 +19,11 @@ const Footer = (props: Props) => {
   return (
     <footer
       className={combineStyles(
-        "relative overflow-hidden border-t border-blue-400",
+        "relative overflow-hidden border-t border-gray-200 dark:border-slate-700",
         styles.sectionStyles.backgroundDefault
       )}
     >
-      <div className="absolute top-0 left-0 w-full h-1 bg-blue-500/70 dark:bg-blue-600/40"></div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gray-200 dark:bg-slate-700"></div>
 
       <div className="hidden lg:block absolute top-10 left-10 opacity-10 dark:opacity-5 pointer-events-none">
         <FaGraduationCap className="text-6xl text-blue-600" />
@@ -216,7 +216,7 @@ const Footer = (props: Props) => {
                     href="https://www.github.com/ahadalireach"
                     className={combineStyles(
                       "flex items-center gap-2 text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
-                      "hover:text-gray-800 dark:hover:text-gray-200"
+                      "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
                     <FaGithub

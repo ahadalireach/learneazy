@@ -3,6 +3,7 @@ import axios from "axios";
 import { BiPlay } from "react-icons/bi";
 import { MdError, MdRefresh } from "react-icons/md";
 import React, { FC, useEffect, useState } from "react";
+import styles from "@/app/styles/styles";
 
 type Props = {
   videoUrl: string;
@@ -28,15 +29,12 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
     setError("");
 
     try {
-      console.log("Fetching video data for:", videoUrl);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URI}/courses/video/getVdoCipherOTP`,
         {
           videoId: videoUrl,
         }
       );
-
-      console.log("Video response:", response.data);
 
       if (response.data?.otp && response.data?.playbackInfo) {
         setVideoData(response.data);
@@ -112,7 +110,11 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
             </p>
             <button
               onClick={retryLoad}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className={styles.combineStyles(
+                styles.buttonStyles.base,
+                "w-full bg-red-600 text-white cursor-not-allowed opacity-75",
+                styles.buttonStyles.large
+              )}
             >
               <MdRefresh className="w-5 h-5" />
               Retry Loading
@@ -160,9 +162,11 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
         <>
           {(() => {
             const playerId = process.env.NEXT_PUBLIC_VDOCIPHER_PLAYER_ID;
-            const playerUrl = `https://player.vdocipher.com/v2/?otp=${videoData.otp}&playbackInfo=${videoData.playbackInfo}${playerId ? `&player=${playerId}` : ''}`;
-            console.log("Player URL:", playerUrl);
-            console.log("Player ID:", playerId);
+            const playerUrl = `https://player.vdocipher.com/v2/?otp=${
+              videoData.otp
+            }&playbackInfo=${videoData.playbackInfo}${
+              playerId ? `&player=${playerId}` : ""
+            }`;
 
             return (
               <iframe
@@ -177,7 +181,10 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
             );
           })()}
 
-          <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 5 }}>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ zIndex: 5 }}
+          >
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
           </div>
         </>

@@ -15,7 +15,6 @@ const CustomModal: FC<Props> = ({
   setOpen,
   setRoute,
   component: Component,
-  refetch,
 }) => {
   return (
     <Modal

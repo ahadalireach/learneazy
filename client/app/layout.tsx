@@ -1,5 +1,4 @@
 "use client";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import "./globals.css";
 import { Loader } from "./components";
 import { Toaster } from "react-hot-toast";
@@ -7,6 +6,7 @@ import { Poppins } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { ReduxProvider } from "./providers/ReduxProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 const poppins = Poppins({
   subsets: ["latin"],

@@ -1,18 +1,33 @@
-import { NextFunction, Request, Response } from "express";
-import { getAllOrders, createOrderRecord } from "../services/orderService";
-import Course, { ICourse } from "../models/Course";
-import { IOrder } from "../models/Order";
-import { redis } from "../utils/redis";
 import User from "../models/User";
+import { redis } from "../utils/redis";
+import { IOrder } from "../models/Order";
 import sendMail from "../utils/sendMail";
 import errorHandler from "../utils/errorHandler";
 import Notification from "../models/Notification";
+import Course, { ICourse } from "../models/Course";
+import { NextFunction, Request, Response } from "express";
 import catchAsyncError from "../middleware/catchAsyncError";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import { getAllOrders, createOrderRecord } from "../services/orderService";
 
 export const processOrder = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { courseId, paymentInfo } = req.body as IOrder;
+      if (paymentInfo) {
+        if ("id" in paymentInfo) {
+          const paymentIntentId = paymentInfo.id;
+          const paymentIntent = await stripe.paymentIntents.retrieve(
+            paymentIntentId
+          );
+
+          if (paymentIntent.status !== "succeeded") {
+            return next(
+              new errorHandler("Payment failed. Please try again.", 400)
+            );
+          }
+        }
+      }
 
       const user = await User.findById(req.user?._id);
       const courseExistInUser = user?.courses.some(
@@ -108,6 +123,38 @@ export const getAllOrdersByAdmin = catchAsyncError(
       getAllOrders(res);
     } catch (error: any) {
       return next(new errorHandler("Failed to retrieve orders list.", 500));
+    }
+  }
+);
+
+export const sendStripePublishableKey = catchAsyncError(
+  async (req: Request, res: Response) => {
+    res.status(200).json({
+      publishablekey: process.env.STRIPE_PUBLISHABLE_KEY,
+    });
+  }
+);
+
+export const createStripePaymentIntent = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const myPayment = await stripe.paymentIntents.create({
+        amount: req.body.amount,
+        currency: "USD",
+        description: "Learneazy Course Payment",
+        metadata: {
+          company: "Learneazy",
+        },
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+      res.status(201).json({
+        success: true,
+        clientSecret: myPayment.client_secret,
+      });
+    } catch (error: any) {
+      return next(new errorHandler(error.message, 500));
     }
   }
 );

@@ -3,8 +3,10 @@ import Image from "next/image";
 import { format } from "timeago.js";
 import { BsCode } from "react-icons/bs";
 import styles from "@/app/styles/styles";
-import { CoursePlayer, Ratings } from "../common";
+import CheckoutForm from "./CheckoutForm";
+import { CoursePlayer, Loader, Ratings } from "../common";
 import React, { useEffect, useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
 import { VscVerifiedFilled } from "react-icons/vsc";
 import CourseContentList from "./CourseContentList";
 import { MdAccessTime, MdSupport } from "react-icons/md";
@@ -14,14 +16,22 @@ import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 
 type Props = {
   data: any;
-  setRoute: any;
   setOpen: any;
+  setRoute: any;
+  stripePromise: any;
+  clientSecret: string;
 };
 
-const CourseDetails = ({ data, setRoute, setOpen: openAuthModal }: Props) => {
-  const { data: userData, refetch } = useLoadUserQuery(undefined, {});
+const CourseDetails = ({
+  data,
+  setRoute,
+  setOpen: openAuthModal,
+  stripePromise,
+  clientSecret,
+}: Props) => {
   const [user, setUser] = useState<any>();
   const [open, setOpen] = useState(false);
+  const { data: userData, refetch } = useLoadUserQuery(undefined, {});
 
   useEffect(() => {
     setUser(userData?.user);
@@ -242,7 +252,7 @@ const CourseDetails = ({ data, setRoute, setOpen: openAuthModal }: Props) => {
                     )}
                     onClick={handleOrder}
                   >
-                    Buy Now {data.price}$
+                    Buy Now
                   </button>
                 )}
               </div>
@@ -274,15 +284,30 @@ const CourseDetails = ({ data, setRoute, setOpen: openAuthModal }: Props) => {
         </div>
         {open && (
           <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
-            <div className="w-[500px] min-h-[500px] bg-white dark:bg-slate-800 rounded-xl shadow p-3">
-              <div className="w-full flex justify-end">
-                <IoCloseOutline
-                  size={40}
-                  className="text-black dark:text-white cursor-pointer"
-                  onClick={() => setOpen(false)}
-                />
+            <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-[450px] max-h-[90vh] bg-white dark:bg-slate-900 rounded-[8px] shadow-lg outline-none overflow-y-auto">
+              <div className="p-6">
+                <div className="w-full flex justify-end mb-2">
+                  <IoCloseOutline
+                    size={32}
+                    className="text-black dark:text-white cursor-pointer"
+                    onClick={() => setOpen(false)}
+                  />
+                </div>
+                <div className="w-full">
+                  {!stripePromise || !clientSecret ? (
+                    <Loader />
+                  ) : (
+                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                      <CheckoutForm
+                        setOpen={setOpen}
+                        data={data}
+                        user={user}
+                        refetch={refetch}
+                      />
+                    </Elements>
+                  )}
+                </div>
               </div>
-              {/* Payment form/modal can go here */}
             </div>
           </div>
         )}
