@@ -125,12 +125,6 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
 
   const isActive = (path: string) => pathname === path;
 
-  const menuItemStyle =
-    "w-full flex items-center px-4 py-3 cursor-pointer transition-colors duration-200";
-  const activeStyle =
-    "bg-blue-50 dark:bg-blue-900/20 border-r-4 border-blue-600 dark:border-blue-400";
-  const inactiveStyle = "hover:bg-slate-50 dark:hover:bg-slate-700/50";
-
   return (
     <div className="w-full">
       <div className="w-full flex items-center justify-center flex-col border-b dark:border-[#ffffff1d] border-[#00000014] pb-3 pt-3">
@@ -164,8 +158,10 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
                 href={item.path}
                 onClick={() => setIsOpen?.(false)}
                 className={styles.combineStyles(
-                  menuItemStyle,
-                  isActive(item.path) ? activeStyle : inactiveStyle
+                  styles.navStyles.menuItem,
+                  isActive(item.path)
+                    ? styles.navStyles.menuItemActive
+                    : styles.navStyles.menuItemInactive
                 )}
               >
                 <item.icon
@@ -194,8 +190,8 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
         <Link
           href="/"
           className={styles.combineStyles(
-            menuItemStyle,
-            inactiveStyle,
+            styles.navStyles.menuItem,
+            styles.navStyles.menuItemInactive,
             "mt-4 border-t border-slate-200 dark:border-slate-700"
           )}
         >

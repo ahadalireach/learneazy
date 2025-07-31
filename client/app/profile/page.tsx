@@ -8,13 +8,13 @@ import { Header, PageHead, ProfileDashboard } from "../components";
 type Props = {};
 
 const page = (props: Props) => {
+  const [activeItem] = useState(5);
   const [open, setOpen] = useState(false);
   const [route, setRoute] = useState("Login");
-  const [activeItem, setActiveItem] = useState(5);
   const { user } = useSelector((state: any) => state.auth);
 
   return (
-    <div className="min-h-screen">
+    <>
       <UserProtected>
         <PageHead
           title={`${user?.name} Profile - Learneazy`}
@@ -32,7 +32,7 @@ const page = (props: Props) => {
           <ProfileDashboard user={user} />
         </div>
       </UserProtected>
-    </div>
+    </>
   );
 };
 

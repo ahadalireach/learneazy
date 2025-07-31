@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import { BiPlay } from "react-icons/bi";
+import styles from "@/app/styles/styles";
 import { MdError, MdRefresh } from "react-icons/md";
 import React, { FC, useEffect, useState } from "react";
-import styles from "@/app/styles/styles";
 
 type Props = {
   videoUrl: string;
@@ -19,7 +18,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const fetchVideoData = async () => {
+  const fetchVideoData = React.useCallback(async () => {
     if (!videoUrl) {
       setLoading(false);
       return;
@@ -49,11 +48,11 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [videoUrl]);
 
   useEffect(() => {
     fetchVideoData();
-  }, [videoUrl]);
+  }, [videoUrl, fetchVideoData]);
 
   const retryLoad = () => {
     fetchVideoData();
@@ -68,14 +67,14 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex flex-col items-center gap-6">
             <div className="relative">
-              <div className="w-16 h-16 border-4 border-blue-200/30 rounded-full"></div>
-              <div className="absolute top-0 left-0 w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-blue-200/30 rounded-full"></div>
+              <div className="absolute top-0 left-0 w-12 h-12 sm:w-16 sm:h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <div className="text-center">
-              <h3 className="text-lg font-semibold text-white mb-2">
+              <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
                 Loading Video Player
               </h3>
-              <p className="text-sm text-slate-300">
+              <p className="text-xs sm:text-sm text-slate-300">
                 Preparing your learning experience...
               </p>
             </div>
@@ -83,9 +82,9 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
         </div>
 
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-20 h-20 bg-blue-500 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-16 h-16 bg-purple-500 rounded-full blur-xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-indigo-500 rounded-full blur-2xl animate-pulse delay-500"></div>
+          <div className="absolute top-4 left-4 sm:top-10 sm:left-10 w-10 h-10 sm:w-20 sm:h-20 bg-blue-500 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-4 right-4 sm:bottom-10 sm:right-10 w-8 h-8 sm:w-16 sm:h-16 bg-purple-500 rounded-full blur-xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-32 sm:h-32 bg-indigo-500 rounded-full blur-2xl animate-pulse delay-500"></div>
         </div>
       </div>
     );
@@ -97,15 +96,15 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
         className={`relative w-full bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 border-2 border-red-200 dark:border-red-700 rounded-xl overflow-hidden shadow-lg ${className}`}
         style={{ aspectRatio: "16/9" }}
       >
-        <div className="absolute inset-0 flex items-center justify-center p-8">
-          <div className="text-center max-w-md">
-            <div className="w-20 h-20 mx-auto mb-6 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
-              <MdError className="w-10 h-10 text-red-500" />
+        <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8">
+          <div className="text-center max-w-xs sm:max-w-md">
+            <div className="w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-6 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
+              <MdError className="w-8 h-8 sm:w-10 sm:h-10 text-red-500" />
             </div>
-            <h3 className="text-xl font-bold text-red-800 dark:text-red-300 mb-3">
+            <h3 className="text-lg sm:text-xl font-bold text-red-800 dark:text-red-300 mb-3">
               Video Unavailable
             </h3>
-            <p className="text-sm text-red-600 dark:text-red-400 mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 mb-6 leading-relaxed">
               {error}
             </p>
             <button
@@ -116,7 +115,7 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
                 styles.buttonStyles.large
               )}
             >
-              <MdRefresh className="w-5 h-5" />
+              <MdRefresh className="w-4 h-4 sm:w-5 sm:h-5" />
               Retry Loading
             </button>
           </div>
@@ -134,7 +133,12 @@ const CoursePlayer: FC<Props> = ({ videoUrl, title, className = "" }) => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center max-w-sm">
             <div className="w-24 h-24 mx-auto mb-6 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center shadow-inner">
-              <BiPlay className="w-12 h-12 text-slate-400 ml-1" />
+              <span className="flex items-center justify-center w-full h-full">
+                <BiPlay
+                  className="w-12 h-12 text-slate-400"
+                  style={{ marginLeft: "2px" }}
+                />
+              </span>
             </div>
             <h3 className="text-xl font-semibold text-slate-700 dark:text-slate-300 mb-3">
               No Video Available

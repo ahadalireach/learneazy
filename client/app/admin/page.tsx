@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import {
   AdminDashboardHero,
@@ -12,7 +11,7 @@ import { AdminProtected } from "../hooks";
 
 type Props = {};
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -53,4 +52,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Page;

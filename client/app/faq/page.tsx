@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import { useState } from "react";
-import { Faqs, Footer, Header, Loader, PageHead } from "@/app/components";
-import { useGetPublicCoursePreviewQuery } from "@/redux/features/courses/coursesApi";
+import { Faqs, Footer, Header, PageHead } from "@/app/components";
 
 const Page = () => {
   const [open, setOpen] = useState(false);

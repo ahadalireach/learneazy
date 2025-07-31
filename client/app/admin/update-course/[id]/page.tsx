@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import {
   UpdateCourse,
@@ -13,7 +12,7 @@ import { AdminProtected } from "../../../hooks";
 
 type Props = {};
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   const params = useParams();
   const courseId = params.id as string;
   const [open, setOpen] = useState(false);
@@ -56,4 +55,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Page;

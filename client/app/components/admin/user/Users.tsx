@@ -1,22 +1,9 @@
-import React, { FC, useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { Box, Button, Modal } from "@mui/material";
 import {
   AiOutlineDelete,
   AiOutlineMail,
   AiOutlineUser,
   AiOutlineUserAdd,
 } from "react-icons/ai";
-import { FiEdit3, FiUsers } from "react-icons/fi";
-import { useTheme } from "next-themes";
-import { format } from "timeago.js";
-import {
-  useDeleteUserMutation,
-  useGetAllUsersQuery,
-  useUpdateUserRoleMutation,
-} from "@/redux/features/user/userApi";
-import { toast } from "react-hot-toast";
-import { Loader } from "../../common";
 import {
   buttonStyles,
   cardStyles,
@@ -26,20 +13,31 @@ import {
   labelStyles,
   badgeStyles,
 } from "@/app/styles/styles";
+import {
+  useDeleteUserMutation,
+  useGetAllUsersQuery,
+  useUpdateUserRoleMutation,
+} from "@/redux/features/user/userApi";
+import { format } from "timeago.js";
+import { Loader } from "../../common";
+import { useTheme } from "next-themes";
+import { toast } from "react-hot-toast";
+import { FiUsers } from "react-icons/fi";
+import { DataGrid } from "@mui/x-data-grid";
+import { Box, Button, Modal } from "@mui/material";
+import React, { FC, useEffect, useState } from "react";
 
 type Props = {
   isTeam?: boolean;
 };
 
 const AllUsers: FC<Props> = ({ isTeam }) => {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const [active, setActive] = useState(false);
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("admin");
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState("");
-
-  // Hook to get window size for responsive design
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {

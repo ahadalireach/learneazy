@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
 import { format } from "timeago.js";
-import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
-import { AiOutlineMail } from "react-icons/ai";
-import { useGetAllOrdersQuery } from "@/redux/features/order/orderApi";
-import { Loader } from "@/app/components";
 import styles from "@/app/styles/styles";
+import { Loader } from "@/app/components";
+import { AiOutlineMail } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
+import { useGetAllOrdersQuery } from "@/redux/features/order/orderApi";
+import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
 
 type Props = {
   isDashboard?: boolean;

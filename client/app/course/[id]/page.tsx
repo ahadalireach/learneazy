@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import {
   CoursePreviewDetails,
@@ -39,7 +38,7 @@ const Page = () => {
       const amount = Math.round(data.course.price * 100);
       createPaymentIntent(amount);
     }
-  }, [config, data, userData]);
+  }, [config, data, userData, createPaymentIntent]);
 
   useEffect(() => {
     if (paymentIntentData) {
@@ -49,15 +48,15 @@ const Page = () => {
 
   return (
     <>
+      <PageHead
+        title="Learneazy | Course Details"
+        description="Explore this course on Learneazy. Find details, curriculum, and more."
+        keywords="Course Details, Ahad Ali LMS, Ahad Ali Project"
+      />
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <PageHead
-            title={`Learneazy - ${data?.title} | Course Details`}
-            description={data?.description}
-            keywords={`${data?.title}, Course Details, Ahad Ali LMS, Ahad Ali Project`}
-          />
           <Header
             route={route}
             setRoute={setRoute}

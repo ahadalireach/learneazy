@@ -125,6 +125,12 @@ export const navStyles = {
 
   brand:
     "text-[25px] font-Poppins font-[500] text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors",
+
+  menuItem:
+    "w-full flex items-center px-4 py-3 cursor-pointer transition-colors duration-200",
+  menuItemActive:
+    "bg-blue-50 dark:bg-blue-900/20 border-r-4 border-blue-600 dark:border-blue-400",
+  menuItemInactive: "hover:bg-slate-50 dark:hover:bg-slate-700/50",
 };
 
 export const formStyles = {

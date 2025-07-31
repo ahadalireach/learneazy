@@ -1,8 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { redirect } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import {
   EnrolledCourseContent,
   Footer,
@@ -10,6 +6,9 @@ import {
   Loader,
   PageHead,
 } from "@/app/components";
+import { redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 type Props = {
   params: any;
@@ -33,19 +32,19 @@ const Page = ({ params }: Props) => {
     if (error) {
       redirect("/");
     }
-  }, [data, error]);
+  }, [id, data, error]);
 
   return (
     <>
+      <PageHead
+        title={`Course Access | Learneazy`}
+        description={`Access your purchased course and continue learning on Learneazy.`}
+        keywords={`course access, purchased course, online learning, Ahad Ali LMS, Learneazy`}
+      />
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <PageHead
-            title={`Course Access | Learneazy`}
-            description={`Access your purchased course and continue learning on Learneazy.`}
-            keywords={`course access, purchased course, online learning, Ahad Ali LMS, Learneazy`}
-          />
           <Header
             route={route}
             setRoute={setRoute}

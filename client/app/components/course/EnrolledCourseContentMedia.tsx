@@ -186,6 +186,15 @@ const EnrolledCourseContentMedia = ({
     addReviewReplyError,
   ]);
 
+  // Fix: Only one filter should apply at a time, and data should be checked for existence
+  if (!data || !Array.isArray(data) || !data[activeVideo]) {
+    return (
+      <div className="flex items-center justify-center min-h-[40vh] text-slate-500 dark:text-slate-400">
+        No course content available.
+      </div>
+    );
+  }
+
   return (
     <div className="py-4">
       <div
@@ -245,7 +254,7 @@ const EnrolledCourseContentMedia = ({
       </div>
 
       <h1 className={styles.titleStyles.h4 + " mb-4"}>
-        {data[activeVideo]?.title}
+        {data[activeVideo]?.title || "Untitled"}
       </h1>
 
       <div
@@ -282,7 +291,7 @@ const EnrolledCourseContentMedia = ({
       >
         {activeBar === 0 && (
           <p className="text-base whitespace-pre-line mb-3 dark:text-white text-black">
-            {data[activeVideo]?.description}
+            {data[activeVideo]?.description || "No description available."}
           </p>
         )}
 
@@ -612,24 +621,32 @@ const CommentReply = ({
   setQuestionId,
   answerCreationLoading,
 }: any) => {
+  // Fix: Defensive check for questions array
+  const questions = data[activeVideo]?.questions || [];
   return (
     <>
       <div className="w-full my-3">
-        {data[activeVideo].questions.map((item: any, index: any) => (
-          <CommentItem
-            key={index}
-            data={data}
-            activeVideo={activeVideo}
-            item={item}
-            index={index}
-            answer={answer}
-            setAnswer={setAnswer}
-            questionId={questionId}
-            setQuestionId={setQuestionId}
-            handleAnswerSubmit={handleAnswerSubmit}
-            answerCreationLoading={answerCreationLoading}
-          />
-        ))}
+        {questions.length === 0 ? (
+          <div className="text-slate-500 dark:text-slate-400 text-center py-6">
+            No questions yet for this lesson.
+          </div>
+        ) : (
+          questions.map((item: any, index: any) => (
+            <CommentItem
+              key={index}
+              data={data}
+              activeVideo={activeVideo}
+              item={item}
+              index={index}
+              answer={answer}
+              setAnswer={setAnswer}
+              questionId={questionId}
+              setQuestionId={setQuestionId}
+              handleAnswerSubmit={handleAnswerSubmit}
+              answerCreationLoading={answerCreationLoading}
+            />
+          ))
+        )}
       </div>
     </>
   );
