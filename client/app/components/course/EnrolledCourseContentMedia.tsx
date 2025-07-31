@@ -5,18 +5,21 @@ import {
   AiOutlineArrowRight,
   AiOutlineStar,
 } from "react-icons/ai";
-import Image from "next/image";
-import toast from "react-hot-toast";
-import styles from "@/app/styles/styles";
-import { CoursePlayer } from "../common";
-import React, { useEffect, useState } from "react";
 import {
   useAddNewQuestionMutation,
   useAddQuestionAnswerMutation,
+  useAddReviewInCourseMutation,
+  useAddReviewReplyMutation,
+  useGetPublicCoursePreviewQuery,
 } from "@/redux/features/courses/coursesApi";
-import { BiMessage } from "react-icons/bi";
-import { VscVerifiedFilled } from "react-icons/vsc";
+import Image from "next/image";
+import toast from "react-hot-toast";
 import { format } from "timeago.js";
+import styles from "@/app/styles/styles";
+import { CoursePlayer, Ratings } from "../common";
+import { BiMessage } from "react-icons/bi";
+import React, { useEffect, useState } from "react";
+import { VscVerifiedFilled } from "react-icons/vsc";
 
 type Props = {
   data: any;
@@ -39,10 +42,14 @@ const EnrolledCourseContentMedia = ({
 }: Props) => {
   const [activeBar, setActiveBar] = useState(0);
   const [question, setQuestion] = useState("");
+  const [questionId, setQuestionId] = useState("");
+  const [answer, setAnswer] = useState("");
   const [rating, setRating] = useState(1);
   const [review, setReview] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [questionId, setQuestionId] = useState("");
+  const [isReviewReply, setIsReviewReply] = useState(false);
+  const [reviewId, setReviewId] = useState("");
+  const [reviewReply, setReviewReply] = useState("");
+
   const [
     addNewQuestion,
     {
@@ -60,7 +67,29 @@ const EnrolledCourseContentMedia = ({
     },
   ] = useAddQuestionAnswerMutation();
 
-  const isReviewExists = data?.reviews?.find(
+  const { data: courseData, refetch: courseRefetch } =
+    useGetPublicCoursePreviewQuery(id, { refetchOnMountOrArgChange: true });
+  const course = courseData?.course;
+
+  const [
+    addReviewInCourse,
+    {
+      isSuccess: addReviewInCourseSuccess,
+      error: addReviewInCourseError,
+      isLoading: reviewCreationLoading,
+    },
+  ] = useAddReviewInCourseMutation();
+
+  const [
+    addReviewReply,
+    {
+      isSuccess: addReviewReplySuccess,
+      error: addReviewReplyError,
+      isLoading: reviewReplyCreationLoading,
+    },
+  ] = useAddReviewReplyMutation();
+
+  const isReviewExists = course?.reviews?.find(
     (item: any) => item.user._id === user._id
   );
 
@@ -85,6 +114,24 @@ const EnrolledCourseContentMedia = ({
     });
   };
 
+  const handleReviewSubmit = async () => {
+    if (review.length === 0) {
+      toast.error("Review can't be empty");
+    } else {
+      addReviewInCourse({ review, rating, courseId: id });
+    }
+  };
+
+  const handleReviewReplySubmit = () => {
+    if (!reviewReplyCreationLoading) {
+      if (reviewReply === "") {
+        toast.error("Reply can't be empty");
+      } else {
+        addReviewReply({ comment: reviewReply, courseId: id, reviewId });
+      }
+    }
+  };
+
   useEffect(() => {
     if (addQuestionSuccess) {
       setQuestion("");
@@ -106,11 +153,37 @@ const EnrolledCourseContentMedia = ({
         toast.error(errorMessage.data.message);
       }
     }
+    if (addReviewInCourseSuccess) {
+      setReview("");
+      setRating(1);
+      courseRefetch();
+    }
+    if (addReviewInCourseError) {
+      if ("data" in addReviewInCourseError) {
+        const errorMessage = addReviewInCourseError as any;
+        toast.error(errorMessage.data.message);
+      }
+    }
+    if (addReviewReplySuccess) {
+      setReviewReply("");
+      setIsReviewReply(false);
+      courseRefetch();
+    }
+    if (addReviewReplyError) {
+      if ("data" in addReviewReplyError) {
+        const errorMessage = addReviewReplyError as any;
+        toast.error(errorMessage.data.message);
+      }
+    }
   }, [
     addQuestionSuccess,
     addQuestionError,
     addQuestionAnswerSuccess,
     addQuestionAnswerError,
+    addReviewInCourseSuccess,
+    addReviewInCourseError,
+    addReviewReplySuccess,
+    addReviewReplyError,
   ]);
 
   return (
@@ -294,69 +367,233 @@ const EnrolledCourseContentMedia = ({
           </>
         )}
 
-        {activeBar === 3 && !isReviewExists && (
+        {activeBar === 3 && (
           <>
-            <div className="flex w-full items-start mb-4">
-              <Image
-                src={
-                  user.avatar
-                    ? user.avatar.url
-                    : "https://res.cloudinary.com/dnrxdohf7/image/upload/v1753601987/layout/q4ifxx7kefbglwvpk0ch.png"
-                }
-                width={50}
-                height={50}
-                alt="User avatar"
-                className="w-[50px] h-[50px] rounded-full object-cover"
-              />
-              <div className="w-full ml-3">
-                <h5 className="text-base font-semibold dark:text-white text-black mb-2">
-                  Give a Rating <span className="text-red-500">*</span>
-                </h5>
-                <div className="flex items-center mb-3">
-                  {[1, 2, 3, 4, 5].map((i) =>
-                    rating >= i ? (
-                      <AiFillStar
-                        key={i}
-                        className="mr-1 cursor-pointer"
-                        color="rgb(246,186,0)"
-                        size={25}
-                        onClick={() => setRating(i)}
-                      />
-                    ) : (
-                      <AiOutlineStar
-                        key={i}
-                        className="mr-1 cursor-pointer"
-                        color="rgb(246,186,0)"
-                        size={25}
-                        onClick={() => setRating(i)}
-                      />
-                    )
-                  )}
+            {!isReviewExists && (
+              <>
+                <div className="flex w-full items-start mb-4">
+                  <Image
+                    src={
+                      user.avatar
+                        ? user.avatar.url
+                        : "https://res.cloudinary.com/dnrxdohf7/image/upload/v1753601987/layout/q4ifxx7kefbglwvpk0ch.png"
+                    }
+                    width={50}
+                    height={50}
+                    alt="User avatar"
+                    className="w-[50px] h-[50px] rounded-full object-cover"
+                  />
+                  <div className="w-full ml-3">
+                    <h5 className="text-base font-semibold dark:text-white text-black mb-2">
+                      Give a Rating <span className="text-red-500">*</span>
+                    </h5>
+                    <div className="flex items-center mb-3">
+                      {[1, 2, 3, 4, 5].map((i) =>
+                        rating >= i ? (
+                          <AiFillStar
+                            key={i}
+                            className="mr-1 cursor-pointer"
+                            color="rgb(246,186,0)"
+                            size={25}
+                            onClick={() => setRating(i)}
+                          />
+                        ) : (
+                          <AiOutlineStar
+                            key={i}
+                            className="mr-1 cursor-pointer"
+                            color="rgb(246,186,0)"
+                            size={25}
+                            onClick={() => setRating(i)}
+                          />
+                        )
+                      )}
+                    </div>
+                    <textarea
+                      value={review}
+                      onChange={(e) => setReview(e.target.value)}
+                      placeholder="Write your comment..."
+                      className={styles.combineStyles(
+                        styles.inputStyles.base,
+                        styles.inputStyles.default,
+                        styles.inputStyles.medium,
+                        "min-h-[80px] resize-y"
+                      )}
+                    />
+                  </div>
                 </div>
-                <textarea
-                  value={review}
-                  onChange={(e) => setReview(e.target.value)}
-                  placeholder="Write your comment..."
+                <div className="w-full flex justify-end">
+                  <button
+                    className={styles.combineStyles(
+                      styles.buttonStyles.base,
+                      styles.buttonStyles.primary,
+                      styles.buttonStyles.medium,
+                      "w-[120px] h-[40px] text-base",
+                      reviewCreationLoading ? "cursor-not-allowed" : ""
+                    )}
+                    onClick={
+                      reviewCreationLoading ? () => {} : handleReviewSubmit
+                    }
+                  >
+                    {reviewCreationLoading ? "Submitting..." : "Submit"}
+                  </button>
+                </div>
+              </>
+            )}
+            <div className="w-full mt-8">
+              <h3 className="text-lg font-semibold mb-4 dark:text-white text-black">
+                Course Reviews
+              </h3>
+              {(!course?.reviews || course.reviews.length === 0) && (
+                <div
                   className={styles.combineStyles(
-                    styles.inputStyles.base,
-                    styles.inputStyles.default,
-                    styles.inputStyles.medium,
-                    "min-h-[80px] resize-y"
+                    styles.cardStyles.base,
+                    styles.cardStyles.paddingSmall,
+                    "text-center text-slate-500 dark:text-slate-400"
                   )}
-                />
-              </div>
-            </div>
-            <div className="w-full flex justify-end">
-              <button
-                className={styles.combineStyles(
-                  styles.buttonStyles.base,
-                  styles.buttonStyles.primary,
-                  styles.buttonStyles.medium,
-                  "w-[120px] h-[40px] text-base"
-                )}
-              >
-                Submit
-              </button>
+                >
+                  No reviews yet.
+                </div>
+              )}
+              {(course?.reviews && [...course.reviews].reverse())?.map(
+                (item: any, index: number) => (
+                  <div
+                    className={styles.combineStyles(
+                      styles.cardStyles.base,
+                      styles.cardStyles.paddingSmall,
+                      "my-4"
+                    )}
+                    key={index}
+                  >
+                    <div className="flex items-start gap-3">
+                      <Image
+                        src={
+                          item.user.avatar
+                            ? item.user.avatar.url
+                            : "https://res.cloudinary.com/dnrxdohf7/image/upload/v1753601987/layout/q4ifxx7kefbglwvpk0ch.png"
+                        }
+                        width={50}
+                        height={50}
+                        alt=""
+                        className="w-[50px] h-[50px] rounded-full object-cover"
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h1 className="text-[18px] font-semibold dark:text-white text-black">
+                            {item?.user.name}
+                          </h1>
+                          <Ratings rating={item.rating} />
+                        </div>
+                        <p className="mt-1 mb-2 dark:text-white text-black">
+                          {item.comment}
+                        </p>
+                        <small className="text-[#0000009e] dark:text-[#ffffff83]">
+                          {format(item.createdAt)} •
+                        </small>
+                        {user.role === "admin" && (
+                          <button
+                            className={styles.combineStyles(
+                              styles.buttonStyles.base,
+                              styles.buttonStyles.tertiary,
+                              styles.buttonStyles.small,
+                              "ml-6 px-2 py-1 text-xs"
+                            )}
+                            onClick={() => {
+                              setIsReviewReply((prev) =>
+                                reviewId === item._id ? !prev : true
+                              );
+                              setReviewId(item._id);
+                            }}
+                          >
+                            {isReviewReply && reviewId === item._id
+                              ? "Hide Reply"
+                              : "Add Reply"}
+                          </button>
+                        )}
+                        {isReviewReply && reviewId === item._id && (
+                          <div className="flex items-center gap-2 mt-2">
+                            <input
+                              type="text"
+                              placeholder="Enter your reply..."
+                              value={reviewReply}
+                              onChange={(e: any) =>
+                                setReviewReply(e.target.value)
+                              }
+                              className={styles.combineStyles(
+                                styles.inputStyles.base,
+                                styles.inputStyles.default,
+                                styles.inputStyles.small,
+                                "flex-1"
+                              )}
+                            />
+                            <button
+                              className={styles.combineStyles(
+                                styles.buttonStyles.base,
+                                styles.buttonStyles.primary,
+                                styles.buttonStyles.small,
+                                reviewReplyCreationLoading
+                                  ? "cursor-not-allowed"
+                                  : ""
+                              )}
+                              onClick={
+                                reviewReplyCreationLoading
+                                  ? () => {}
+                                  : handleReviewReplySubmit
+                              }
+                            >
+                              {reviewReplyCreationLoading ? "..." : "Send"}
+                            </button>
+                          </div>
+                        )}
+                        {item.commentReplies.length > 0 && (
+                          <div className="mt-4 space-y-3">
+                            {item.commentReplies.map((i: any, idx: number) => (
+                              <div
+                                className={styles.combineStyles(
+                                  styles.cardStyles.base,
+                                  styles.cardStyles.paddingSmall,
+                                  "flex items-start gap-2 bg-slate-50 dark:bg-slate-900"
+                                )}
+                                key={idx}
+                              >
+                                <Image
+                                  src={
+                                    i.user.avatar
+                                      ? i.user.avatar.url
+                                      : "https://res.cloudinary.com/dnrxdohf7/image/upload/v1753601987/layout/q4ifxx7kefbglwvpk0ch.png"
+                                  }
+                                  width={40}
+                                  height={40}
+                                  alt=""
+                                  className="w-10 h-10 rounded-full object-cover"
+                                />
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <h5 className="text-[16px] font-medium dark:text-white text-black">
+                                      {i.user.name}
+                                    </h5>
+                                    {i.user.role === "admin" && (
+                                      <VscVerifiedFilled
+                                        className="text-blue-500"
+                                        size={18}
+                                      />
+                                    )}
+                                  </div>
+                                  <p className="text-sm mt-1 dark:text-white text-black">
+                                    {i.comment}
+                                  </p>
+                                  <small className="text-[#0000009e] dark:text-[#ffffff83]">
+                                    {format(i.createdAt)} •
+                                  </small>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </>
         )}

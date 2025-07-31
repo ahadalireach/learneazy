@@ -310,7 +310,6 @@ export const addCourseReview = catchAsyncError(
       }
 
       const course = await Course.findById(courseId);
-
       const { review, rating } = req.body as IAddReviewData;
       const reviewData: any = {
         user: req.user,
