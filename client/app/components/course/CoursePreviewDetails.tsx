@@ -147,7 +147,7 @@ const CoursePreviewDetails = ({
                         src={
                           item.user.avatar
                             ? item.user.avatar.url
-                            : "https://res.cloudinary.com/dshp9jnuy/image/upload/v1665822253/avatars/nrxsg8sd9iy10bbsoenn.png"
+                            : "https://res.cloudinary.com/dnrxdohf7/image/upload/v1753601987/layout/q4ifxx7kefbglwvpk0ch.png"
                         }
                         width={50}
                         height={50}
@@ -173,7 +173,7 @@ const CoursePreviewDetails = ({
                               src={
                                 i.user.avatar
                                   ? i.user.avatar.url
-                                  : "https://res.cloudinary.com/dshp9jnuy/image/upload/v1665822253/avatars/nrxsg8sd9iy10bbsoenn.png"
+                                  : "https://res.cloudinary.com/dnrxdohf7/image/upload/v1753601987/layout/q4ifxx7kefbglwvpk0ch.png"
                               }
                               width={40}
                               height={40}
