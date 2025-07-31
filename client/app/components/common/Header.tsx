@@ -106,7 +106,7 @@ const Header: FC<HeaderProps> = ({
                 </Link>
               ) : (
                 <button
-                  className="hidden 800px:block cursor-pointer text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="hidden 800px:block cursor-pointer text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-600 transition-colors"
                   onClick={() => setOpen(true)}
                 >
                   <HiOutlineUserCircle size={25} />
@@ -115,7 +115,7 @@ const Header: FC<HeaderProps> = ({
 
               <div className="800px:hidden">
                 <button
-                  className="p-2 cursor-pointer text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="p-2 cursor-pointer text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-600 transition-colors"
                   onClick={() => setOpenSidebar(true)}
                 >
                   <HiOutlineMenuAlt3 size={25} />
@@ -129,7 +129,7 @@ const Header: FC<HeaderProps> = ({
           <div className="fixed w-full h-screen top-0 left-0 z-[99999] bg-black/50 dark:bg-black/70">
             <div className="w-[70%] fixed z-[999999999] h-screen bg-white dark:bg-slate-900 top-0 right-0 shadow-2xl">
               <div
-                className="p-4 flex justify-end cursor-pointer text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
+                className="p-4 flex justify-end cursor-pointer text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-600"
                 onClick={() => setOpenSidebar(false)}
               >
                 <HiOutlineX size={25} />
@@ -137,7 +137,7 @@ const Header: FC<HeaderProps> = ({
               <NavItems isMobile={true} />
               <button
                 onClick={() => setOpen(true)}
-                className="flex items-center py-5 px-6 font-Poppins font-[400] text-[18px] text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors"
+                className="flex items-center py-5 px-6 font-Poppins font-[400] text-[18px] text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-600 cursor-pointer transition-colors"
               >
                 <HiOutlineUserCircle size={25} className="mr-2" />
                 <span>Account</span>

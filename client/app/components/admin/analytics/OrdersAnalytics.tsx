@@ -117,7 +117,6 @@ const OrdersAnalytics = ({ isDashboard }: Props) => {
     );
   }
 
-  // Full page view
   return (
     <div
       className={styles.combineStyles(
@@ -126,7 +125,6 @@ const OrdersAnalytics = ({ isDashboard }: Props) => {
         "min-h-screen"
       )}
     >
-      {/* Header Section */}
       <div className="mb-8">
         <h1 className={styles.titleStyles.h3}>Orders Analytics</h1>
         <p className={styles.titleStyles.subtitle}>
@@ -134,7 +132,6 @@ const OrdersAnalytics = ({ isDashboard }: Props) => {
         </p>
       </div>
 
-      {/* Analytics Content */}
       <div
         className={styles.combineStyles(
           styles.cardStyles.base,
@@ -142,7 +139,6 @@ const OrdersAnalytics = ({ isDashboard }: Props) => {
           "bg-slate-50 dark:bg-slate-800/50"
         )}
       >
-        {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div
             className={styles.combineStyles(
@@ -202,7 +198,6 @@ const OrdersAnalytics = ({ isDashboard }: Props) => {
           </div>
         </div>
 
-        {/* Chart Section */}
         <div className="mb-6">
           <h3 className={styles.titleStyles.h5}>Monthly Order Trends</h3>
           <p className={styles.titleStyles.subtitleSmall}>
@@ -291,7 +286,6 @@ const OrdersAnalytics = ({ isDashboard }: Props) => {
           </div>
         )}
 
-        {/* Additional Insights */}
         {analyticsData.length > 0 && (
           <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
             <h4 className={styles.titleStyles.h6}>Insights</h4>

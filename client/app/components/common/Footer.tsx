@@ -66,8 +66,7 @@ const Footer = (props: Props) => {
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
             <div className={styles.utilityStyles.spacingSmall}>
-              <div className="flex items-center gap-2 mb-4">
-                <FaUsers className={styles.utilityStyles.textAccent} />
+              <div className="flex items-center mb-4">
                 <h3
                   className={combineStyles(
                     styles.titleStyles.h6,
@@ -115,8 +114,7 @@ const Footer = (props: Props) => {
             </div>
 
             <div className={styles.utilityStyles.spacingSmall}>
-              <div className="flex items-center gap-2 mb-4">
-                <FaBook className={styles.utilityStyles.textAccent} />
+              <div className="flex items-center mb-4">
                 <h3
                   className={combineStyles(
                     styles.titleStyles.h6,
@@ -164,9 +162,7 @@ const Footer = (props: Props) => {
             </div>
 
             <div className={styles.utilityStyles.spacingSmall}>
-              <div className="flex items-center gap-2 mb-4">
-                <FiShare2 className={styles.utilityStyles.textAccent} />
-
+              <div className="flex items-centermb-4">
                 <h3
                   className={combineStyles(
                     styles.titleStyles.h6,
@@ -232,8 +228,7 @@ const Footer = (props: Props) => {
             </div>
 
             <div className={styles.utilityStyles.spacingSmall}>
-              <div className="flex items-center gap-2 mb-4">
-                <FaAddressCard className={styles.utilityStyles.textAccent} />
+              <div className="flex items-center mb-4">
                 <h3
                   className={combineStyles(
                     styles.titleStyles.h6,

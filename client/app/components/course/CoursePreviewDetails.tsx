@@ -4,13 +4,13 @@ import { format } from "timeago.js";
 import { BsCode } from "react-icons/bs";
 import styles from "@/app/styles/styles";
 import CheckoutForm from "./CheckoutForm";
-import { CoursePlayer, Loader, Ratings } from "../common";
 import React, { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { VscVerifiedFilled } from "react-icons/vsc";
-import CourseContentList from "./CourseContentList";
 import { MdAccessTime, MdSupport } from "react-icons/md";
+import { CoursePlayer, Loader, Ratings } from "../common";
 import { AiTwotoneSafetyCertificate } from "react-icons/ai";
+import CourseContentSections from "./CourseContentSections";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 
@@ -22,7 +22,7 @@ type Props = {
   clientSecret: string;
 };
 
-const CourseDetails = ({
+const CoursePreviewDetails = ({
   data,
   setRoute,
   setOpen: openAuthModal,
@@ -115,7 +115,7 @@ const CourseDetails = ({
             <div className="space-y-4">
               <h2 className={styles.titleStyles.h4}>Course Overview</h2>
               <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30 p-4">
-                <CourseContentList data={data?.courseData} isDemo={true} />
+                <CourseContentSections data={data?.courseData} isDemo={true} />
               </div>
             </div>
 
@@ -316,4 +316,4 @@ const CourseDetails = ({
   );
 };
 
-export default CourseDetails;
+export default CoursePreviewDetails;

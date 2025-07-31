@@ -43,9 +43,9 @@ const Navigation: FC<NavigationProps> = ({ isMobile }) => {
             key={item.url}
             className={`${
               activeItem === index
-                ? "text-blue-500"
+                ? "text-blue-500 dark:text-blue-500"
                 : "dark:text-white text-black"
-            } text-[18px] px-6 font-Poppins font-[400] cursor-pointer hover:text-blue-400 transition-colors`}
+            } text-[18px] px-6 font-Poppins font-[400] cursor-pointer hover:text-blue-400 dark:hover:text-blue-500 transition-colors`}
           >
             {item.name}
           </Link>

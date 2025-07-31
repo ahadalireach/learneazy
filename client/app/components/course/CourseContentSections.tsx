@@ -1,7 +1,7 @@
+import styles from "@/app/styles/styles";
 import React, { FC, useState } from "react";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
-import styles from "@/app/styles/styles";
 
 type Props = {
   data: any;
@@ -10,7 +10,7 @@ type Props = {
   isDemo?: boolean;
 };
 
-const CourseContentList: FC<Props> = (props) => {
+const CourseContentSections: FC<Props> = (props) => {
   const [visibleSections, setVisibleSections] = useState<Set<string>>(
     new Set<string>()
   );
@@ -142,4 +142,4 @@ const CourseContentList: FC<Props> = (props) => {
   );
 };
 
-export default CourseContentList;
+export default CourseContentSections;

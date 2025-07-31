@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import {
-  CourseDetails,
+  CoursePreviewDetails,
   Footer,
   Header,
   Loader,
@@ -68,7 +67,7 @@ const Page = () => {
           />
           {stripePromise && (
             <div className="pt-[80px]">
-              <CourseDetails
+              <CoursePreviewDetails
                 data={data?.course}
                 setOpen={setOpen}
                 setRoute={setRoute}
