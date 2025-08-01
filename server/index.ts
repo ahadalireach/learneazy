@@ -18,10 +18,11 @@ import analyticsRoutes from "./routes/analyticsRoutes";
 import notificationRoutes from "./routes/notificationRoutes";
 
 import { v2 as cloudinary } from "cloudinary";
+import { rateLimit } from "express-rate-limit";
 
 import http from "http";
 import { initSocketServer } from "./socketServer";
-import { errorMiddlware } from "./middleware/error";
+import { errorMiddleware } from "./middleware/error";
 
 const PORT = process.env.PORT || 4000;
 
@@ -39,6 +40,23 @@ app.use(
     credentials: true,
   })
 );
+
+// Rate limiting middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  handler: (req: Request, res: Response) => {
+    res.status(429).json({
+      success: false,
+      message: "Too many requests, please try again later.",
+    });
+  },
+});
+
+// Apply rate limiting to all routes
+app.use(limiter);
 
 // Routes
 app.use("/api/users", userRoutes);
@@ -66,7 +84,7 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Global error handling middleware (must be last)
-app.use(errorMiddlware);
+app.use(errorMiddleware);
 
 const startServer = async () => {
   try {

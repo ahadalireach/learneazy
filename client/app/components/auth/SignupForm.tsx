@@ -31,7 +31,7 @@ const SignupForm: FC<Props> = ({ setRoute }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      const message = data?.message || "User registration sucessful!";
+      const message = data?.message || "User registration successful!";
       toast.success(message);
       setRoute("Verification");
     }
@@ -41,7 +41,7 @@ const SignupForm: FC<Props> = ({ setRoute }) => {
         toast.error(errorData.data.message);
       }
     }
-  }, [isSuccess, error]);
+  }, [isSuccess, error, data?.message, setRoute]);
 
   const formik = useFormik({
     initialValues: { name: "", email: "", password: "" },
