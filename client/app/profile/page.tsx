@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
+import React, { useState } from "react";
 import { UserProtected } from "../hooks";
 import { useSelector } from "react-redux";
-import React, { FC, useState } from "react";
 import { Header, PageHead, ProfileDashboard } from "../components";
 
 type Props = {};

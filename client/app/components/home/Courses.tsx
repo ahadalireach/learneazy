@@ -9,8 +9,9 @@ import { useGetAllPublicCoursePreviewsQuery } from "@/redux/features/courses/cou
 type Props = {};
 
 const Courses = (props: Props) => {
-  const { data, isLoading } = useGetAllPublicCoursePreviewsQuery({});
   const [courses, setCourses] = useState<any[]>([]);
+
+  const { data, isLoading } = useGetAllPublicCoursePreviewsQuery({});
 
   useEffect(() => {
     setCourses(data?.courses);

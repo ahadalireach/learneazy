@@ -1,25 +1,11 @@
 "use client";
-import {
-  MdDashboard,
-  MdPeople,
-  MdCategory,
-  MdAnalytics,
-  MdPayment,
-  MdLogout,
-  MdGroups,
-  MdVideoCall,
-  MdOndemandVideo,
-  MdWeb,
-  MdQuiz,
-  MdManageHistory,
-  MdBarChart,
-} from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../../styles/styles";
 import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import { avatar as avatarIcon } from "@/public";
+import { menuSections } from "@/app/static/data";
 
 interface Props {
   isOpen?: boolean;
@@ -29,99 +15,6 @@ interface Props {
 const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
   const pathname = usePathname();
   const { user } = useSelector((state: any) => state.auth);
-
-  const menuSections = [
-    {
-      title: "Overview",
-      items: [
-        {
-          title: "Dashboard",
-          icon: MdDashboard,
-          path: "/admin",
-        },
-      ],
-    },
-    {
-      title: "Data",
-      items: [
-        {
-          title: "Users",
-          icon: MdGroups,
-          path: "/admin/users",
-        },
-        {
-          title: "Invoices",
-          icon: MdPayment,
-          path: "/admin/invoices",
-        },
-      ],
-    },
-    {
-      title: "Content",
-      items: [
-        {
-          title: "Create Course",
-          icon: MdVideoCall,
-          path: "/admin/create-course",
-        },
-        {
-          title: "Live Courses",
-          icon: MdOndemandVideo,
-          path: "/admin/courses",
-        },
-      ],
-    },
-    {
-      title: "Customization",
-      items: [
-        {
-          title: "Hero",
-          icon: MdWeb,
-          path: "/admin/hero",
-        },
-        {
-          title: "FAQ",
-          icon: MdQuiz,
-          path: "/admin/faq",
-        },
-        {
-          title: "Categories",
-          icon: MdCategory,
-          path: "/admin/categories",
-        },
-      ],
-    },
-    {
-      title: "Controllers",
-      items: [
-        {
-          title: "Manage Team",
-          icon: MdPeople,
-          path: "/admin/team",
-        },
-      ],
-    },
-    {
-      title: "Analytics",
-      items: [
-        {
-          title: "Courses Analytics",
-          icon: MdBarChart,
-          path: "/admin/courses-analytics",
-        },
-        {
-          title: "Orders Analytics",
-          icon: MdAnalytics,
-          path: "/admin/orders-analytics",
-        },
-        {
-          title: "Users Analytics",
-          icon: MdManageHistory,
-          path: "/admin/users-analytics",
-        },
-      ],
-    },
-  ];
 
   const isActive = (path: string) => pathname === path;
 

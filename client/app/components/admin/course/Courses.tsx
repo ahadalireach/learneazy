@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { Box, Button, Modal } from "@mui/material";
-import { AiOutlineDelete } from "react-icons/ai";
-import { useTheme } from "next-themes";
-import { FiEdit2 } from "react-icons/fi";
-import {
-  useDeleteCourseMutation,
-  useGetAllCoursesQuery,
-} from "@/redux/features/courses/coursesApi";
-import { format } from "timeago.js";
-import { toast } from "react-hot-toast";
-import Link from "next/link";
-import { Loader } from "../../common";
 import {
   buttonStyles,
   cardStyles,
   combineStyles,
   titleStyles,
 } from "@/app/styles/styles";
+import {
+  useDeleteCourseMutation,
+  useGetAllCoursesQuery,
+} from "@/redux/features/courses/coursesApi";
+import Link from "next/link";
+import { format } from "timeago.js";
+import { Loader } from "../../common";
+import { useTheme } from "next-themes";
+import { toast } from "react-hot-toast";
+import { FiEdit2 } from "react-icons/fi";
+import { Box, Modal } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { AiOutlineDelete } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
 
 type Props = {};
 
@@ -30,13 +30,14 @@ const AllCourses = (props: Props) => {
     { refetchOnMountOrArgChange: true }
   );
   const [deleteCourse, { isSuccess, error }] = useDeleteCourseMutation({});
+
   const columns = [
     {
       field: "id",
       headerName: "ID",
       width: 100,
       minWidth: 80,
-      hide: true, // Hide on mobile
+      hide: true,
     },
     {
       field: "title",

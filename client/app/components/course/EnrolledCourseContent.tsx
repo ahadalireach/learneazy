@@ -12,6 +12,7 @@ type Props = {
 
 const CourseContent = ({ id, user }: Props) => {
   const [activeVideo, setActiveVideo] = useState(0);
+
   const {
     data: contentData,
     isLoading,

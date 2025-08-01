@@ -25,6 +25,7 @@ const CreateCourse = (props: Props) => {
     demoUrl: "",
     thumbnail: "",
   });
+  const [courseData, setCourseData] = useState({});
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
   const [courseContentData, setCourseContentData] = useState([
@@ -44,7 +45,6 @@ const CreateCourse = (props: Props) => {
     },
   ]);
 
-  const [courseData, setCourseData] = useState({});
   const [createCourse, { isLoading, isSuccess, error }] =
     useCreateCourseMutation();
 

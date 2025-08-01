@@ -1,30 +1,8 @@
 "use client";
+import { FC } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { FC } from "react";
-
-export const navItemsData = [
-  {
-    name: "Home",
-    url: "/",
-  },
-  {
-    name: "Courses",
-    url: "/courses",
-  },
-  {
-    name: "About",
-    url: "/about",
-  },
-  {
-    name: "Policy",
-    url: "/policy",
-  },
-  {
-    name: "FAQ",
-    url: "/faq",
-  },
-];
+import { navItemsData } from "@/app/static/data";
 
 interface NavigationProps {
   isMobile: boolean;

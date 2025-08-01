@@ -22,6 +22,7 @@ import React, { useEffect, useState } from "react";
 import { VscVerifiedFilled } from "react-icons/vsc";
 
 import socketIO from "socket.io-client";
+import { tabList } from "@/app/static/data";
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
@@ -33,8 +34,6 @@ type Props = {
   user: any;
   refetch: any;
 };
-
-const tabList = ["Overview", "Resources", "Q&A", "Reviews"];
 
 const EnrolledCourseContentMedia = ({
   data,

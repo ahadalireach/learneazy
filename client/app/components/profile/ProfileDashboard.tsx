@@ -15,6 +15,7 @@ const ProfileDashboard: FC<Props> = ({ user }) => {
   const [active, setActive] = useState(1);
   const [avatar, setAvatar] = useState(null);
   const [logout, setLogout] = useState(false);
+
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
   });

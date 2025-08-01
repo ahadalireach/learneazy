@@ -16,11 +16,14 @@ type Props = {
 };
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
+  const [loadUser, setLoadUser] = useState(false);
   const [name, setName] = useState(user && user.name);
+
   const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation();
+
   const [editProfile, { isSuccess: success, error: updateError }] =
     useEditProfileMutation();
-  const [loadUser, setLoadUser] = useState(false);
+
   const {} = useLoadUserQuery(undefined, { skip: loadUser ? false : true });
 
   const imageHandler = async (e: any) => {

@@ -1,25 +1,25 @@
+import { Box } from "@mui/material";
+import { format } from "timeago.js";
+import { useTheme } from "next-themes";
+import { Loader } from "@/app/components";
+import { AiOutlineMail } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
-import { useTheme } from "next-themes";
-import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
-import { format } from "timeago.js";
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
-import { AiOutlineMail } from "react-icons/ai";
 import { useGetAllOrdersQuery } from "@/redux/features/order/orderApi";
-import { Loader } from "@/app/components";
+import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
 
 type Props = {
   isDashboard?: boolean;
 };
 
 const Invoices = ({ isDashboard }: Props) => {
-  const { theme, setTheme } = useTheme();
-  const { isLoading, data } = useGetAllOrdersQuery({});
-  const { data: usersData } = useGetAllUsersQuery({});
-  const { data: coursesData } = useGetAllCoursesQuery({});
-
+  const { theme } = useTheme();
   const [orderData, setOrderData] = useState<any>([]);
+
+  const { data: usersData } = useGetAllUsersQuery({});
+  const { isLoading, data } = useGetAllOrdersQuery({});
+  const { data: coursesData } = useGetAllCoursesQuery({});
 
   useEffect(() => {
     if (data) {

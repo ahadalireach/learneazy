@@ -9,6 +9,7 @@ const ChangePassword: FC<Props> = (props) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
 
   const passwordChangeHandler = async (e: any) => {

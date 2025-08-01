@@ -1,15 +1,16 @@
+import { Loader } from "../common";
+import { HiMinus, HiPlus } from "react-icons/hi";
+import React, { useEffect, useState } from "react";
 import styles, { combineStyles } from "@/app/styles/styles";
 import { useGetLayoutDataQuery } from "@/redux/features/layout/layoutApi";
-import React, { useEffect, useState } from "react";
-import { HiMinus, HiPlus } from "react-icons/hi";
-import { Loader } from "../common";
 
 type Props = {};
 
 const Faqs = (props: Props) => {
-  const { data, isLoading } = useGetLayoutDataQuery("FAQ", {});
-  const [activeQuestion, setActiveQuestion] = useState(null);
   const [questions, setQuestions] = useState<any[]>([]);
+  const [activeQuestion, setActiveQuestion] = useState(null);
+
+  const { data, isLoading } = useGetLayoutDataQuery("FAQ", {});
 
   useEffect(() => {
     if (data) {

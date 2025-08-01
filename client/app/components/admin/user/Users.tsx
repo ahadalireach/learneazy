@@ -23,8 +23,8 @@ import { Loader } from "../../common";
 import { useTheme } from "next-themes";
 import { toast } from "react-hot-toast";
 import { FiUsers } from "react-icons/fi";
+import { Box, Modal } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Button, Modal } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 
 type Props = {
@@ -40,6 +40,17 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
   const [userId, setUserId] = useState("");
   const [windowWidth, setWindowWidth] = useState(0);
 
+  const [updateUserRole, { error: updateError, isSuccess }] =
+    useUpdateUserRoleMutation();
+
+  const { isLoading, data, refetch } = useGetAllUsersQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
+
+  const [deleteUser, { isSuccess: deleteSuccess, error: deleteError }] =
+    useDeleteUserMutation({});
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     setWindowWidth(window.innerWidth);
@@ -49,15 +60,6 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
 
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth < 1024;
-
-  const [updateUserRole, { error: updateError, isSuccess }] =
-    useUpdateUserRoleMutation();
-  const { isLoading, data, refetch } = useGetAllUsersQuery(
-    {},
-    { refetchOnMountOrArgChange: true }
-  );
-  const [deleteUser, { isSuccess: deleteSuccess, error: deleteError }] =
-    useDeleteUserMutation({});
 
   useEffect(() => {
     if (updateError) {
@@ -69,7 +71,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
 
     if (isSuccess) {
       refetch();
-      toast.success("User role updated successfully");
+      toast.success("User role updated successfully!");
       setActive(false);
     }
     if (deleteSuccess) {

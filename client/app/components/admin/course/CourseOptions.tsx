@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styles from "../../../styles/styles";
+import { options } from "@/app/static/data";
 import { IoMdCheckmark } from "react-icons/io";
 
 type Props = {
@@ -9,13 +10,6 @@ type Props = {
 };
 
 const CourseOptions: FC<Props> = ({ active, setActive, isCreate = true }) => {
-  const options = [
-    "Course Information",
-    "Course Options",
-    "Course Content",
-    "Course Preview",
-  ];
-
   return (
     <div className="w-full">
       <div className="mb-6">

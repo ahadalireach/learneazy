@@ -1,17 +1,7 @@
-import {
-  FaGraduationCap,
-  FaBook,
-  FaUsers,
-  FaCertificate,
-  FaAddressCard,
-  FaLinkedin,
-} from "react-icons/fa";
 import Link from "next/link";
-import { CgWebsite } from "react-icons/cg";
-import { FaGithub } from "react-icons/fa";
-import { FiShare2 } from "react-icons/fi";
 import styles, { combineStyles } from "@/app/styles/styles";
 import { IoCall, IoLocation, IoMail } from "react-icons/io5";
+import { FaBook, FaCertificate, FaGraduationCap } from "react-icons/fa";
 
 type Props = {};
 
@@ -90,7 +80,7 @@ const Footer = (props: Props) => {
                 </li>
                 <li>
                   <Link
-                    href="/privacy-policy"
+                    href="/privacy"
                     className={combineStyles(
                       "text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"

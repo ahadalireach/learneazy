@@ -1,4 +1,8 @@
 "use client";
+import {
+  useGetAllCoursesQuery,
+  useUpdateCourseMutation,
+} from "@/redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
 import CourseData from "./CourseData";
 import { redirect } from "next/navigation";
@@ -8,10 +12,6 @@ import CoursePreview from "./CoursePreview";
 import styles from "../../../styles/styles";
 import React, { useEffect, useState } from "react";
 import CourseInformation from "./CourseInformation";
-import {
-  useGetAllCoursesQuery,
-  useUpdateCourseMutation,
-} from "@/redux/features/courses/coursesApi";
 
 type Props = {
   id: string;
@@ -19,7 +19,7 @@ type Props = {
 
 const UpdateCourse = ({ id }: Props) => {
   const [updateCourse, { isSuccess, error }] = useUpdateCourseMutation();
-  const { data, refetch } = useGetAllCoursesQuery(
+  const { data } = useGetAllCoursesQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );

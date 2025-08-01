@@ -12,10 +12,10 @@ type Props = {
 };
 
 const Invoices = ({ isDashboard }: Props) => {
+  const [orderData, setOrderData] = useState<any>([]);
   const { isLoading, data } = useGetAllOrdersQuery({});
   const { data: usersData } = useGetAllUsersQuery({});
   const { data: coursesData } = useGetAllCoursesQuery({});
-  const [orderData, setOrderData] = useState<any>([]);
 
   useEffect(() => {
     if (data) {

@@ -16,7 +16,6 @@ import NavItems from "./Navigation";
 import toast from "react-hot-toast";
 import CustomModal from "./CustomModal";
 import styles from "../../styles/styles";
-import { useSelector } from "react-redux";
 import ThemeSwitcher from "./ThemeToggle";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, type FC } from "react";

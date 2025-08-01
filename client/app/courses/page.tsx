@@ -12,10 +12,11 @@ type Props = {};
 const Page = (props: Props) => {
   const searchParams = useSearchParams();
   const search = searchParams?.get("title");
-  const [route, setRoute] = useState("Login");
   const [open, setOpen] = useState(false);
   const [courses, setcourses] = useState([]);
+  const [route, setRoute] = useState("Login");
   const [category, setCategory] = useState("All");
+
   const { data: coursesData, isLoading } = useGetAllPublicCoursePreviewsQuery(
     undefined,
     {}

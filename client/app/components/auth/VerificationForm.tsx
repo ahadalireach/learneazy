@@ -23,7 +23,7 @@ const VerificationForm: FC<Props> = ({ setRoute }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Account activated successfully.");
+      toast.success("Account activated successfully!");
       setRoute("Login");
     }
     if (error) {

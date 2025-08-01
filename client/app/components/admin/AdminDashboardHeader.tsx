@@ -43,8 +43,6 @@ const AdminDashboardHeader: FC<Props> = ({
       )
   );
 
-  const unreadCount = notifications.length;
-
   const { data, refetch } = useGetAllNotificationsByAdminQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
@@ -52,6 +50,7 @@ const AdminDashboardHeader: FC<Props> = ({
   const [updateNotificationStatus, { isSuccess }] =
     useUpdateNotificationStatusMutation();
 
+  const unreadCount = notifications.length;
   const playNotificationSound = () => {
     audio.play();
   };

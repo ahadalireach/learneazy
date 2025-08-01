@@ -6,15 +6,15 @@ import {
   Loader,
   PageHead,
 } from "@/app/components";
+import {
+  useCreatePaymentIntentMutation,
+  useGetStripePublishablekeyQuery,
+} from "@/redux/features/order/orderApi";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { useGetPublicCoursePreviewQuery } from "@/redux/features/courses/coursesApi";
-import {
-  useCreatePaymentIntentMutation,
-  useGetStripePublishablekeyQuery,
-} from "@/redux/features/order/orderApi";
 
 const Page = () => {
   const params = useParams();

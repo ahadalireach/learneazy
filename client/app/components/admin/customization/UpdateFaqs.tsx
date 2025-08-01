@@ -12,13 +12,14 @@ import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 type Props = {};
 
 const UpdateFaqs = (props: Props) => {
+  const [questions, setQuestions] = useState<any[]>([]);
+
   const { data, isLoading, refetch } = useGetLayoutDataQuery("FAQ", {
     refetchOnMountOrArgChange: true,
   });
+
   const [editLayout, { isSuccess: layoutSuccess, error }] =
     useUpdateLayoutMutation();
-
-  const [questions, setQuestions] = useState<any[]>([]);
 
   useEffect(() => {
     if (data) {
@@ -28,7 +29,7 @@ const UpdateFaqs = (props: Props) => {
 
   useEffect(() => {
     if (layoutSuccess) {
-      toast.success("FAQ updated successfully");
+      toast.success("FAQ updated successfully.");
       refetch();
     }
     if (error) {

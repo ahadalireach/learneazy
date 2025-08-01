@@ -2,19 +2,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Loader } from "../common";
 import styles from "../../styles/styles";
 import { BiSearch } from "react-icons/bi";
 import { useRouter } from "next/navigation";
 import React, { FC, useState } from "react";
 import { useGetLayoutDataQuery } from "@/redux/features/layout/layoutApi";
-import { Loader } from "../common";
 
 type Props = {};
 
 const Hero: FC<Props> = () => {
-  const { data, isLoading } = useGetLayoutDataQuery("Banner", {});
-  const [search, setSearch] = useState("");
   const router = useRouter();
+  const [search, setSearch] = useState("");
+
+  const { data, isLoading } = useGetLayoutDataQuery("Banner", {});
 
   const handleSearch = () => {
     if (search.trim()) {

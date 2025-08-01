@@ -11,12 +11,14 @@ import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 type Props = {};
 
 const UpdateCategories = (props: Props) => {
+  const [categories, setCategories] = useState<any[]>([]);
+
   const { data, isLoading, refetch } = useGetLayoutDataQuery("Categories", {
     refetchOnMountOrArgChange: true,
   });
+
   const [editLayout, { isSuccess: layoutSuccess, error }] =
     useUpdateLayoutMutation();
-  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     if (data) {
@@ -26,7 +28,7 @@ const UpdateCategories = (props: Props) => {
 
   useEffect(() => {
     if (layoutSuccess) {
-      toast.success("Categories updated successfully");
+      toast.success("Categories updated successfully.");
       refetch();
     }
     if (error) {

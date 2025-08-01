@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { BiMoon, BiSun } from "react-icons/bi";
 
 const ThemeToggle = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
 

@@ -23,11 +23,9 @@ const ProfileSidebar: FC<Props> = ({
   setActive,
   logOutHandler,
 }) => {
-  const menuItemStyle =
-    "w-full flex items-center px-4 py-3 cursor-pointer transition-colors duration-200";
-  const activeStyle =
-    "bg-blue-50 dark:bg-blue-900/20 border-r-4 border-blue-600 dark:border-blue-400";
-  const inactiveStyle = "hover:bg-slate-50 dark:hover:bg-slate-700/50";
+  const menuItemStyle = styles.navStyles.profileSidebarMenuItem;
+  const activeStyle = styles.navStyles.profileSidebarMenuItemActive;
+  const inactiveStyle = styles.navStyles.profileSidebarMenuItemInactive;
 
   return (
     <div className="w-full">
