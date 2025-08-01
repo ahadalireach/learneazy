@@ -21,6 +21,7 @@ import ThemeSwitcher from "./ThemeToggle";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, type FC } from "react";
 import { LoginForm, SignupForm, VerificationForm } from "../auth";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 
 interface HeaderProps {
   open: boolean;
@@ -41,27 +42,41 @@ const Header: FC<HeaderProps> = ({
   const [active, setActive] = useState(false);
   const [logout, setLogout] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  const { user } = useSelector((state: any) => state.auth);
-  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+
+  const [socialAuth, { isSuccess }] = useSocialAuthMutation();
+
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useLoadUserQuery(undefined, {});
+
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
   });
 
   useEffect(() => {
-    if (!user) {
-      if (data) {
-        socialAuth({
-          email: data?.user?.email,
-          name: data?.user?.name,
-          avatar: data.user?.image,
-        });
+    if (!isLoading) {
+      if (!userData) {
+        if (data) {
+          socialAuth({
+            email: data?.user?.email,
+            name: data?.user?.name,
+            avatar: data.user?.image,
+          });
+          refetch();
+        }
+      }
+      if (data === null) {
+        if (isSuccess) {
+          toast.success("Login Successfully!");
+        }
+      }
+      if (data === null && !isLoading && !userData) {
+        setLogout(true);
       }
     }
-
-    if (data === null && isSuccess) {
-      toast.success("Login Successfully");
-    }
-  }, [data, user, isSuccess, socialAuth]);
+  }, [data, userData, isLoading]);
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -91,10 +106,12 @@ const Header: FC<HeaderProps> = ({
               <NavItems isMobile={false} />
               <ThemeSwitcher />
 
-              {user ? (
+              {userData ? (
                 <Link href={"/profile"}>
                   <Image
-                    src={user.avatar ? user.avatar.url : avatar}
+                    src={
+                      userData?.user.avatar ? userData.user.avatar.url : avatar
+                    }
                     alt="User Avatar"
                     width={25}
                     height={25}
@@ -155,6 +172,7 @@ const Header: FC<HeaderProps> = ({
               setRoute={setRoute}
               activeItem={activeItem}
               component={LoginForm}
+              refetch={refetch}
             />
           )}
         </>

@@ -15,6 +15,7 @@ const CustomModal: FC<Props> = ({
   setOpen,
   setRoute,
   component: Component,
+  refetch,
 }) => {
   return (
     <Modal
@@ -25,7 +26,7 @@ const CustomModal: FC<Props> = ({
     >
       <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-[450px] max-h-[90vh] bg-white dark:bg-slate-900 rounded-[8px] shadow-lg outline-none overflow-y-auto">
         <div className="p-6">
-          <Component setOpen={setOpen} setRoute={setRoute} />
+          <Component setOpen={setOpen} setRoute={setRoute} refetch={refetch} />
         </div>
       </Box>
     </Modal>

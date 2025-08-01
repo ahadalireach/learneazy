@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,10 +7,18 @@ import styles from "../../styles/styles";
 import { useSelector } from "react-redux";
 import { avatar as avatarIcon } from "@/public";
 import ThemeToggle from "../common/ThemeToggle";
+import { MdMarkAsUnread } from "react-icons/md";
 import React, { FC, useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { MdMarkAsUnread, MdDelete } from "react-icons/md";
 import { HiOutlineUserCircle, HiOutlineX } from "react-icons/hi";
+import {
+  useGetAllNotificationsByAdminQuery,
+  useUpdateNotificationStatusMutation,
+} from "@/redux/features/notifications/notificationsApi";
+
+import socketIO from "socket.io-client";
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 type Props = {
   open?: boolean;
@@ -18,106 +27,68 @@ type Props = {
   setSidebarOpen?: any;
 };
 
-const dummyNotifications = [
-  {
-    id: 1,
-    title: "New User Registration",
-    message:
-      "John Doe has registered as a new student. Please review their profile.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 30),
-    type: "user",
-    read: false,
-  },
-  {
-    id: 2,
-    title: "Course Enrollment",
-    message: "25 new students enrolled in 'React Masterclass' course today.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2),
-    type: "course",
-    read: false,
-  },
-  {
-    id: 3,
-    title: "Payment Received",
-    message:
-      "$299 payment received for Premium Course Package from Sarah Wilson.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4),
-    type: "payment",
-    read: true,
-  },
-  {
-    id: 4,
-    title: "New Review Posted",
-    message:
-      "Alice Johnson posted a 5-star review for 'JavaScript Fundamentals'.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6),
-    type: "review",
-    read: false,
-  },
-  {
-    id: 5,
-    title: "Server Maintenance",
-    message:
-      "Scheduled server maintenance completed successfully. All systems are running normally.",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
-    type: "system",
-    read: true,
-  },
-];
-
 const AdminDashboardHeader: FC<Props> = ({
   open,
   setOpen,
   sidebarOpen,
   setSidebarOpen,
 }) => {
-  const { user } = useSelector((state: any) => state.auth);
-  const [notifications, setNotifications] = useState(dummyNotifications);
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [profileOpen, setProfileOpen] = useState(false);
   const [active, setActive] = useState(false);
+  const { user } = useSelector((state: any) => state.auth);
+  const [notifications, setNotifications] = useState<any>([]);
+  const [audio] = useState<any>(
+    typeof window !== "undefined" &&
+      new Audio(
+        "https://res.cloudinary.com/dnrxdohf7/video/upload/v1754043411/mixkit-gaming-lock-2848_utxeax.wav"
+      )
+  );
+
+  const unreadCount = notifications.length;
+
+  const { data, refetch } = useGetAllNotificationsByAdminQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const [updateNotificationStatus, { isSuccess }] =
+    useUpdateNotificationStatusMutation();
+
+  const playNotificationSound = () => {
+    audio.play();
+  };
 
   useEffect(() => {
-    const unread = notifications.filter((notif) => !notif.read).length;
-    setUnreadCount(unread);
-  }, [notifications]);
+    if (data) {
+      setNotifications(
+        data.notifications.filter((item: any) => item.status === "unread")
+      );
+    }
+    if (isSuccess) {
+      refetch();
+    }
+    audio.load();
+  }, [data, isSuccess, audio]);
 
-  const markAsRead = (id: number) => {
-    setNotifications((prev) =>
-      prev.map((notif) => (notif.id === id ? { ...notif, read: true } : notif))
-    );
-  };
-
-  const deleteNotification = (id: number) => {
-    setNotifications((prev) => prev.filter((notif) => notif.id !== id));
-  };
-
-  const markAllAsRead = () => {
-    setNotifications((prev) => prev.map((notif) => ({ ...notif, read: true })));
-  };
-
-  const getNotificationIcon = (type: string) => {
-    const icons = {
-      user: "👤",
-      course: "📚",
-      payment: "💰",
-      review: "⭐",
-      system: "⚙️",
-      achievement: "🏆",
+  useEffect(() => {
+    socketId.on("newNotification", (data) => {
+      refetch();
+      playNotificationSound();
+    });
+    return () => {
+      socketId.off("newNotification");
     };
-    return icons[type as keyof typeof icons] || "📢";
+  }, [refetch, playNotificationSound]);
+
+  const markAsRead = async (id: string) => {
+    await updateNotificationStatus(id);
   };
 
-  const getNotificationColor = (type: string) => {
-    const colors = {
-      user: "border-l-blue-500",
-      course: "border-l-green-500",
-      payment: "border-l-yellow-500",
-      review: "border-l-purple-500",
-      system: "border-l-red-500",
-      achievement: "border-l-indigo-500",
-    };
-    return colors[type as keyof typeof colors] || "border-l-gray-500";
+  const markAllAsRead = async () => {
+    if (notifications.length > 0) {
+      await Promise.all(
+        notifications.map((item: any) => updateNotificationStatus(item._id))
+      );
+      refetch();
+    }
   };
 
   if (typeof window !== "undefined") {
@@ -173,16 +144,6 @@ const AdminDashboardHeader: FC<Props> = ({
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-1 lg:gap-2">
-                        {unreadCount > 0 && (
-                          <button
-                            onClick={markAllAsRead}
-                            className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium px-2 py-1"
-                          >
-                            Mark all read
-                          </button>
-                        )}
-                      </div>
                     </div>
 
                     <div className="max-h-[50vh] lg:max-h-96 overflow-y-auto">
@@ -194,12 +155,10 @@ const AdminDashboardHeader: FC<Props> = ({
                           </p>
                         </div>
                       ) : (
-                        notifications.map((item) => (
+                        notifications.map((item: any) => (
                           <div
-                            key={item.id}
-                            className={`border-l-4 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-slate-800 ${getNotificationColor(
-                              item.type
-                            )} ${
+                            key={item._id}
+                            className={`border-l-4 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-slate-800 ${
                               !item.read
                                 ? "bg-blue-50/30 dark:bg-blue-900/10"
                                 : ""
@@ -207,9 +166,6 @@ const AdminDashboardHeader: FC<Props> = ({
                           >
                             <div className="p-3 lg:p-4 border-b border-slate-100 dark:border-slate-800">
                               <div className="flex items-start gap-2 lg:gap-3">
-                                <span className="text-base lg:text-lg flex-shrink-0 mt-0.5">
-                                  {getNotificationIcon(item.type)}
-                                </span>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-2 mb-1">
                                     <h4
@@ -235,20 +191,13 @@ const AdminDashboardHeader: FC<Props> = ({
                                 <div className="flex items-center gap-0.5 lg:gap-1 flex-shrink-0">
                                   {!item.read && (
                                     <button
-                                      onClick={() => markAsRead(item.id)}
+                                      onClick={() => markAsRead(item._id)}
                                       className="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                                       title="Mark as read"
                                     >
                                       <MdMarkAsUnread className="w-3 h-3 lg:w-4 lg:h-4 text-slate-400 hover:text-blue-500" />
                                     </button>
                                   )}
-                                  <button
-                                    onClick={() => deleteNotification(item.id)}
-                                    className="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                                    title="Delete"
-                                  >
-                                    <MdDelete className="w-3 h-3 lg:w-4 lg:h-4 text-slate-400 hover:text-red-500" />
-                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -259,8 +208,11 @@ const AdminDashboardHeader: FC<Props> = ({
 
                     {notifications.length > 0 && (
                       <div className="p-2 lg:p-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50">
-                        <button className="w-full text-center text-xs lg:text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium py-1.5 lg:py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                          View All Notifications
+                        <button
+                          className="w-full text-center text-xs lg:text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium py-1.5 lg:py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                          onClick={markAllAsRead}
+                        >
+                          Mark all read
                         </button>
                       </div>
                     )}

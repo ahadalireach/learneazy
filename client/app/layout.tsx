@@ -3,10 +3,15 @@ import "./globals.css";
 import { Loader } from "./components";
 import { Toaster } from "react-hot-toast";
 import { Poppins } from "next/font/google";
+import React, { FC, useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ReduxProvider } from "./providers/ReduxProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+
+import socketIO from "socket.io-client";
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,9 +42,12 @@ export default function RootLayout({
   );
 }
 
-const Custom: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isLoading: isUserLoading } = useLoadUserQuery({});
+const Custom: FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isLoading } = useLoadUserQuery({});
 
-  const isLoading = isUserLoading;
+  useEffect(() => {
+    socketId.on("connection", () => {});
+  }, []);
+
   return <>{isLoading ? <Loader /> : <div>{children}</div>}</>;
 };

@@ -11,6 +11,10 @@ import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useProcessOrderMutation } from "@/redux/features/order/orderApi";
 
+import socketIO from "socket.io-client";
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+
 type Props = {
   setOpen: any;
   data: any;
@@ -47,6 +51,11 @@ const CheckOutForm = ({ data, user, refetch }: Props) => {
   useEffect(() => {
     if (orderData) {
       refetch();
+      socketId.emit("notification", {
+        title: "New Order Placed",
+        message: `A new order has been placed for '${data.name}' by user '${user.name}'.`,
+        userId: user._id,
+      });
       redirect(`/course-access/${data._id}`);
     }
     if (error) {

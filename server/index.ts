@@ -16,7 +16,11 @@ import courseRoutes from "./routes/courseRoutes";
 import layoutRoutes from "./routes/layoutRoutes";
 import analyticsRoutes from "./routes/analyticsRoutes";
 import notificationRoutes from "./routes/notificationRoutes";
+
 import { v2 as cloudinary } from "cloudinary";
+
+import http from "http";
+import { initSocketServer } from "./socketServer";
 import { errorMiddlware } from "./middleware/error";
 
 const PORT = process.env.PORT || 4000;
@@ -75,11 +79,18 @@ const startServer = async () => {
       api_secret: process.env.CLOUDINARY_API_SECRET,
     });
 
-    app.listen(PORT, () => {
+    // Create HTTP server and integrate with Socket.IO
+    const server = http.createServer(app);
+    initSocketServer(server);
+
+    server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`.green.underline.bold);
       console.log(
         `Health check available at: http://localhost:${PORT}/health`.blue
           .underline.bold
+      );
+      console.log(
+        `Socket.IO server running on port ${PORT}`.cyan.underline.bold
       );
     });
   } catch (error) {

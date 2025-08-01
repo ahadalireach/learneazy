@@ -177,16 +177,10 @@ const Footer = (props: Props) => {
                   <Link
                     href="https://www.ahadali.me"
                     className={combineStyles(
-                      "flex items-center gap-2 text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "flex items-center text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
-                    <CgWebsite
-                      className={combineStyles(
-                        styles.utilityStyles.textAccent,
-                        "text-sm"
-                      )}
-                    />
                     Portfolio
                   </Link>
                 </li>
@@ -194,16 +188,10 @@ const Footer = (props: Props) => {
                   <Link
                     href="https://www.linkedin.com/in/ahadalireach/"
                     className={combineStyles(
-                      "flex items-center gap-2 text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "flex items-center text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
-                    <FaLinkedin
-                      className={combineStyles(
-                        styles.utilityStyles.textAccent,
-                        "text-sm"
-                      )}
-                    />
                     Linkedin
                   </Link>
                 </li>
@@ -211,16 +199,10 @@ const Footer = (props: Props) => {
                   <Link
                     href="https://www.github.com/ahadalireach"
                     className={combineStyles(
-                      "flex items-center gap-2 text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "flex items-center text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
-                    <FaGithub
-                      className={combineStyles(
-                        styles.utilityStyles.textAccent,
-                        "text-sm"
-                      )}
-                    />
                     GitHub
                   </Link>
                 </li>

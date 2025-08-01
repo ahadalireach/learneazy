@@ -16,10 +16,14 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { format } from "timeago.js";
 import styles from "@/app/styles/styles";
-import { CoursePlayer, Ratings } from "../common";
 import { BiMessage } from "react-icons/bi";
+import { CoursePlayer, Ratings } from "../common";
 import React, { useEffect, useState } from "react";
 import { VscVerifiedFilled } from "react-icons/vsc";
+
+import socketIO from "socket.io-client";
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 type Props = {
   data: any;
@@ -136,6 +140,11 @@ const EnrolledCourseContentMedia = ({
     if (addQuestionSuccess) {
       setQuestion("");
       refetch();
+      socketId.emit("notification", {
+        title: "New Question Submitted",
+        message: `A new question was asked in '${data[activeVideo].title}'.`,
+        userId: user._id,
+      });
     }
     if (addQuestionError) {
       if ("data" in addQuestionError) {
@@ -146,6 +155,13 @@ const EnrolledCourseContentMedia = ({
     if (addQuestionAnswerSuccess) {
       setAnswer("");
       refetch();
+      if (user.role !== "admin") {
+        socketId.emit("notification", {
+          title: "New Answer Submitted",
+          message: `Question in '${data[activeVideo].title}' has received a new answer.`,
+          userId: user._id,
+        });
+      }
     }
     if (addQuestionAnswerError) {
       if ("data" in addQuestionAnswerError) {
@@ -157,6 +173,11 @@ const EnrolledCourseContentMedia = ({
       setReview("");
       setRating(1);
       courseRefetch();
+      socketId.emit("notification", {
+        title: "New Review Submitted",
+        message: `A new review was added for '${data[activeVideo].title}'.`,
+        userId: user._id,
+      });
     }
     if (addReviewInCourseError) {
       if ("data" in addReviewInCourseError) {
@@ -631,13 +652,12 @@ const CommentReply = ({
             No questions yet for this lesson.
           </div>
         ) : (
-          questions.map((item: any, index: any) => (
+          questions.map((item: any) => (
             <CommentItem
-              key={index}
+              key={item._id}
               data={data}
               activeVideo={activeVideo}
               item={item}
-              index={index}
               answer={answer}
               setAnswer={setAnswer}
               questionId={questionId}

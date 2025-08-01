@@ -191,7 +191,7 @@ export const addCourseQuestion = catchAsyncError(
       await Notification.create({
         user: req.user?._id,
         title: "New Question Received",
-        message: `You have a new question in ${courseContent.title}`,
+        message: `You have a new question in ${course?.name}`,
       });
 
       await course?.save();
@@ -251,7 +251,7 @@ export const addQuestionAnswer = catchAsyncError(
         await Notification.create({
           user: req.user?._id,
           title: "New Question Reply Received",
-          message: `You have a new question reply in ${courseContent.title}`,
+          message: `You have a new question in ${course?.name}`,
         });
       } else {
         try {
