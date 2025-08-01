@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "../../styles/styles";
 import { useSelector } from "react-redux";
+import { MdLogout } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { avatar as avatarIcon } from "@/public";
 import { menuSections } from "@/app/static/data";
@@ -28,10 +29,10 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
           height={80}
           className="w-[40px] h-[40px] sm:w-[80px] sm:h-[80px] rounded-full border cursor-pointer mb-4"
         />
-        <h5 className="text-[12px] sm:text-[18px] font-Poppins dark:text-white text-black">
+        <h5 className="text-[12px] sm:text-[18px] dark:text-white text-black">
           {user?.name || "Admin User"}
         </h5>
-        <h6 className="text-[10px] sm:text-[12px] font-Poppins dark:text-white text-black">
+        <h6 className="text-[10px] sm:text-[12px] dark:text-white text-black">
           {user?.role || "Administrator"}
         </h6>
       </div>
@@ -40,7 +41,7 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
         {menuSections.map((section, sectionIndex) => (
           <div key={section.title}>
             <div className="px-6 py-2">
-              <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-Poppins 800px:block hidden">
+              <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider 800px:block hidden">
                 {section.title}
               </h3>
             </div>
@@ -67,7 +68,7 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
                 />
                 <h5
                   className={styles.combineStyles(
-                    "pl-3 800px:block hidden font-Poppins text-sm font-medium",
+                    "pl-3 800px:block hidden text-sm font-medium",
                     isActive(item.path)
                       ? "text-blue-700 dark:text-blue-300"
                       : "text-slate-700 dark:text-slate-300"
@@ -89,7 +90,7 @@ const AdminDashboardSidebar = ({ isOpen = false, setIsOpen }: Props) => {
           )}
         >
           <MdLogout size={20} className="text-slate-700 dark:text-slate-300" />
-          <h5 className="pl-3 800px:block hidden font-Poppins text-sm font-medium text-slate-700 dark:text-slate-300">
+          <h5 className="pl-3 800px:block hidden text-sm font-medium text-slate-700 dark:text-slate-300">
             Back to Site
           </h5>
         </Link>

@@ -20,8 +20,7 @@ const About = () => {
       <div className="text-center mb-12">
         <h2
           className={
-            styles.titleStyles.h2 +
-            " mb-4 font-Poppins text-blue-600 dark:text-blue-400"
+            styles.titleStyles.h2 + " mb-4 text-blue-600 dark:text-blue-400"
           }
         >
           Welcome to
@@ -71,7 +70,7 @@ const About = () => {
               <h3
                 className={styles.combineStyles(
                   styles.titleStyles.h5,
-                  "mb-2 font-Poppins",
+                  "mb-2",
                   styles.utilityStyles.textAccent
                 )}
               >
@@ -89,7 +88,7 @@ const About = () => {
                     "bg-slate-50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-800 mb-2"
                   )}
                 >
-                  <span className="text-sm font-Poppins">{f.desc}</span>
+                  <span className="text-sm">{f.desc}</span>
                 </li>
               </ul>
             </article>

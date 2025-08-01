@@ -68,7 +68,7 @@ const Header: FC<HeaderProps> = ({
       }
       if (data === null) {
         if (isSuccess) {
-          toast.success("Login Successfully!");
+          toast.success("Logged in successfully!");
         }
       }
       if (data === null && !isLoading && !userData) {
@@ -153,7 +153,7 @@ const Header: FC<HeaderProps> = ({
               <NavItems isMobile={true} />
               <button
                 onClick={() => setOpen(true)}
-                className="flex items-center py-5 px-6 font-Poppins font-[400] text-[18px] text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-600 cursor-pointer transition-colors"
+                className="flex items-center py-5 px-6 font-[400] text-[18px] text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-600 cursor-pointer transition-colors"
               >
                 <HiOutlineUserCircle size={25} className="mr-2" />
                 <span>Account</span>

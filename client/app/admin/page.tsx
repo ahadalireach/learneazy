@@ -1,6 +1,6 @@
 "use client";
 import {
-  AdminDashboardHero,
+  AdminDashboardMain,
   AdminDashboardSidebar,
   AdminDashboardHeader,
   PageHead,
@@ -43,7 +43,7 @@ const Page = (props: Props) => {
               />
             </div>
             <div className="flex-1">
-              <AdminDashboardHero isDashboard={true} />
+              <AdminDashboardMain isDashboard={true} />
             </div>
           </div>
         </div>

@@ -80,7 +80,7 @@ const UpdateCourse = ({ id }: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Course updated successfully");
+      toast.success("Course updated successfully!");
       redirect("/admin/courses");
     }
     if (error) {

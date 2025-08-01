@@ -113,7 +113,7 @@ const VerificationForm: FC<Props> = ({ setRoute }) => {
             key={key}
             ref={inputRefs[index]}
             className={styles.combineStyles(
-              "w-12 h-12 bg-white dark:bg-slate-800 border-2 rounded-lg flex items-center justify-center text-lg font-Poppins outline-none text-center transition-all duration-200 focus:ring-2 focus:ring-offset-0",
+              "w-12 h-12 bg-white dark:bg-slate-800 border-2 rounded-lg flex items-center justify-center text-lg outline-none text-center transition-all duration-200 focus:ring-2 focus:ring-offset-0",
               invalidError
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500/20 animate-pulse"
                 : "border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20"
@@ -139,7 +139,7 @@ const VerificationForm: FC<Props> = ({ setRoute }) => {
       </button>
 
       <div className="text-center">
-        <p className="text-xs text-slate-600 dark:text-slate-400 font-Poppins">
+        <p className="text-xs text-slate-600 dark:text-slate-400">
           Go back to sign in?{" "}
           <button
             type="button"

@@ -33,7 +33,7 @@ const LoginForm: FC<Props> = ({ setRoute, setOpen, refetch }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Login Successfully.");
+      toast.success("Logged in successfully!");
       setOpen(false);
       refetch();
     }
@@ -175,7 +175,7 @@ const LoginForm: FC<Props> = ({ setRoute, setOpen, refetch }) => {
             <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 font-Poppins">
+            <span className="px-2 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400">
               Or continue with
             </span>
           </div>
@@ -211,7 +211,7 @@ const LoginForm: FC<Props> = ({ setRoute, setOpen, refetch }) => {
         </div>
 
         <div className="text-center mt-4">
-          <p className="text-xs text-slate-600 dark:text-slate-400 font-Poppins">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             Don&apos;t have an account?{" "}
             <button
               type="button"

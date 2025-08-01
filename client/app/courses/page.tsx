@@ -118,7 +118,7 @@ const Page = (props: Props) => {
             {courses && courses.length === 0 && (
               <div className="flex flex-col items-center justify-center min-h-[40vh]">
                 <MdOutlineSentimentDissatisfied className="text-4xl text-slate-400 dark:text-slate-500 mb-2" />
-                <p className="text-xl text-slate-500 dark:text-slate-400 text-center font-Poppins">
+                <p className="text-xl text-slate-500 dark:text-slate-400 text-center">
                   {search
                     ? "No courses found!"
                     : "No courses found in this category. Please try another one!"}

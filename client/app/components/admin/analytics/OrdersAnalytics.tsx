@@ -56,7 +56,6 @@ const OrdersAnalytics = ({ isDashboard }: Props) => {
     return <Loader />;
   }
 
-  // Dashboard view (compact)
   if (isDashboard) {
     return (
       <div

@@ -1,3 +1,10 @@
+import {
+  MdPeople,
+  MdBarChart,
+  MdAttachMoney,
+  MdReceiptLong,
+  MdShoppingCart,
+} from "react-icons/md";
 import { format } from "timeago.js";
 import styles from "@/app/styles/styles";
 import { Loader } from "@/app/components";
@@ -47,7 +54,7 @@ const Invoices = ({ isDashboard }: Props) => {
       <div className="space-y-4">
         {orderData && orderData.length > 0 ? (
           <div className="space-y-3">
-            {orderData.slice(0, 5).map((order: any, index: number) => (
+            {orderData.slice(0, 3).map((order: any, index: number) => (
               <div
                 key={order._id}
                 className={styles.combineStyles(
@@ -96,19 +103,7 @@ const Invoices = ({ isDashboard }: Props) => {
         ) : (
           <div className="text-center py-8">
             <div className="w-12 h-12 mx-auto mb-3 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
-              <svg
-                className="w-6 h-6 text-slate-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
+              <MdReceiptLong className="w-6 h-6 text-slate-400" />
             </div>
             <p className="text-slate-500 dark:text-slate-400 text-sm">
               No transactions yet
@@ -143,19 +138,7 @@ const Invoices = ({ isDashboard }: Props) => {
           )}
         >
           <div className="w-12 h-12 mx-auto mb-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-            <svg
-              className="w-6 h-6 text-blue-600 dark:text-blue-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-              />
-            </svg>
+            <MdShoppingCart className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">
             {orderData.length}
@@ -173,19 +156,7 @@ const Invoices = ({ isDashboard }: Props) => {
           )}
         >
           <div className="w-12 h-12 mx-auto mb-3 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
-            <svg
-              className="w-6 h-6 text-green-600 dark:text-green-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
-              />
-            </svg>
+            <MdAttachMoney className="w-8 h-8 text-green-600 dark:text-green-400" />
           </div>
           <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-1">
             $
@@ -207,19 +178,7 @@ const Invoices = ({ isDashboard }: Props) => {
           )}
         >
           <div className="w-12 h-12 mx-auto mb-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
-            <svg
-              className="w-6 h-6 text-purple-600 dark:text-purple-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-              />
-            </svg>
+            <MdBarChart className="w-8 h-8 text-purple-600 dark:text-purple-400" />
           </div>
           <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">
             $
@@ -245,19 +204,7 @@ const Invoices = ({ isDashboard }: Props) => {
           )}
         >
           <div className="w-12 h-12 mx-auto mb-3 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center">
-            <svg
-              className="w-6 h-6 text-orange-600 dark:text-orange-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-              />
-            </svg>
+            <MdPeople className="w-8 h-8 text-orange-600 dark:text-orange-400" />
           </div>
           <h3 className="text-2xl font-bold text-orange-600 dark:text-orange-400 mb-1">
             {new Set(orderData.map((order: any) => order.userId)).size}
@@ -400,9 +347,6 @@ const Invoices = ({ isDashboard }: Props) => {
                           >
                             <AiOutlineMail size={16} />
                           </a>
-                          <button className="text-xs text-blue-600 dark:text-blue-400 hover:underline">
-                            Details
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -449,19 +393,7 @@ const Invoices = ({ isDashboard }: Props) => {
         ) : (
           <div className="text-center py-12">
             <div className="w-16 h-16 mx-auto mb-4 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-slate-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
+              <MdReceiptLong className="w-8 h-8 text-slate-400" />
             </div>
             <p className="text-slate-600 dark:text-slate-400 mb-2">
               No orders found

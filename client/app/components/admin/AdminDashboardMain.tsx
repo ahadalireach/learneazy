@@ -35,7 +35,7 @@ const CircularProgressWithLabel: FC<{ open?: boolean; value?: number }> = ({
   );
 };
 
-const AdminDashboardHero = ({ isDashboard, open, setOpen }: Props) => {
+const AdminDashboardMain = ({ isDashboard, open }: Props) => {
   const [ordersComparePercentage, setOrdersComparePercentage] = useState<any>();
   const [userComparePercentage, setUserComparePercentage] = useState<any>();
 
@@ -116,7 +116,7 @@ const AdminDashboardHero = ({ isDashboard, open, setOpen }: Props) => {
           )}
         >
           <h3 className="text-sm lg:text-base font-semibold text-slate-900 dark:text-white mb-2">
-            Total Users
+            Total Users <span className="text-xs">(This Month)</span>
           </h3>
           <p className="text-2xl lg:text-3xl font-bold text-blue-600 dark:text-blue-400">
             {userComparePercentage?.currentMonth || 0}
@@ -130,7 +130,7 @@ const AdminDashboardHero = ({ isDashboard, open, setOpen }: Props) => {
           )}
         >
           <h3 className="text-sm lg:text-base font-semibold text-slate-900 dark:text-white mb-2">
-            Total Orders
+            Total Orders <span className="text-xs">(This Month)</span>
           </h3>
           <p className="text-2xl lg:text-3xl font-bold text-green-600 dark:text-green-400">
             {ordersComparePercentage?.currentMonth || 0}
@@ -293,4 +293,4 @@ const AdminDashboardHero = ({ isDashboard, open, setOpen }: Props) => {
   );
 };
 
-export default AdminDashboardHero;
+export default AdminDashboardMain;

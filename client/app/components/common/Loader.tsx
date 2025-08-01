@@ -28,9 +28,7 @@ const Loader: FC<LoaderProps> = ({
         )}
       />
       {text && (
-        <p className="text-sm text-slate-600 dark:text-slate-400 font-Poppins">
-          {text}
-        </p>
+        <p className="text-sm text-slate-600 dark:text-slate-400">{text}</p>
       )}
     </div>
   );

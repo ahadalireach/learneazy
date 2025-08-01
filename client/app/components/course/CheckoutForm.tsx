@@ -108,7 +108,7 @@ const CheckOutForm = ({ data, user, refetch }: Props) => {
         {message && (
           <div
             id="payment-message"
-            className="text-red-600 dark:text-red-400 font-Poppins pt-2 text-center"
+            className="text-red-600 dark:text-red-400 pt-2 text-center"
           >
             {message}
           </div>

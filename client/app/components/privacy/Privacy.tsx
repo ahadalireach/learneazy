@@ -13,12 +13,7 @@ const Privacy: FC = () => {
       )}
     >
       <header className="text-center mb-12">
-        <h2
-          className={styles.combineStyles(
-            styles.titleStyles.h2,
-            "mb-3 font-Poppins"
-          )}
-        >
+        <h2 className={styles.combineStyles(styles.titleStyles.h2, "mb-3")}>
           <span className={styles.utilityStyles.textAccent}>Privacy </span>
           Policy
         </h2>
@@ -49,10 +44,7 @@ const Privacy: FC = () => {
                 <Icon size={32} className={styles.utilityStyles.textAccent} />
               </div>
               <h3
-                className={styles.combineStyles(
-                  styles.titleStyles.h5,
-                  "mb-2 font-Poppins"
-                )}
+                className={styles.combineStyles(styles.titleStyles.h5, "mb-2")}
               >
                 {card.title}
               </h3>
@@ -89,8 +81,7 @@ const Privacy: FC = () => {
         <p
           className={styles.combineStyles(
             "mt-4 text-sm text-center",
-            styles.utilityStyles.textMuted,
-            "font-Poppins"
+            styles.utilityStyles.textMuted
           )}
         >
           By using Learneazy, you agree to this privacy policy. We may update

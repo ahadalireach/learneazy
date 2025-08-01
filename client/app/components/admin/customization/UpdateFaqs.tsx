@@ -29,7 +29,7 @@ const UpdateFaqs = (props: Props) => {
 
   useEffect(() => {
     if (layoutSuccess) {
-      toast.success("FAQ updated successfully.");
+      toast.success("FAQ updated successfully!");
       refetch();
     }
     if (error) {

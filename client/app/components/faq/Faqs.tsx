@@ -93,7 +93,7 @@ const Faqs = (props: Props) => {
                   {activeQuestion === q._id && (
                     <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
                       <p
-                        className={`${styles.utilityStyles.textMuted} font-Poppins leading-relaxed`}
+                        className={`${styles.utilityStyles.textMuted} leading-relaxed`}
                       >
                         {q.answer}
                       </p>

@@ -27,10 +27,7 @@ const Courses = (props: Props) => {
       <div className={styles.sectionStyles.container}>
         <div className="text-center mb-12 lg:mb-16">
           <h1
-            className={combineStyles(
-              styles.titleStyles.h2,
-              "text-center font-Poppins mb-4"
-            )}
+            className={combineStyles(styles.titleStyles.h2, "text-center mb-4")}
           >
             <span>
               Expand Your Career{" "}

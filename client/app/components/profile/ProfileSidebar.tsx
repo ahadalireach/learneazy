@@ -45,7 +45,7 @@ const ProfileSidebar: FC<Props> = ({
         />
         <h5
           className={styles.combineStyles(
-            "pl-3 800px:block hidden font-Poppins text-sm font-medium",
+            "pl-3 800px:block hidden text-sm font-medium",
             active === 1
               ? "text-blue-700 dark:text-blue-300"
               : "text-slate-700 dark:text-slate-300"
@@ -71,7 +71,7 @@ const ProfileSidebar: FC<Props> = ({
         />
         <h5
           className={styles.combineStyles(
-            "pl-3 800px:block hidden font-Poppins text-sm font-medium",
+            "pl-3 800px:block hidden text-sm font-medium",
             active === 2
               ? "text-blue-700 dark:text-blue-300"
               : "text-slate-700 dark:text-slate-300"
@@ -97,7 +97,7 @@ const ProfileSidebar: FC<Props> = ({
         />
         <h5
           className={styles.combineStyles(
-            "pl-3 800px:block hidden font-Poppins text-sm font-medium",
+            "pl-3 800px:block hidden text-sm font-medium",
             active === 3
               ? "text-blue-700 dark:text-blue-300"
               : "text-slate-700 dark:text-slate-300"
@@ -124,7 +124,7 @@ const ProfileSidebar: FC<Props> = ({
           />
           <h5
             className={styles.combineStyles(
-              "pl-3 800px:block hidden font-Poppins text-sm font-medium",
+              "pl-3 800px:block hidden text-sm font-medium",
               active === 6
                 ? "text-blue-700 dark:text-blue-300"
                 : "text-slate-700 dark:text-slate-300"
@@ -151,7 +151,7 @@ const ProfileSidebar: FC<Props> = ({
         />
         <h5
           className={styles.combineStyles(
-            "pl-3 800px:block hidden font-Poppins text-sm font-medium",
+            "pl-3 800px:block hidden text-sm font-medium",
             active === 4
               ? "text-blue-700 dark:text-blue-300"
               : "text-slate-700 dark:text-slate-300"

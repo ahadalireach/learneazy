@@ -20,9 +20,7 @@ const ReviewCard = (props: Props) => {
           <h5 className={`${styles.titleStyles.card} text-lg mb-1 truncate`}>
             {props.item.name}
           </h5>
-          <p
-            className={`${styles.utilityStyles.textMuted} text-sm font-Poppins mb-2`}
-          >
+          <p className={`${styles.utilityStyles.textMuted} text-sm mb-2`}>
             {props.item.profession}
           </p>
           <div className="flex items-center">
@@ -32,7 +30,7 @@ const ReviewCard = (props: Props) => {
       </div>
 
       <p
-        className={`${styles.utilityStyles.textMuted} font-Poppins leading-relaxed text-sm`}
+        className={`${styles.utilityStyles.textMuted} leading-relaxed text-sm`}
       >
         {props.item.comment}
       </p>

@@ -55,7 +55,7 @@ const Hero: FC<Props> = () => {
                   <span
                     className={styles.combineStyles(
                       styles.utilityStyles.textAccent,
-                      "font-Poppins font-medium text-sm"
+                      "font-medium text-sm"
                     )}
                   >
                     Learn Anything
@@ -166,7 +166,7 @@ const Hero: FC<Props> = () => {
                     ))}
                   </div>
                   <div className="text-left">
-                    <p className="text-slate-700 dark:text-slate-300 font-Poppins font-medium">
+                    <p className="text-slate-700 dark:text-slate-300 font-medium">
                       <span
                         className={styles.combineStyles(
                           styles.utilityStyles.textAccent,

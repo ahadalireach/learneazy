@@ -133,7 +133,7 @@ const AllCourses = (props: Props) => {
     if (isSuccess) {
       setOpen(false);
       refetch();
-      toast.success("Course Deleted Successfully");
+      toast.success("Course deleted successfully!");
     }
     if (error) {
       if ("data" in error) {

@@ -71,7 +71,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="/about"
                     className={combineStyles(
-                      "text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -82,7 +82,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="/privacy"
                     className={combineStyles(
-                      "text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -93,7 +93,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="/faq"
                     className={combineStyles(
-                      "text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -119,7 +119,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="/courses"
                     className={combineStyles(
-                      "text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -130,7 +130,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="/profile"
                     className={combineStyles(
-                      "text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -141,7 +141,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="/course-dashboard"
                     className={combineStyles(
-                      "text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -167,7 +167,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="https://www.ahadali.me"
                     className={combineStyles(
-                      "flex items-center text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "flex items-center text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -178,7 +178,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="https://www.linkedin.com/in/ahadalireach/"
                     className={combineStyles(
-                      "flex items-center text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "flex items-center text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >
@@ -189,7 +189,7 @@ const Footer = (props: Props) => {
                   <Link
                     href="https://www.github.com/ahadalireach"
                     className={combineStyles(
-                      "flex items-center text-slate-700 dark:text-gray-300 font-Poppins transition-colors duration-200",
+                      "flex items-center text-slate-700 dark:text-gray-300 transition-colors duration-200",
                       "hover:text-blue-600 dark:hover:text-blue-400"
                     )}
                   >

@@ -121,7 +121,9 @@ const CourseContentSections: FC<Props> = (props) => {
                       />
                       <div className="flex-1">
                         <h3 className="text-base font-medium text-slate-900 dark:text-white">
-                          {item.title}
+                          {item.title.length > 22
+                            ? item.title.slice(0, 22) + "..."
+                            : item.title}
                         </h3>
                         <span className="text-xs text-slate-500 dark:text-slate-400">
                           {item.videoLength > 60

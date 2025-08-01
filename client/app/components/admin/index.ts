@@ -6,7 +6,7 @@ export { default as CreateCourse } from "./course/CreateCourse";
 export { default as CourseContent } from "./course/CourseContent";
 export { default as CoursePreview } from "./course/CoursePreview";
 export { default as CourseOptions } from "./course/CourseOptions";
-export { default as AdminDashboardHero } from "./AdminDashboardHero";
+export { default as AdminDashboardMain } from "./AdminDashboardMain";
 export { default as AdminDashboardHeader } from "./AdminDashboardHeader";
 export { default as CourseInformation } from "./course/CourseInformation";
 export { default as AdminDashboardSidebar } from "./AdminDashboardSidebar";

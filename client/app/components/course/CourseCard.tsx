@@ -48,7 +48,7 @@ const CourseCard: FC<Props> = ({ item, isProfile }) => {
             className="w-8 h-8 rounded-full border-2 border-slate-200 dark:border-slate-600 object-cover"
           />
           <span
-            className={`${styles.utilityStyles.textMuted} text-sm font-Poppins font-medium`}
+            className={`${styles.utilityStyles.textMuted} text-sm font-medium`}
           >
             Ahad Ali
           </span>
@@ -70,7 +70,7 @@ const CourseCard: FC<Props> = ({ item, isProfile }) => {
         </div>
 
         <div
-          className={`${styles.cardStyles.footer} flex items-center justify-between text-sm ${styles.utilityStyles.textMuted} font-Poppins`}
+          className={`${styles.cardStyles.footer} flex items-center justify-between text-sm ${styles.utilityStyles.textMuted}`}
         >
           <div className="flex items-center gap-1.5">
             <AiOutlineUser className="w-4 h-4" />

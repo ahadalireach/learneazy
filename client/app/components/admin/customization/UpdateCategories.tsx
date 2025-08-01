@@ -28,7 +28,7 @@ const UpdateCategories = (props: Props) => {
 
   useEffect(() => {
     if (layoutSuccess) {
-      toast.success("Categories updated successfully.");
+      toast.success("Categories updated successfully!");
       refetch();
     }
     if (error) {
