@@ -82,9 +82,55 @@ const ProfileDashboard: FC<Props> = ({ user }) => {
                   ))}
               </div>
               {courses.length === 0 && (
-                <h1 className="text-center text-[18px] dark:text-white text-black">
-                  You don&apos;t have any purchased courses!
-                </h1>
+                <div
+                  className={styles.combineStyles(
+                    styles.cardStyles.base,
+                    styles.cardStyles.elevated,
+                    styles.cardStyles.paddingLarge,
+                    "flex flex-col items-center justify-center text-center bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 mb-8"
+                  )}
+                >
+                  <svg
+                    className="w-12 h-12 mb-4 text-blue-400 dark:text-blue-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0H7m5 0h5"
+                    />
+                  </svg>
+                  <h2
+                    className={styles.combineStyles(
+                      styles.titleStyles.h5,
+                      "mb-2 text-blue-600 dark:text-blue-400 font-Poppins"
+                    )}
+                  >
+                    No Courses Yet
+                  </h2>
+                  <p
+                    className={styles.combineStyles(
+                      styles.titleStyles.subtitle,
+                      "mb-2 text-slate-600 dark:text-slate-400"
+                    )}
+                  >
+                    You haven&apos;t purchased any courses yet.
+                  </p>
+                  <a
+                    href="/courses"
+                    className={styles.combineStyles(
+                      styles.buttonStyles.base,
+                      styles.buttonStyles.primary,
+                      styles.buttonStyles.medium,
+                      "mt-4"
+                    )}
+                  >
+                    Browse Courses
+                  </a>
+                </div>
               )}
             </div>
           )}

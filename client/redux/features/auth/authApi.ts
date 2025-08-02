@@ -31,12 +31,12 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
     activation: builder.mutation({
-      query: ({ activation_token, activation_code }) => ({
+      query: ({ activationToken, activationCode }) => ({
         url: "/users/auth/activate",
         method: "POST",
         body: {
-          activation_token,
-          activation_code,
+          activationToken,
+          activationCode,
         },
       }),
     }),

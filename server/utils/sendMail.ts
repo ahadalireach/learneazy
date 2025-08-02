@@ -30,73 +30,68 @@ const sendMail = async (options: MailOptions) => {
     },
   });
 
-  const mainColor = "#374151";
-  const buttonColor = "#1f2937";
-  const accentColor = "#3b82f6";
-  const successColor = "#10b981";
+  const mainColor = "#1e293b"; // dark slate (bg-slate-800)
+  const cardBg = "#fff"; // white card
+  const cardShadow = "0 4px 16px rgba(30,41,59,0.10)"; // shadow-md
+  const borderRadius = "16px"; // rounded-lg
+  const accentColor = "#2563eb"; // blue-600
+  const mutedColor = "#64748b"; // slate-500
+  const borderColor = "#e2e8f0"; // slate-200
+  const successColor = "#10b981"; // green-600
+  const fontFamily =
+    "'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 
   let html = "";
 
   // Account Activation Email with Code
   if (emailType === "activation" && activationCode) {
     html = `
-      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; padding: 40px 0; margin: 0;">
-        <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden;">
-          <!-- Header -->
+      <div style="background: #f1f5f9; padding: 40px 0; font-family: ${fontFamily};">
+        <div style="max-width: 600px; margin: auto; background: ${cardBg}; border-radius: ${borderRadius}; box-shadow: ${cardShadow}; border: 1px solid ${borderColor}; overflow: hidden;">
           <div style="background: linear-gradient(135deg, ${mainColor} 0%, ${accentColor} 100%); padding: 32px 24px; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
+            <h1 style="color: #fff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
               📚 Learneazy LMS
             </h1>
             <p style="color: #e2e8f0; margin: 8px 0 0 0; font-size: 16px;">
               Learning Management System
             </p>
           </div>
-
-          <!-- Content -->
           <div style="padding: 40px 32px;">
             <h2 style="color: ${mainColor}; margin: 0 0 16px 0; font-size: 24px; font-weight: 600;">
               Activate Your Account
             </h2>
-
-            <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
+            <p style="color: ${mutedColor}; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
               Hello <strong style="color: ${mainColor};">${
       options.name || "there"
     }</strong>,
             </p>
-
-            <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 32px 0;">
+            <p style="color: ${mutedColor}; font-size: 16px; line-height: 1.6; margin: 0 0 32px 0;">
               Welcome to Learneazy LMS! To complete your registration and start your learning journey, please use the activation code below:
             </p>
-
-            <!-- Activation Code Box -->
-            <div style="background: #f1f5f9; border: 2px dashed ${accentColor}; border-radius: 12px; padding: 24px; text-align: center; margin: 32px 0;">
-              <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+            <div style="background: #f8fafc; border: 2px dashed ${accentColor}; border-radius: 12px; padding: 24px; text-align: center; margin: 32px 0;">
+              <p style="color: ${mutedColor}; font-size: 14px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
                 Your Activation Code
               </p>
-              <div style="background: #ffffff; border: 2px solid ${accentColor}; border-radius: 8px; padding: 16px; display: inline-block;">
+              <div style="background: #fff; border: 2px solid ${accentColor}; border-radius: 8px; padding: 16px; display: inline-block;">
                 <span style="font-size: 32px; font-weight: 700; color: ${mainColor}; letter-spacing: 4px; font-family: 'Courier New', monospace;">
                   ${activationCode}
                 </span>
               </div>
-              <p style="color: #64748b; font-size: 14px; margin: 12px 0 0 0;">
+              <p style="color: ${mutedColor}; font-size: 14px; margin: 12px 0 0 0;">
                 This code expires in <strong>5 minutes</strong>
               </p>
             </div>
-
             <div style="background: #fef3cd; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 6px; margin: 24px 0;">
               <p style="color: #92400e; font-size: 14px; margin: 0; font-weight: 500;">
                 ⚠️ <strong>Security Notice:</strong> If you didn't create an account with Learneazy LMS, please ignore this email. This activation code will expire automatically.
               </p>
             </div>
-
-            <p style="color: #64748b; font-size: 14px; line-height: 1.5; margin: 24px 0 0 0;">
+            <p style="color: ${mutedColor}; font-size: 14px; line-height: 1.5; margin: 24px 0 0 0;">
               Having trouble? Contact our support team at
               <a href="mailto:support@learneazy.com" style="color: ${accentColor}; text-decoration: none;">support@learneazy.com</a>
             </p>
           </div>
-
-          <!-- Footer -->
-          <div style="background: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid #e2e8f0;">
+          <div style="background: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid ${borderColor};">
             <p style="color: #94a3b8; font-size: 14px; margin: 0 0 8px 0;">
               &copy; ${new Date().getFullYear()} Learneazy LMS. All rights reserved.
             </p>
@@ -111,21 +106,31 @@ const sendMail = async (options: MailOptions) => {
   // Account Activation Email with URL
   else if (emailType === "activation" && options.activationUrl) {
     html = `
-      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; padding: 40px 0;">
-        <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden;">
+      <div style="background: #f1f5f9; padding: 40px 0; font-family: ${fontFamily};">
+        <div style="max-width: 600px; margin: auto; background: ${cardBg}; border-radius: ${borderRadius}; box-shadow: ${cardShadow}; border: 1px solid ${borderColor}; overflow: hidden;">
           <div style="background: linear-gradient(135deg, ${mainColor} 0%, ${accentColor} 100%); padding: 32px 24px; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">📚 Learneazy LMS</h1>
+            <h1 style="color: #fff; margin: 0; font-size: 28px; font-weight: 700;">📚 Learneazy LMS</h1>
           </div>
           <div style="padding: 40px 32px;">
             <h2 style="color: ${mainColor}; margin: 0 0 16px 0;">Activate Your Account</h2>
-            <p>Hello <strong>${options.name || "there"}</strong>,</p>
-            <p>Welcome to Learneazy LMS! Click the button below to activate your account and start learning.</p>
+            <p style="color: ${mutedColor}; font-size: 16px;">Hello <strong>${
+      options.name || "there"
+    }</strong>,</p>
+            <p style="color: ${mutedColor}; font-size: 16px;">Welcome to Learneazy LMS! Click the button below to activate your account and start learning.</p>
             <div style="text-align: center; margin: 32px 0;">
               <a href="${options.activationUrl}"
-                style="background: ${buttonColor}; color: #ffffff; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
+                style="background: ${accentColor}; color: #fff; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block;">
                 Activate Account
               </a>
             </div>
+          </div>
+          <div style="background: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid ${borderColor};">
+            <p style="color: #94a3b8; font-size: 14px; margin: 0 0 8px 0;">
+              &copy; ${new Date().getFullYear()} Learneazy LMS. All rights reserved.
+            </p>
+            <p style="color: #cbd5e1; font-size: 12px; margin: 0;">
+              This is an automated message. Please do not reply to this email.
+            </p>
           </div>
         </div>
       </div>
@@ -135,12 +140,12 @@ const sendMail = async (options: MailOptions) => {
   else if (emailType === "question-reply" && options.data) {
     const { name, title, answer, questionText, instructorName } = options.data;
     html = `
-      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; padding: 40px 0; margin: 0;">
-        <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden;">
+      <div style="background: #f1f5f9; padding: 40px 0; font-family: ${fontFamily};">
+        <div style="max-width: 600px; margin: auto; background: ${cardBg}; border-radius: ${borderRadius}; box-shadow: ${cardShadow}; border: 1px solid ${borderColor}; overflow: hidden;">
 
           <!-- Header -->
           <div style="background: linear-gradient(135deg, ${successColor} 0%, ${accentColor} 100%); padding: 32px 24px; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
+            <h1 style="color: #fff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
               📚 Learneazy LMS
             </h1>
             <p style="color: #e2e8f0; margin: 8px 0 0 0; font-size: 16px;">
@@ -159,16 +164,16 @@ const sendMail = async (options: MailOptions) => {
               </p>
             </div>
 
-            <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
+            <p style="color: ${mutedColor}; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
               Hello <strong style="color: ${mainColor};">${name}</strong>,
             </p>
 
-            <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
+            <p style="color: ${mutedColor}; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
               Great news! Your question in the course "<strong>${title}</strong>" has received a new answer.
             </p>
 
             <!-- Question Box -->
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 24px 0;">
+            <div style="background: #f8fafc; border: 1px solid ${borderColor}; border-radius: 8px; padding: 20px; margin: 24px 0;">
               <h3 style="color: ${mainColor}; margin: 0 0 12px 0; font-size: 16px; font-weight: 600;">
                 📝 Your Question:
               </h3>
@@ -192,13 +197,13 @@ const sendMail = async (options: MailOptions) => {
 
             <!-- Call to Action -->
             <div style="background: #f8fafc; border-radius: 8px; padding: 20px; margin: 32px 0; text-align: center;">
-              <p style="color: #64748b; font-size: 14px; margin: 0 0 16px 0;">
+              <p style="color: ${mutedColor}; font-size: 14px; margin: 0 0 16px 0;">
                 Continue the conversation or view more details
               </p>
               <a href="${process.env.FRONTEND_URL}/course/${
       options.data.courseId
     }"
-                style="background: ${successColor}; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
+                style="background: ${successColor}; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
                 View Course Discussion
               </a>
             </div>
@@ -209,14 +214,14 @@ const sendMail = async (options: MailOptions) => {
               </p>
             </div>
 
-            <p style="color: #64748b; font-size: 14px; line-height: 1.5; margin: 24px 0 0 0;">
+            <p style="color: ${mutedColor}; font-size: 14px; line-height: 1.5; margin: 24px 0 0 0;">
               Need help? Contact our support team at
               <a href="mailto:support@learneazy.com" style="color: ${accentColor}; text-decoration: none;">support@learneazy.com</a>
             </p>
           </div>
 
           <!-- Footer -->
-          <div style="background: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid #e2e8f0;">
+          <div style="background: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid ${borderColor};">
             <p style="color: #94a3b8; font-size: 14px; margin: 0 0 8px 0;">
               &copy; ${new Date().getFullYear()} Learneazy LMS. All rights reserved.
             </p>
@@ -232,12 +237,12 @@ const sendMail = async (options: MailOptions) => {
   else if (emailType === "order-confirmation" && options.data) {
     const { userName, courseName, orderNumber, amount, date } = options.data;
     html = `
-      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; padding: 40px 0; margin: 0;">
-        <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden;">
+      <div style="background: #f1f5f9; padding: 40px 0; font-family: ${fontFamily};">
+        <div style="max-width: 600px; margin: auto; background: ${cardBg}; border-radius: ${borderRadius}; box-shadow: ${cardShadow}; border: 1px solid ${borderColor}; overflow: hidden;">
 
           <!-- Header -->
           <div style="background: linear-gradient(135deg, ${successColor} 0%, ${accentColor} 100%); padding: 32px 24px; text-align: center;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
+            <h1 style="color: #fff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
               📚 Learneazy LMS
             </h1>
             <p style="color: #e2e8f0; margin: 8px 0 0 0; font-size: 16px;">
@@ -256,16 +261,16 @@ const sendMail = async (options: MailOptions) => {
               </p>
             </div>
 
-            <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
+            <p style="color: ${mutedColor}; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
               Hello <strong style="color: ${mainColor};">${userName}</strong>,
             </p>
 
-            <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
+            <p style="color: ${mutedColor}; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
               Your order has been confirmed and you now have access to your course. Start learning immediately!
             </p>
 
             <!-- Order Details Box -->
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 24px; margin: 24px 0;">
+            <div style="background: #f8fafc; border: 1px solid ${borderColor}; border-radius: 8px; padding: 24px; margin: 24px 0;">
               <h3 style="color: ${mainColor}; margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">
                 📋 Order Details
               </h3>
@@ -303,13 +308,13 @@ const sendMail = async (options: MailOptions) => {
 
             <!-- Call to Action -->
             <div style="background: #f8fafc; border-radius: 8px; padding: 20px; margin: 32px 0; text-align: center;">
-              <p style="color: #64748b; font-size: 14px; margin: 0 0 16px 0;">
+              <p style="color: ${mutedColor}; font-size: 14px; margin: 0 0 16px 0;">
                 Start your learning journey now
               </p>
               <a href="${process.env.FRONTEND_URL}/course/${
       options.data.courseId
     }"
-                style="background: ${successColor}; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
+                style="background: ${successColor}; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block;">
                 Access Course
               </a>
             </div>
@@ -320,14 +325,14 @@ const sendMail = async (options: MailOptions) => {
               </p>
             </div>
 
-            <p style="color: #64748b; font-size: 14px; line-height: 1.5; margin: 24px 0 0 0;">
+            <p style="color: ${mutedColor}; font-size: 14px; line-height: 1.5; margin: 24px 0 0 0;">
               Need help? Contact our support team at
               <a href="mailto:support@learneazy.com" style="color: ${accentColor}; text-decoration: none;">support@learneazy.com</a>
             </p>
           </div>
 
           <!-- Footer -->
-          <div style="background: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid #e2e8f0;">
+          <div style="background: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid ${borderColor};">
             <p style="color: #94a3b8; font-size: 14px; margin: 0 0 8px 0;">
               &copy; ${new Date().getFullYear()} Learneazy LMS. All rights reserved.
             </p>

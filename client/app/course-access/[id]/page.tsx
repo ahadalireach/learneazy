@@ -43,7 +43,7 @@ const Page = ({ params }: Props) => {
       />
       {isLoading ? (
         <Loader />
-      ) : (
+      ) : data && data.user ? (
         <>
           <Header
             route={route}
@@ -57,7 +57,7 @@ const Page = ({ params }: Props) => {
           </div>
           <Footer />
         </>
-      )}
+      ) : null}
     </>
   );
 };
