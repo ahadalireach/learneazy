@@ -5,9 +5,13 @@
   "license": "ISC",
   "author": "Ahad Ali",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only index.ts"
+    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "build": "tsc",
+    "start": "node index.js",
+    "vercel-build": "echo 'No build needed for Vercel'",
+    "test": "echo 'No tests specified'"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",

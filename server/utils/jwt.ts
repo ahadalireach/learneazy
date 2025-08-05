@@ -59,6 +59,5 @@ export const sendToken = (user: IUser, statusCode: number, res: Response) => {
       avatar: user.avatar,
     },
     accessToken,
-    message: "Successfully signed in! Welcome to Learneazy.",
   });
 };

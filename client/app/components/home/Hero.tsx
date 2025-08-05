@@ -69,10 +69,10 @@ const Hero: FC<Props> = () => {
                     ) : (
                       <>
                         <span className="text-slate-900 dark:text-white">
-                          Master
+                          Master{" "}
                         </span>
                         <span className={styles.utilityStyles.textAccent}>
-                          Top Skills
+                          Top Skills{" "}
                         </span>
                         <span className="text-slate-900 dark:text-white">
                           from Learneazy
