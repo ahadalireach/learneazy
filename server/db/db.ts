@@ -1,30 +1,50 @@
 import "colors";
 import mongoose from "mongoose";
-const MONGO_URI = process.env.MONGO_URI || "";
+
+let retryCount = 0;
+const maxRetries = 5;
 
 const connectDB = async (): Promise<void> => {
   try {
-    console.log("Checking MongoDB URI...".blue);
+    const data = await mongoose.connect(process.env.MONGO_URI!, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+      retryWrites: true,
+      maxPoolSize: 10,
+    });
 
-    if (!MONGO_URI) {
-      console.error("MONGO_URI environment variable is not defined".red.bold);
-      console.log(
-        "Available environment variables:".yellow,
-        Object.keys(process.env).filter((key) => key.includes("MONGO"))
-      );
-      throw new Error("MONGO_URI environment variable is not defined");
+    console.log(
+      `mongod connected with server: ${data.connection.host}`.yellow.bold
+    );
+    retryCount = 0;
+  } catch (err: any) {
+    console.error(
+      `Database connection failed (attempt ${retryCount + 1}/${maxRetries}):`,
+      err.message
+    );
+
+    if (retryCount < maxRetries) {
+      retryCount++;
+      console.log(`Retrying in 5 seconds...`);
+      setTimeout(connectDB, 5000);
+    } else {
+      console.error("Max retries reached. Exiting...");
+      process.exit(1);
     }
-
-    console.log("MongoDB URI found, attempting connection...".green);
-    const conn = await mongoose.connect(MONGO_URI);
-
-    console.log(`MongoDB connected successfully!`.yellow.underline.bold);
-    console.log(`Database Host: ${conn.connection.host}`.underline.cyan);
-    console.log(`Database Name: ${conn.connection.name}`.underline.cyan);
-  } catch (error: any) {
-    console.error("MongoDB connection failed:".red.bold, error.message);
-    throw error;
   }
 };
+
+mongoose.connection.on("disconnected", () => {
+  console.log("MongoDB disconnected! Attempting to reconnect...");
+  connectDB();
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error("MongoDB connection error:", err);
+});
+
+mongoose.connection.on("reconnected", () => {
+  console.log("MongoDB reconnected successfully");
+});
 
 export default connectDB;
