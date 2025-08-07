@@ -10,28 +10,28 @@ interface ITokenOption {
   secure?: boolean;
 }
 
-const accessTokenExpires = parseInt(
-  process.env.ACCESS_TOKEN_EXPIRE || "300",
-  10
-);
+const accessTokenExpires = parseInt(process.env.ACCESS_TOKEN_EXPIRE || "5", 10);
 
 const refreshTokenExpire = parseInt(
-  process.env.REFRESH_TOKEN_EXPIRE || "1200",
+  process.env.REFRESH_TOKEN_EXPIRE || "3",
   10
 );
 
+// Production-optimized cookie options
 export const accessTokenOptions: ITokenOption = {
-  expires: new Date(Date.now() + accessTokenExpires * 60 * 60 * 1000),
-  maxAge: accessTokenExpires * 60 * 60 * 1000,
+  expires: new Date(Date.now() + accessTokenExpires * 60 * 1000),
+  maxAge: accessTokenExpires * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: process.env.NODE_ENV === "production",
 };
 
 export const refreshTokenOptions: ITokenOption = {
   expires: new Date(Date.now() + refreshTokenExpire * 24 * 60 * 60 * 1000),
   maxAge: refreshTokenExpire * 24 * 60 * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: process.env.NODE_ENV === "production",
 };
 
 export const sendToken = (user: IUser, statusCode: number, res: Response) => {
@@ -39,15 +39,19 @@ export const sendToken = (user: IUser, statusCode: number, res: Response) => {
   const refreshToken = user.SignRefreshToken();
 
   const userId = user._id as string;
-  redis.set(userId, JSON.stringify(user));
+  redis.set(userId, JSON.stringify(user), "EX", 604800); // 7 days expiry
 
-  if (process.env.NODE_ENV === "production") {
-    accessTokenOptions.secure = true;
-    refreshTokenOptions.secure = true;
-  }
+  // Simplified and more reliable cookie options for production
+  const cookieOptions = {
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days
+    httpOnly: true,
+    sameSite: "none" as const,
+    secure: true,
+  };
 
-  res.cookie("access_token", accessToken, accessTokenOptions);
-  res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+  // Set cookies without domain restrictions
+  res.cookie("access_token", accessToken, cookieOptions);
+  res.cookie("refresh_token", refreshToken, cookieOptions);
 
   res.status(statusCode).json({
     success: true,

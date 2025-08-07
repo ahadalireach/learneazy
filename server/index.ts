@@ -21,7 +21,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { rateLimit } from "express-rate-limit";
 import { errorMiddleware } from "./middleware/error";
 
-// Connect DB and configure cloudinary if needed (for local/dev)
+// Connect DB and configure cloudinary
 connectDB();
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -48,7 +48,6 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (mobile apps, curl, etc.)
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.indexOf(origin) !== -1) {
@@ -64,7 +63,9 @@ app.use(
       "Authorization",
       "Cookie",
       "X-Requested-With",
+      "Access-Control-Allow-Credentials",
     ],
+    exposedHeaders: ["Set-Cookie"],
     optionsSuccessStatus: 200, // For legacy browser support
   })
 );
@@ -73,6 +74,16 @@ app.use(
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Additional headers for production cookie support
+app.use((req: Request, res: Response, next: NextFunction) => {
+  if (process.env.NODE_ENV === "production") {
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+    res.header("Cross-Origin-Embedder-Policy", "unsafe-none");
+  }
+  next();
+});
 
 // Rate limiting middleware - properly configured for Vercel
 const limiter = rateLimit({
@@ -97,12 +108,6 @@ const limiter = rateLimit({
 // Apply rate limiting to all routes
 app.use(limiter);
 
-// Debug middleware to log all requests
-app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log(`${req.method} ${req.path} - ${new Date().toISOString()}`);
-  next();
-});
-
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
@@ -118,15 +123,6 @@ app.get("/", (req, res) => {
       analytics: "/api/analytics",
       notifications: "/api/notifications",
     },
-  });
-});
-
-// Simple API test route
-app.get("/api", (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: "API is working!",
-    timestamp: new Date().toISOString(),
   });
 });
 

@@ -185,8 +185,25 @@ export const authenticateUser = catchAsyncError(
 export const logoutCurrentUser = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.cookie("access_token", "", { maxAge: 1 });
-      res.cookie("refresh_token", "", { maxAge: 1 });
+      // Clear cookies with proper options for production
+      const clearCookieOptions = {
+        httpOnly: true,
+        sameSite:
+          process.env.NODE_ENV === "production"
+            ? ("none" as const)
+            : ("lax" as const),
+        secure: process.env.NODE_ENV === "production",
+        domain:
+          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
+      };
+
+      res.clearCookie("access_token", clearCookieOptions);
+      res.clearCookie("refresh_token", clearCookieOptions);
+
+      // Also try clearing with empty values as fallback
+      res.cookie("access_token", "", { maxAge: 1, ...clearCookieOptions });
+      res.cookie("refresh_token", "", { maxAge: 1, ...clearCookieOptions });
+
       const userId = req.user?._id;
       if (userId) {
         await redis.del(userId.toString());
@@ -250,8 +267,21 @@ export const refreshUserAccessToken = catchAsyncError(
 
       req.user = user;
 
-      res.cookie("access_token", accessToken, accessTokenOptions);
-      res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+      // Use consistent cookie options
+      const enhancedAccessTokenOptions = {
+        ...accessTokenOptions,
+        domain:
+          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
+      };
+
+      const enhancedRefreshTokenOptions = {
+        ...refreshTokenOptions,
+        domain:
+          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
+      };
+
+      res.cookie("access_token", accessToken, enhancedAccessTokenOptions);
+      res.cookie("refresh_token", refreshToken, enhancedRefreshTokenOptions);
 
       await redis.set(user?._id as string, JSON.stringify(user), "EX", 604800);
       res.status(200).json({
