@@ -294,8 +294,8 @@ npm run dev
 ## Live Links
 
 - **Live Web:** [learneazy.vercel.app](https://learneazy.vercel.app)
+- **Live Video Demo:** [Watch Now](https://youtu.be/PC2D0_RNu4k?si=te4ichbQcF7rBYbp)
 - **GitHub Repo:** [github.com/ahadalireach/learneazy](https://github.com/ahadalireach/learneazy) (Give it a Star!)
-- **Live Video Demo:** Coming Soon
 
 ---
 
