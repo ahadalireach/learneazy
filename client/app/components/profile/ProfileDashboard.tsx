@@ -9,6 +9,7 @@ import ChangePassword from "./ChangePassword";
 import React, { FC, useEffect, useState } from "react";
 import { useLogOutQuery } from "../../../redux/features/auth/authApi";
 import { useGetAllPublicCoursePreviewsQuery } from "@/redux/features/courses/coursesApi";
+import { Loader } from "../common";
 
 type Props = {
   user: any;
@@ -27,7 +28,7 @@ const ProfileDashboard: FC<Props> = ({ user }) => {
   const { data } = useGetAllPublicCoursePreviewsQuery(undefined, {});
 
   useEffect(() => {
-    if (data) {
+    if (data && user?.courses && Array.isArray(user.courses)) {
       const filteredCourses = user.courses
         .map((userCourse: any) =>
           data.courses.find((course: any) => course._id === userCourse._id)
@@ -35,7 +36,11 @@ const ProfileDashboard: FC<Props> = ({ user }) => {
         .filter((course: any) => course !== undefined);
       setCourses(filteredCourses);
     }
-  }, [data]);
+  }, [data, user?.courses]);
+
+  if (!user) {
+    return <Loader />;
+  }
 
   const logOutHandler = async () => {
     setLogout(true);

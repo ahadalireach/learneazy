@@ -267,21 +267,8 @@ export const refreshUserAccessToken = catchAsyncError(
 
       req.user = user;
 
-      // Use consistent cookie options
-      const enhancedAccessTokenOptions = {
-        ...accessTokenOptions,
-        domain:
-          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
-      };
-
-      const enhancedRefreshTokenOptions = {
-        ...refreshTokenOptions,
-        domain:
-          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
-      };
-
-      res.cookie("access_token", accessToken, enhancedAccessTokenOptions);
-      res.cookie("refresh_token", refreshToken, enhancedRefreshTokenOptions);
+      res.cookie("access_token", accessToken, accessTokenOptions);
+      res.cookie("refresh_token", refreshToken, refreshTokenOptions);
 
       await redis.set(user?._id as string, JSON.stringify(user), "EX", 604800);
       res.status(200).json({

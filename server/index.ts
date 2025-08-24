@@ -32,41 +32,10 @@ cloudinary.config({
 // Create Express app
 const app = express();
 
-// Trust proxy for Vercel/production environment
-if (process.env.NODE_ENV === "production") {
-  app.set("trust proxy", 1);
-}
-
-// CORS must be first
-const allowedOrigins = [
-  "https://learneazy.vercel.app",
-  "http://localhost:3000",
-  "https://learneazy-api.vercel.app",
-  process.env.FRONTEND_URL,
-].filter((origin): origin is string => Boolean(origin));
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: process.env.FRONTEND_URL || "https://learneazy.vercel.app",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Cookie",
-      "X-Requested-With",
-      "Access-Control-Allow-Credentials",
-    ],
-    exposedHeaders: ["Set-Cookie"],
-    optionsSuccessStatus: 200, // For legacy browser support
   })
 );
 
@@ -75,28 +44,10 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Additional headers for production cookie support
-app.use((req: Request, res: Response, next: NextFunction) => {
-  if (process.env.NODE_ENV === "production") {
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
-    res.header("Cross-Origin-Embedder-Policy", "unsafe-none");
-  }
-  next();
-});
-
-// Rate limiting middleware - properly configured for Vercel
+// Rate limiting middleware
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
-  standardHeaders: "draft-7",
-  legacyHeaders: false,
-  skip: (req) => {
-    return !req.ip && !req.connection.remoteAddress;
-  },
-  keyGenerator: (req) => {
-    return req.ip || req.connection.remoteAddress || "unknown";
-  },
   handler: (req: Request, res: Response) => {
     res.status(429).json({
       success: false,
@@ -112,17 +63,6 @@ app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
     message: "LearnEazy API is running successfully!",
-    version: "1.0.0",
-    timestamp: new Date().toISOString(),
-    endpoints: {
-      health: "/health",
-      users: "/api/users",
-      courses: "/api/courses",
-      orders: "/api/orders",
-      layouts: "/api/layouts",
-      analytics: "/api/analytics",
-      notifications: "/api/notifications",
-    },
   });
 });
 
