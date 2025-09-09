@@ -74,12 +74,18 @@ const CourseCard: FC<Props> = ({ item, isProfile }) => {
         >
           <div className="flex items-center gap-1.5">
             <AiOutlineUser className="w-4 h-4" />
-            <span>{item.purchased || 0} Students</span>
+            <span>
+              {item.purchased || 0}{" "}
+              {item.purchased === 1 ? "Student" : "Students"}
+            </span>
           </div>
 
           <div className="flex items-center gap-1.5">
             <HiOutlineBookOpen className="w-4 h-4" />
-            <span>{item.courseData?.length || 0} Lessons</span>
+            <span>
+              {item.courseData?.length || 0}{" "}
+              {item.courseData?.length === 1 ? "Lesson" : "Lessons"}
+            </span>
           </div>
         </div>
       </div>

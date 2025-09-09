@@ -117,7 +117,7 @@ const Hero: FC<Props> = () => {
                   </Link>
 
                   <Link
-                    href="/about"
+                    href="/courses"
                     className={styles.combineStyles(
                       styles.commonStyles.secondaryButton,
                       "transform"
