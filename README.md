@@ -140,6 +140,10 @@ STRIPE_SECRET_KEY=your_stripe_secret_key
 
 # VdoCipher (Video Streaming)
 VDOCIPHER_API_KEY=your_vdocipher_api_key
+
+# Rate Limiting (Server)
+RATE_LIMIT_MAX=1000 (Max requests per window per IP. Defaults to 100 if unset.)
+# RATE_LIMIT_WINDOW_MS=900000 (Optional: window size in ms (default 900000 = 15 minutes))
 ```
 
 Start the backend server:
