@@ -167,15 +167,15 @@ export const reviews = [
     name: "Gene Bates",
     profession: "Student | Cambridge University",
     comment:
-      "Learneazy offers a wide range of tech courses for every level. The structure, depth, and clarity make it one of the best learning platforms I’ve used. Highly recommended for anyone serious about tech.",
+      "Learneazy offers a wide range of tech courses for every level. The structure, depth, and clarity make it one of the best learning platforms I've used. Highly recommended for anyone serious about tech.",
     image: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
-    name: "Verna Santos",
+    name: "Marcus Johnson",
     profession: "Full Stack Developer | Quarter Ltd.",
     comment:
       "Absolutely love the tutorials on Learneazy! Complex topics are broken down so well, and the real-world examples make everything click. This platform truly stands out in the programming education space.",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    image: "https://randomuser.me/api/portraits/men/44.jpg",
   },
   {
     name: "Jay Gibbs",
@@ -185,25 +185,25 @@ export const reviews = [
     image: "https://randomuser.me/api/portraits/men/65.jpg",
   },
   {
-    name: "Mina Davidson",
+    name: "David Chen",
     profession: "Junior Web Developer | Indonesia",
     comment:
       "I explored Learneazy and was impressed by the course quality and variety. Whether you're just starting or upskilling, it's a great place to learn and grow.",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    image: "https://randomuser.me/api/portraits/men/68.jpg",
   },
   {
-    name: "Rosemary Smith",
+    name: "Robert Smith",
     profession: "Full Stack Web Developer | Algeria",
     comment:
       "What I love about Learneazy is the depth. The long-form tutorials cover everything in detail, making it beginner-friendly yet comprehensive. Looking forward to more content!",
-    image: "https://randomuser.me/api/portraits/women/21.jpg",
+    image: "https://randomuser.me/api/portraits/men/22.jpg",
   },
   {
-    name: "Laura Mckenzie",
+    name: "Alex McKenzie",
     profession: "Full Stack Web Developer | Canada",
     comment:
-      "Learneazy focuses on real-world application. I built a complete web marketplace using React, step by step. It’s a game-changer if you want to build projects, not just watch theory.",
-    image: "https://randomuser.me/api/portraits/women/12.jpg",
+      "Learneazy focuses on real-world application. I built a complete web marketplace using React, step by step. It's a game-changer if you want to build projects, not just watch theory.",
+    image: "https://randomuser.me/api/portraits/men/11.jpg",
   },
 ];
 
